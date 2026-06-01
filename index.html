@@ -3,47 +3,3492 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tra Cứu Văn Khấn Việt Nam — Danh Mục</title>
-<link rel="stylesheet" href="css/style.css">
+<title>LịchViệt Pro — Lịch Âm & Tử Vi Đẩu Số</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:    #8B0000;
+  --red2:   #B22222;
+  --gold:   #B8860B;
+  --gold2:  #DAA520;
+  --cream:  #FDF6E3;
+  --cream2: #F5E6C8;
+  --cream3: #EDD9A3;
+  --ink:    #1A0A00;
+  --ink2:   #3D1C00;
+  --ink3:   #6B3A2A;
+  --bg:     #FAF0DC;
+  --border: #C8A96E;
+  --border2:#8B6914;
+  --shadow: rgba(139,69,19,0.15);
+  --tuvi-r: #7B0000;
+  --tuvi-b: #003366;
+  --tuvi-p: #4B0082;
+  --tuvi-g: #1A5C00;
+  --tuvi-o: #8B4500;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(139,0,0,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(184,134,11,0.06) 0%, transparent 50%);
+}
+
+/* ─── HEADER ─── */
+header {
+  background: linear-gradient(135deg, #6B0000 0%, #8B0000 40%, #A0180A 70%, #7A0A00 100%);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg, transparent, transparent 30px,
+    rgba(255,215,0,0.04) 30px, rgba(255,215,0,0.04) 31px
+  );
+}
+.header-inner {
+  position: relative;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 32px;
+}
+.logo {
+  display: flex; align-items: center; gap: 16px;
+}
+.logo-symbol {
+  width: 54px; height: 54px;
+  border: 2px solid rgba(255,215,0,0.6);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 26px;
+  color: #FFD700;
+  background: rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+.logo-text h1 {
+  font-family: 'Noto Serif', serif;
+  font-size: 22px; font-weight: 700;
+  color: #FFD700;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(255,215,0,0.3);
+}
+.logo-text p {
+  font-size: 11px; color: rgba(255,215,0,0.7);
+  letter-spacing: 1px; margin-top: 2px;
+  font-weight: 300;
+}
+.nav-tabs {
+  display: flex; gap: 4px;
+}
+.nav-tab {
+  padding: 8px 18px;
+  border: 1px solid rgba(255,215,0,0.3);
+  background: rgba(0,0,0,0.2);
+  color: rgba(255,215,0,0.8);
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; border-radius: 4px;
+  transition: all 0.2s;
+  font-family: 'Noto Sans', sans-serif;
+}
+.nav-tab:hover { background: rgba(255,215,0,0.15); color: #FFD700; }
+.nav-tab.active {
+  background: rgba(255,215,0,0.25);
+  border-color: rgba(255,215,0,0.7);
+  color: #FFD700;
+}
+
+/* ─── MAIN ─── */
+main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── CARDS ─── */
+.card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 12px var(--shadow);
+}
+.card-title {
+  font-family: 'Noto Serif', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--red);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cream3);
+  display: flex; align-items: center; gap: 8px;
+}
+.card-title .han { font-family: 'Noto Serif TC', serif; font-size: 20px; }
+
+/* ─── FORM ELEMENTS ─── */
+.form-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; align-items: flex-end; }
+.form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 100px; }
+.form-group label {
+  font-size: 12px; font-weight: 600; color: var(--ink3);
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+.form-group input, .form-group select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: #fff;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus {
+  outline: none; border-color: var(--red2);
+}
+.radio-group { display: flex; gap: 12px; align-items: center; }
+.radio-group label {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 13px; color: var(--ink2);
+  cursor: pointer; font-weight: 400;
+  text-transform: none; letter-spacing: 0;
+}
+.radio-group input[type=radio] { accent-color: var(--red); }
+.checkbox-row { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.checkbox-row input { accent-color: var(--red); }
+.checkbox-row label { font-size: 13px; color: var(--ink2); cursor: pointer; }
+
+.btn {
+  padding: 10px 24px;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red2) 100%);
+  color: #FFD700;
+  border: none; border-radius: 5px;
+  font-family: 'Noto Serif', serif;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; letter-spacing: 1px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(139,0,0,0.3);
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(139,0,0,0.4); }
+.btn:active { transform: translateY(0); }
+.btn-sm {
+  padding: 6px 14px; font-size: 12px;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red2) 100%);
+  color: #FFD700; border: none; border-radius: 4px;
+  cursor: pointer; font-family: 'Noto Sans', sans-serif; font-weight: 600;
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  box-shadow: none;
+}
+.btn-outline:hover { background: rgba(139,0,0,0.05); }
+
+/* ─── RESULT BOXES ─── */
+.result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 18px; }
+.result-box {
+  background: #fff;
+  border: 1px solid var(--cream3);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.result-box .rb-label { font-size: 11px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 6px; }
+.result-box .rb-value { font-family: 'Noto Serif', serif; font-size: 20px; font-weight: 700; color: var(--ink); }
+.result-box .rb-sub { font-size: 12px; color: var(--ink3); margin-top: 3px; }
+.result-box.highlight { background: linear-gradient(135deg, #FFF8E7 0%, #FFF0D0 100%); border-color: var(--gold2); }
+.result-box.highlight .rb-value { color: var(--red); }
+
+/* ─── CALENDAR ─── */
+.calendar-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width:700px){ .calendar-container { grid-template-columns: 1fr; } }
+
+.cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.cal-nav { background: none; border: 1px solid var(--border); border-radius: 4px; padding: 4px 10px; cursor: pointer; font-size: 16px; color: var(--red); }
+.cal-title { font-family: 'Noto Serif', serif; font-size: 16px; font-weight: 700; color: var(--ink); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.cal-day-name { font-size: 11px; font-weight: 600; color: var(--ink3); text-align: center; padding: 4px 0; }
+.cal-day {
+  aspect-ratio: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 5px; cursor: pointer; font-size: 13px;
+  border: 1px solid transparent; transition: all 0.15s;
+  min-height: 44px; padding: 2px;
+}
+.cal-day:hover { background: rgba(139,0,0,0.08); border-color: var(--border); }
+.cal-day.today { background: var(--red); color: #FFD700; font-weight: 700; }
+.cal-day.today .lunar-day { color: rgba(255,215,0,0.8); }
+.cal-day.selected { background: rgba(139,0,0,0.15); border-color: var(--red); }
+.cal-day.other-month { opacity: 0.35; }
+.cal-day .solar-day { font-weight: 600; line-height: 1; }
+.cal-day .lunar-day { font-size: 10px; color: var(--ink3); margin-top: 2px; }
+.cal-day.hoang-dao .lunar-day::after { content: '●'; font-size: 6px; color: var(--gold2); margin-left: 2px; }
+
+.day-detail { }
+.day-detail .big-date {
+  font-family: 'Noto Serif', serif;
+  font-size: 48px; font-weight: 700; color: var(--red);
+  line-height: 1; margin-bottom: 4px;
+}
+.day-detail .dow { font-size: 14px; color: var(--ink3); margin-bottom: 16px; font-weight: 300; }
+.info-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--cream3); }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 12px; color: var(--ink3); font-weight: 500; }
+.info-value { font-family: 'Noto Serif', serif; font-size: 14px; font-weight: 600; color: var(--ink); text-align: right; }
+.info-value.red { color: var(--red); }
+.info-value.gold { color: var(--gold); }
+
+/* ─── GIỜ HOÀNG ĐẠO ─── */
+.gio-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-top: 14px; }
+.gio-item {
+  border-radius: 5px; padding: 8px 10px; text-align: center;
+  border: 1px solid transparent;
+}
+.gio-item.hoang { background: linear-gradient(135deg,#FFF8E7,#FFF0C0); border-color: var(--gold2); }
+.gio-item.hac { background: #F5F0F0; border-color: #DDD; opacity: 0.7; }
+.gio-item .gio-chi { font-family: 'Noto Serif',serif; font-size: 14px; font-weight: 700; }
+.gio-item.hoang .gio-chi { color: var(--red); }
+.gio-item.hac .gio-chi { color: var(--ink3); }
+.gio-item .gio-time { font-size: 10px; color: var(--ink3); margin-top: 2px; }
+.gio-item .gio-badge { font-size: 10px; margin-top: 3px; font-weight: 600; }
+.gio-item.hoang .gio-badge { color: var(--gold); }
+.gio-item.hac .gio-badge { color: #999; }
+
+/* ─── TỬ VI LÁ SỐ ─── */
+.tuvi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 4px;
+  aspect-ratio: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.tuvi-cung {
+  background: #FFFDF5;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 7px;
+  font-size: 11px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-height: 120px;
+}
+.tuvi-cung:hover { border-color: var(--red); background: #FFF8E0; z-index: 2; }
+.tuvi-cung.menh-cung { border-color: var(--red); border-width: 2px; background: #FFF5F5; }
+.tuvi-cung.than-cung { border-color: var(--gold); border-width: 2px; }
+.tuvi-cung.active-van { background: linear-gradient(135deg, #FFF8E0, #FFF0C0); border-color: var(--gold2); }
+
+.tuvi-center {
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
+  background: linear-gradient(135deg, #FDF6E3 0%, #F5E6C8 100%);
+  border: 1px solid var(--cream3);
+  border-radius: 8px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 16px; text-align: center;
+}
+.tuvi-center .la-so-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 22px; color: var(--red);
+  font-weight: 700; margin-bottom: 8px;
+}
+.tuvi-center .chu-nhan { font-size: 13px; color: var(--ink2); margin-bottom: 4px; }
+.tuvi-center .tu-tru { font-family: 'Noto Serif', serif; font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.tuvi-center .hanh-cuc { font-size: 12px; color: var(--ink3); }
+.tuvi-center .hanh-cuc strong { color: var(--red); font-size: 14px; }
+
+.cung-name { font-size: 10px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.cung-diachi { font-family: 'Noto Serif', serif; font-size: 12px; font-weight: 700; color: var(--ink3); }
+.cung-menh-badge { position: absolute; top: 5px; right: 5px; font-size: 9px; padding: 1px 5px; border-radius: 3px; background: var(--red); color: #FFD700; font-weight: 700; }
+
+.sao-list { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 2px; }
+.sao {
+  font-size: 10px; font-weight: 600; padding: 1px 4px;
+  border-radius: 3px; white-space: nowrap;
+}
+.sao.bac-dau { color: #7B0000; background: rgba(123,0,0,0.08); }
+.sao.nam-dau { color: #003366; background: rgba(0,51,102,0.08); }
+.sao.ta-phu { color: #8B6914; background: rgba(139,105,20,0.1); }
+.sao.hoa-tinh { color: #8B4500; background: rgba(139,69,0,0.08); }
+.sao.van-xuong { color: #4B0082; background: rgba(75,0,130,0.08); }
+.sao.khoi-viet { color: #1A5C00; background: rgba(26,92,0,0.08); }
+.sao.loc { color: #CC0000; }
+.sao.quyen { color: #CC6600; }
+.sao.khoa { color: #0066CC; }
+.sao.ky { color: #333; background: rgba(0,0,0,0.08); }
+.sao.truong-sinh { color: #666; font-style: italic; }
+.sao.dia-khong  { color: #555; background: rgba(0,0,0,0.06); border: 1px dashed #999; }
+.sao.dia-kiep   { color: #800; background: rgba(128,0,0,0.06); border: 1px dashed #a00; }
+.sao.tuan-triet { color: #555; font-style: italic; background: rgba(100,100,100,0.07); }
+
+.van-info { position: absolute; bottom: 5px; right: 5px; font-size: 9px; color: var(--ink3); font-style: italic; }
+
+/* ─── THẬP NHỊ TRỰC ─── */
+.truc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.truc-table th { background: var(--cream2); color: var(--red); font-weight: 700; padding: 8px 10px; text-align: left; font-family: 'Noto Serif', serif; }
+.truc-table td { padding: 7px 10px; border-bottom: 1px solid var(--cream3); }
+.truc-table tr:last-child td { border-bottom: none; }
+.truc-table .truc-name { font-weight: 700; font-family: 'Noto Serif', serif; }
+.truc-table .tot { color: #1A5C00; font-size: 12px; }
+.truc-table .xau { color: var(--red2); font-size: 12px; }
+.truc-highlight { background: linear-gradient(90deg, rgba(255,215,0,0.1), transparent); }
+
+/* ─── LUẬN GIẢI ─── */
+.luan-giai-box {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFF5F0 100%);
+  border: 1px solid var(--cream3);
+  border-radius: 6px; padding: 16px 20px;
+  margin-top: 16px;
+}
+.luan-giai-box h3 {
+  font-family: 'Noto Serif', serif;
+  font-size: 14px; font-weight: 700; color: var(--red);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.luan-giai-box p { font-size: 13px; color: var(--ink2); line-height: 1.75; }
+
+/* ─── TỨ TRỤ ─── */
+.tu-tru-display {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+  margin-top: 16px;
+}
+.tru-box {
+  background: #fff; border: 1px solid var(--cream3);
+  border-radius: 6px; padding: 14px; text-align: center;
+}
+.tru-box .tru-title { font-size: 11px; color: var(--ink3); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 10px; }
+.tru-box .can-chi { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; color: var(--red); line-height: 1; }
+.tru-box .can-chi-viet { font-family: 'Noto Serif', serif; font-size: 13px; color: var(--ink2); margin-top: 4px; font-weight: 600; }
+.tru-box .ngu-hanh { font-size: 11px; color: var(--ink3); margin-top: 5px; }
+
+.ngu-hanh-moc { color: #2D6A00; }
+.ngu-hanh-hoa { color: #B80000; }
+.ngu-hanh-tho { color: #7A5500; }
+.ngu-hanh-kim { color: #555; }
+.ngu-hanh-thuy { color: #004080; }
+
+/* ─── DAI VAN PANEL ─── */
+.dai-van-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 14px; }
+.dv-item {
+  border: 1px solid var(--cream3); border-radius: 5px;
+  padding: 10px 12px; background: #fff;
+}
+.dv-item.current { border-color: var(--gold2); background: linear-gradient(135deg,#FFF8E7,#FFF0C0); }
+.dv-item .dv-age { font-size: 11px; color: var(--ink3); margin-bottom: 4px; }
+.dv-item .dv-cung { font-family: 'Noto Serif', serif; font-size: 13px; font-weight: 700; color: var(--ink); }
+.dv-item .dv-cc { font-size: 12px; color: var(--ink3); }
+.dv-item.current .dv-cung { color: var(--red); }
+
+/* ─── TABS ─── */
+.sub-tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 2px solid var(--cream3); padding-bottom: 0; }
+.sub-tab {
+  padding: 8px 16px; font-size: 13px; font-weight: 600;
+  color: var(--ink3); cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  transition: all 0.2s;
+}
+.sub-tab:hover { color: var(--red); }
+.sub-tab.active { color: var(--red); border-bottom-color: var(--red); }
+
+/* ─── POPUP ─── */
+.popup-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 100;
+  align-items: center; justify-content: center;
+}
+.popup-overlay.open { display: flex; }
+.popup-box {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 10px; padding: 24px; max-width: 480px; width: 90%;
+  max-height: 80vh; overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.popup-close { float: right; font-size: 20px; cursor: pointer; color: var(--ink3); }
+.popup-box h2 { font-family: 'Noto Serif', serif; font-size: 18px; font-weight: 700; color: var(--red); margin-bottom: 14px; }
+
+/* Utility */
+.hidden { display: none !important; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width:700px){ .grid-2 { grid-template-columns: 1fr; } }
+.mt-4 { margin-top: 16px; }
+.text-red { color: var(--red); }
+.text-gold { color: var(--gold); }
+.divider { border: none; border-top: 1px solid var(--cream3); margin: 18px 0; }
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.tag-red { background: rgba(139,0,0,0.1); color: var(--red); }
+.tag-gold { background: rgba(184,134,11,0.1); color: var(--gold); }
+.tag-blue { background: rgba(0,51,102,0.08); color: #003366; }
+
+/* ─── LOADING STATE ─── */
+.loading-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(250,240,220,0.85);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.loading-overlay.hidden { display: none !important; }
+.loading-spinner {
+  width: 48px; height: 48px;
+  border: 3px solid var(--cream3);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-family: 'Noto Serif', serif; color: var(--red); font-size: 15px; }
+
+/* ─── NGŨ HÀNH BARS ─── */
+.hanh-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.hanh-bar-label { width: 36px; font-family: 'Noto Serif', serif; font-size: 13px; font-weight: 700; }
+.hanh-bar-track { flex: 1; height: 14px; background: var(--cream2); border-radius: 7px; overflow: hidden; }
+.hanh-bar-fill { height: 100%; border-radius: 7px; transition: width 0.6s ease; }
+.hanh-bar-count { font-size: 12px; color: var(--ink3); min-width: 30px; text-align: right; }
+
+/* ─── SINH KHẮC TABLE ─── */
+.sk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.sk-box { background: #fff; border: 1px solid var(--cream3); border-radius: 6px; padding: 12px; }
+.sk-box .sk-title { font-size: 11px; font-weight: 700; color: var(--ink3); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.sk-item { font-size: 12px; color: var(--ink2); padding: 3px 0; border-bottom: 1px solid var(--cream3); }
+.sk-item:last-child { border-bottom: none; }
+.sk-sinh { color: #1A5C00; }
+.sk-khac { color: var(--red2); }
+
+/* ─── TIỂU VẬN ─── */
+.tieu-van-wrap { margin-top: 20px; }
+.tieu-van-title { font-family: 'Noto Serif', serif; font-size: 14px; font-weight: 700; color: var(--red); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--cream3); }
+.tv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; }
+.tv-item {
+  border: 1px solid var(--cream3); border-radius: 5px;
+  padding: 8px 10px; background: #fff; font-size: 11px;
+}
+.tv-item.tv-cur { border-color: var(--red); background: rgba(139,0,0,0.04); }
+.tv-item .tv-age { color: var(--ink3); margin-bottom: 3px; }
+.tv-item .tv-cc { font-family: 'Noto Serif', serif; font-weight: 700; color: var(--ink); }
+.tv-item.tv-cur .tv-cc { color: var(--red); }
+
+/* ─── RESPONSIVE MOBILE ─── */
+@media(max-width:480px) {
+  .header-inner { padding: 12px 14px; }
+  .logo-symbol { width: 40px; height: 40px; font-size: 20px; }
+  .logo-text h1 { font-size: 17px; }
+  .nav-tabs { flex-wrap: wrap; justify-content: center; }
+  .nav-tab { padding: 6px 12px; font-size: 12px; }
+  main { padding: 14px 10px; }
+  .tuvi-grid { aspect-ratio: auto; gap: 3px; }
+  .tuvi-cung { min-height: 70px; padding: 5px; }
+  .sao { font-size: 9px; padding: 1px 3px; }
+  .cung-name { font-size: 9px; }
+  .cung-diachi { font-size: 10px; }
+  .tu-tru-display { grid-template-columns: repeat(2, 1fr); }
+  .tru-box .can-chi { font-size: 22px; }
+  .dai-van-list { grid-template-columns: repeat(2, 1fr); }
+  .gio-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── VĂN KHẤN PRINT ── */
+@media print {
+  body * { visibility: hidden !important; }
+  #vk-print-area, #vk-print-area * { visibility: visible !important; }
+  #vk-print-area {
+    display: block !important;
+    position: fixed !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important;
+    padding: 0 !important; margin: 0 !important;
+    font-family: 'Noto Serif', 'Times New Roman', Georgia, serif !important;
+    font-size: 13pt !important; line-height: 1.85 !important;
+    color: #000 !important; white-space: pre-line !important;
+  }
+  .vkprint-title {
+    font-family: 'Noto Serif', 'Times New Roman', Georgia, serif !important;
+    font-size: 18pt !important; font-weight: 700 !important;
+    text-align: center !important; margin-bottom: 18pt !important;
+    color: #000 !important;
+  }
+  #vk-print-area strong { font-weight: 700 !important; color: #000 !important; }
+}
+
+</style>
 </head>
 <body>
 
-<header class="site-header">
+<header>
   <div class="header-inner">
-    <a href="index.html" class="logo-link">
-      <div class="logo-symbol">☸</div>
+    <div class="logo">
+      <div class="logo-symbol">紫</div>
       <div class="logo-text">
-        <h1>Văn Khấn Việt</h1>
-        <p>Tra cứu &amp; In văn khấn truyền thống</p>
+        <h1>LịchViệt Pro</h1>
+        <p>LỊCH ÂM DƯƠNG · TỨ TRỤ BÁT TỰ · TỬ VI ĐẨU SỐ</p>
       </div>
-    </a>
-    <nav class="header-nav">
-      <a href="index.html">Danh mục</a>
-    </nav>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('lich')">📅 Lịch Âm</button>
+      <button class="nav-tab" onclick="showSection('tuvi')">🔮 Tử Vi</button>
+      <button class="nav-tab" onclick="showSection('tutru')">🏮 Tứ Trụ</button>
+      <button class="nav-tab" onclick="showSection('phongthuy')">☯ Phong Thủy</button>
+      <button class="nav-tab" onclick="showSection('vankhan')">📜 Văn Khấn</button>
+    </div>
   </div>
 </header>
 
-<section class="hero">
-  <h2>📜 Kho Văn Khấn Truyền Thống Việt Nam</h2>
-  <p>Tra cứu hơn 24 bài văn khấn chính thống — điền thông tin, xem trước và in ngay</p>
+<main>
+
+<!-- ══════════ SECTION: LỊCH ÂM ══════════ -->
+<section id="sect-lich" class="section active">
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="han">曆</span> Tra Cứu Ngày Âm Lịch</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ngày</label>
+          <input type="number" id="inp-day" min="1" max="31" value="" placeholder="DD">
+        </div>
+        <div class="form-group">
+          <label>Tháng</label>
+          <input type="number" id="inp-month" min="1" max="12" value="" placeholder="MM">
+        </div>
+        <div class="form-group">
+          <label>Năm</label>
+          <input type="number" id="inp-year" min="1900" max="2100" value="" placeholder="YYYY">
+        </div>
+        <div class="form-group" style="flex:0.5">
+          <label>Múi giờ</label>
+          <select id="inp-tz">
+            <option value="7" selected>UTC+7</option>
+            <option value="8">UTC+8</option>
+            <option value="9">UTC+9</option>
+            <option value="0">UTC+0</option>
+            <option value="-5">UTC-5</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="doConvert()">🔍 Tra Cứu</button>
+
+      <div id="result-lich" class="hidden">
+        <hr class="divider">
+        <div class="result-grid">
+          <div class="result-box highlight">
+            <div class="rb-label">Ngày Âm Lịch</div>
+            <div class="rb-value" id="r-am-lich">—</div>
+            <div class="rb-sub" id="r-leap"></div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label">Can Chi Ngày</div>
+            <div class="rb-value" id="r-ngay-cc">—</div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label">Can Chi Tháng</div>
+            <div class="rb-value" id="r-thang-cc">—</div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label">Can Chi Năm</div>
+            <div class="rb-value" id="r-nam-cc">—</div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label">Tiết Khí</div>
+            <div class="rb-value" id="r-tiet-khi">—</div>
+          </div>
+          <div class="result-box">
+            <div class="rb-label">Thập Nhị Trực</div>
+            <div class="rb-value" id="r-truc">—</div>
+          </div>
+        </div>
+
+        <div class="luan-giai-box mt-4">
+          <h3>🗓️ Nhận Định Ngày</h3>
+          <p id="r-nhan-dinh">—</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="han">月</span> Lịch Tháng</div>
+        <div class="cal-header">
+          <button class="cal-nav" onclick="calPrev()">‹</button>
+          <div class="cal-title" id="cal-title">—</div>
+          <button class="cal-nav" onclick="calNext()">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+
+      <div class="card mt-4" id="day-info-card">
+        <div class="card-title"><span class="han">日</span> Thông Tin Ngày Đã Chọn</div>
+        <div class="day-detail">
+          <div class="big-date" id="di-solar">—</div>
+          <div class="dow" id="di-dow">—</div>
+          <div class="info-row"><span class="info-label">Âm lịch</span><span class="info-value red" id="di-am">—</span></div>
+          <div class="info-row"><span class="info-label">Can Chi ngày</span><span class="info-value" id="di-ngay">—</span></div>
+          <div class="info-row"><span class="info-label">Tiết Khí</span><span class="info-value gold" id="di-tiet">—</span></div>
+          <div class="info-row"><span class="info-label">Thập Nhị Trực</span><span class="info-value" id="di-truc">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<div class="search-wrap">
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Tìm bài văn khấn... (VD: giỗ, khai trương, thôi nôi...)">
+<!-- ══════════ SECTION: TỬ VI ══════════ -->
+<section id="sect-tuvi" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="han">紫微</span> Lập Lá Số Tử Vi</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input type="text" id="tv-ten" placeholder="Nhập họ tên...">
+        </div>
+        <div class="form-group" style="flex:0.5">
+          <label>Giới tính</label>
+          <div class="radio-group mt-4" style="margin-top:0">
+            <label><input type="radio" name="gt" value="nam" checked> Nam</label>
+            <label><input type="radio" name="gt" value="nu"> Nữ</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ngày sinh (Dương)</label>
+          <input type="number" id="tv-day" min="1" max="31" placeholder="DD">
+        </div>
+        <div class="form-group">
+          <label>Tháng</label>
+          <input type="number" id="tv-month" min="1" max="12" placeholder="MM">
+        </div>
+        <div class="form-group">
+          <label>Năm</label>
+          <input type="number" id="tv-year" min="1900" max="2100" placeholder="YYYY">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Giờ sinh (Địa Chi)</label>
+          <select id="tv-gio">
+            <option value="-1">— Không biết giờ —</option>
+            <option value="0">Tý (23:00–01:00)</option>
+            <option value="1">Sửu (01:00–03:00)</option>
+            <option value="2">Dần (03:00–05:00)</option>
+            <option value="3">Mão (05:00–07:00)</option>
+            <option value="4">Thìn (07:00–09:00)</option>
+            <option value="5">Tỵ (09:00–11:00)</option>
+            <option value="6">Ngọ (11:00–13:00)</option>
+            <option value="7">Mùi (13:00–15:00)</option>
+            <option value="8">Thân (15:00–17:00)</option>
+            <option value="9">Dậu (17:00–19:00)</option>
+            <option value="10">Tuất (19:00–21:00)</option>
+            <option value="11">Hợi (21:00–23:00)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Trường phái</label>
+          <div class="radio-group" style="margin-top:0">
+            <label><input type="radio" name="tp" value="nam" checked> Nam phái</label>
+            <label><input type="radio" name="tp" value="bac"> Bắc phái</label>
+          </div>
+        </div>
+        <div class="form-group" style="flex:0.4">
+          <label>Múi giờ</label>
+          <select id="tv-tz">
+            <option value="7" selected>UTC+7</option>
+            <option value="8">UTC+8</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" onclick="lapLaSo()">⭐ Lập Lá Số</button>
+    </div>
+
+    <div class="card" id="tuvi-summary" style="display:none">
+      <div class="card-title"><span class="han">命</span> Tứ Trụ Bát Tự</div>
+      <div class="tu-tru-display" id="tu-tru-display"></div>
+      <hr class="divider">
+      <div class="result-grid" id="menh-info-grid"></div>
+    </div>
+  </div>
+
+  <div id="tuvi-main" style="display:none">
+    <div class="sub-tabs">
+      <div class="sub-tab active" onclick="showSubTab('la-so')">Lá Số Gốc</div>
+      <div class="sub-tab" onclick="showSubTab('dai-van')">Đại Vận</div>
+      <div class="sub-tab" onclick="showSubTab('luan-giai')">Luận Giải</div>
+    </div>
+
+    <div id="sub-la-so">
+      <div class="card">
+        <div class="card-title"><span class="han">斗數</span> Lá Số Tử Vi <span style="font-size:12px;color:var(--ink3);font-weight:400;margin-left:8px">(click vào cung để xem chi tiết)</span></div>
+        <div class="tuvi-grid" id="tuvi-grid"></div>
+      </div>
+    </div>
+
+    <div id="sub-dai-van" class="hidden">
+      <div class="card">
+        <div class="card-title"><span class="han">運</span> Đại Vận · Tiểu Vận</div>
+        <div class="dai-van-list" id="dai-van-list"></div>
+      </div>
+    </div>
+
+    <div id="sub-luan-giai" class="hidden">
+      <div class="card">
+        <div class="card-title"><span class="han">解</span> Luận Giải Tổng Quát</div>
+        <div id="luan-giai-content"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION: TỨ TRỤ BÁT TỰ ══════════ -->
+<section id="sect-tutru" class="section">
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="han">命</span> Nhập Ngày Giờ Sinh</div>
+      <div class="form-row">
+        <div class="form-group"><label>Họ Tên</label><input type="text" id="batu-ten" placeholder="Nhập họ tên..."></div>
+        <div class="form-group" style="flex:0.5">
+          <label>Giới Tính</label>
+          <div class="radio-group" style="margin-top:0">
+            <label><input type="radio" name="batu-gt" value="nam" checked> Nam</label>
+            <label><input type="radio" name="batu-gt" value="nu"> Nữ</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Ngày</label><input type="number" id="batu-day" min="1" max="31" placeholder="DD"></div>
+        <div class="form-group"><label>Tháng</label><input type="number" id="batu-month" min="1" max="12" placeholder="MM"></div>
+        <div class="form-group"><label>Năm</label><input type="number" id="batu-year" min="1900" max="2100" placeholder="YYYY"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Giờ Sinh</label>
+          <select id="batu-gio">
+            <option value="-1">— Không biết —</option>
+            <option value="0">Tý (23–01h)</option><option value="1">Sửu (01–03h)</option>
+            <option value="2">Dần (03–05h)</option><option value="3">Mão (05–07h)</option>
+            <option value="4">Thìn (07–09h)</option><option value="5">Tỵ (09–11h)</option>
+            <option value="6">Ngọ (11–13h)</option><option value="7">Mùi (13–15h)</option>
+            <option value="8">Thân (15–17h)</option><option value="9">Dậu (17–19h)</option>
+            <option value="10">Tuất (19–21h)</option><option value="11">Hợi (21–23h)</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:0.5"><label>Múi Giờ</label>
+          <select id="batu-tz"><option value="7" selected>UTC+7</option><option value="8">UTC+8</option></select>
+        </div>
+      </div>
+      <div id="batu-loading" class="hidden" style="text-align:center;padding:10px;color:var(--red)">⏳ Đang tính toán...</div>
+      <button class="btn" onclick="doBatuAnalysis()">🏮 Phân Tích Tứ Trụ Bát Tự</button>
+    </div>
+
+    <div class="card" id="batu-result" style="display:none">
+      <div class="card-title"><span class="han">八字</span> Bát Tự</div>
+      <div class="tu-tru-display" id="batu-display"></div>
+      <hr class="divider">
+      <div id="batu-ngu-hanh-chart"></div>
+    </div>
+  </div>
+
+  <div id="batu-analysis" style="display:none">
+    <div class="sub-tabs">
+      <div class="sub-tab active" onclick="showBatuTab('ngu-hanh')">Ngũ Hành</div>
+      <div class="sub-tab" onclick="showBatuTab('than-vuong')">Thân Vượng/Nhược</div>
+      <div class="sub-tab" onclick="showBatuTab('than-ki')">Thần Kỳ Dụng</div>
+      <div class="sub-tab" onclick="showBatuTab('luan-bat-tu')">Luận Đoán</div>
+    </div>
+    <div id="batu-sub-ngu-hanh">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title"><span class="han">行</span> Phân Bố Ngũ Hành</div>
+          <div id="batu-hanh-bars"></div>
+        </div>
+        <div class="card">
+          <div class="card-title"><span class="han">克</span> Tương Sinh · Tương Khắc</div>
+          <div id="batu-sinh-khac"></div>
+        </div>
+      </div>
+    </div>
+    <div id="batu-sub-than-vuong" class="hidden">
+      <div class="card">
+        <div class="card-title"><span class="han">强</span> Phân Tích Nhật Chủ</div>
+        <div id="batu-than-analysis"></div>
+      </div>
+    </div>
+    <div id="batu-sub-than-ki" class="hidden">
+      <div class="card">
+        <div class="card-title"><span class="han">用</span> Dụng Thần · Hỷ Thần · Kỵ Thần</div>
+        <div id="batu-dung-than"></div>
+      </div>
+    </div>
+    <div id="batu-sub-luan-bat-tu" class="hidden">
+      <div class="card">
+        <div class="card-title"><span class="han">斷</span> Luận Đoán Tổng Quát</div>
+        <div id="batu-luan-doan"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION: PHONG THỦY ══════════ -->
+<section id="sect-phongthuy" class="section">
+  <div class="grid-2">
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="han">黃</span> Giờ Hoàng Đạo / Hắc Đạo</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:14px">Chọn ngày để xem giờ tốt/xấu (không cần giờ thực)</p>
+        <div class="form-row">
+          <div class="form-group"><label>Ngày</label><input type="number" id="pt-day" placeholder="DD" min="1" max="31"></div>
+          <div class="form-group"><label>Tháng</label><input type="number" id="pt-month" placeholder="MM" min="1" max="12"></div>
+          <div class="form-group"><label>Năm</label><input type="number" id="pt-year" placeholder="YYYY" min="1900" max="2100"></div>
+        </div>
+        <button class="btn" onclick="doPhongThuy()">🌟 Xem Giờ Hoàng Đạo</button>
+        <div id="gio-hoang-dao" class="hidden">
+          <hr class="divider">
+          <p style="font-size:12px;color:var(--ink3);margin-bottom:10px">
+            Can ngày: <strong id="pt-can-ngay" style="color:var(--red)"></strong> —
+            Tháng âm: <strong id="pt-thang-am" style="color:var(--red)"></strong>
+          </p>
+          <div class="gio-grid" id="gio-grid"></div>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-title"><span class="han">直</span> Thập Nhị Trực Hôm Nay</div>
+        <table class="truc-table">
+          <thead>
+            <tr><th>Trực</th><th>Tốt cho</th><th>Xấu / Kiêng</th></tr>
+          </thead>
+          <tbody id="truc-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title"><span class="han">八卦</span> Hướng Tốt Xuất Hành</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:14px">
+          Dựa trên ngày đã nhập ở mục Giờ Hoàng Đạo
+        </p>
+        <div id="huong-grid" class="result-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-title"><span class="han">干支</span> Đổi Ngày Âm ↔ Dương</div>
+        <div class="form-row">
+          <div class="form-group"><label>Ngày Dương</label>
+            <input type="number" id="dc-d" placeholder="DD" min="1" max="31">
+          </div>
+          <div class="form-group"><label>Tháng</label>
+            <input type="number" id="dc-m" placeholder="MM" min="1" max="12">
+          </div>
+          <div class="form-group"><label>Năm</label>
+            <input type="number" id="dc-y" placeholder="YYYY" min="1900" max="2100">
+          </div>
+        </div>
+        <button class="btn btn-outline" onclick="doQuickConvert()">⇄ Đổi Nhanh</button>
+        <div id="quick-result" class="luan-giai-box mt-4 hidden"></div>
+      </div>
+      <div class="card mt-4">
+        <div class="card-title"><span class="han">行</span> Ngũ Hành Tương Sinh · Tương Khắc</div>
+        <div style="margin-bottom:12px">
+          <p style="font-size:13px;color:var(--ink2);line-height:1.8">
+            <strong style="color:#2D6A00">Mộc</strong> → sinh → <strong style="color:#B80000">Hỏa</strong> → sinh → <strong style="color:#7A5500">Thổ</strong> → sinh → <strong style="color:#555">Kim</strong> → sinh → <strong style="color:#004080">Thủy</strong> → sinh → <strong style="color:#2D6A00">Mộc</strong>
+          </p>
+          <p style="font-size:13px;color:var(--ink2);line-height:1.8;margin-top:6px">
+            <strong style="color:#2D6A00">Mộc</strong> ⚔️ khắc ⚔️ <strong style="color:#7A5500">Thổ</strong> ·
+            <strong style="color:#7A5500">Thổ</strong> ⚔️ khắc ⚔️ <strong style="color:#004080">Thủy</strong> ·
+            <strong style="color:#004080">Thủy</strong> ⚔️ khắc ⚔️ <strong style="color:#B80000">Hỏa</strong> ·
+            <strong style="color:#B80000">Hỏa</strong> ⚔️ khắc ⚔️ <strong style="color:#555">Kim</strong> ·
+            <strong style="color:#555">Kim</strong> ⚔️ khắc ⚔️ <strong style="color:#2D6A00">Mộc</strong>
+          </p>
+        </div>
+        <table class="truc-table">
+          <thead><tr><th>Hành</th><th>Màu sắc</th><th>Hướng</th><th>Mùa</th><th>Số</th></tr></thead>
+          <tbody>
+            <tr><td class="truc-name" style="color:#2D6A00">Mộc 木</td><td>Xanh lá</td><td>Đông</td><td>Xuân</td><td>3, 8</td></tr>
+            <tr class="truc-highlight"><td class="truc-name" style="color:#B80000">Hỏa 火</td><td>Đỏ, tím</td><td>Nam</td><td>Hạ</td><td>2, 7</td></tr>
+            <tr><td class="truc-name" style="color:#7A5500">Thổ 土</td><td>Vàng, nâu</td><td>Trung tâm</td><td>Cuối mùa</td><td>5, 10</td></tr>
+            <tr class="truc-highlight"><td class="truc-name" style="color:#555">Kim 金</td><td>Trắng, bạc</td><td>Tây</td><td>Thu</td><td>4, 9</td></tr>
+            <tr><td class="truc-name" style="color:#004080">Thủy 水</td><td>Đen, xanh đậm</td><td>Bắc</td><td>Đông</td><td>1, 6</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SECTION: VĂN KHẤN ══════════ -->
+<section id="sect-vankhan" class="section">
+
+  <!-- Hero nhỏ -->
+  <div style="background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 50%,#b45309 100%);padding:32px 20px 26px;text-align:center;border-radius:8px;margin-bottom:20px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:200px;opacity:0.04;color:#ffd700;pointer-events:none;">☸</div>
+    <h2 style="font-family:'Noto Serif',serif;font-size:clamp(20px,4vw,28px);color:#ffd700;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,0.3);margin-bottom:8px;">📜 Kho Văn Khấn Truyền Thống Việt Nam</h2>
+    <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:520px;margin:0 auto;">Tra cứu hơn 24 bài văn khấn chính thống — điền thông tin, xem trước và in ngay</p>
+  </div>
+
+  <!-- Tìm kiếm -->
+  <div style="max-width:600px;margin:0 auto 20px;">
+    <div style="display:flex;align-items:center;background:#fff;border:2px solid var(--border);border-radius:50px;padding:10px 20px;box-shadow:0 4px 16px var(--shadow);gap:10px;">
+      <span style="color:var(--red);font-size:18px;flex-shrink:0;">🔍</span>
+      <input type="text" id="vk-search" placeholder="Tìm bài văn khấn... (VD: giỗ, khai trương, thôi nôi...)"
+        style="border:none;outline:none;font-size:14px;font-family:inherit;color:var(--ink);flex:1;background:transparent;"
+        oninput="vkRenderCards()">
+    </div>
+  </div>
+
+  <!-- Danh mục -->
+  <div style="margin-bottom:8px;">
+    <p style="font-family:'Noto Serif',serif;font-size:16px;font-weight:700;color:var(--red);padding:0 0 10px;display:flex;align-items:center;gap:8px;">
+      <span style="display:inline-block;width:4px;height:18px;background:var(--red);border-radius:2px;"></span>Danh mục
+    </p>
+    <div id="vk-cat-grid" style="display:flex;flex-wrap:wrap;gap:8px;padding-bottom:16px;"></div>
+  </div>
+
+  <!-- Lưới bài khấn -->
+  <div>
+    <p style="font-family:'Noto Serif',serif;font-size:16px;font-weight:700;color:var(--red);padding:0 0 12px;display:flex;align-items:center;gap:8px;">
+      <span style="display:inline-block;width:4px;height:18px;background:var(--red);border-radius:2px;"></span>Các bài văn khấn
+    </p>
+    <div id="vk-card-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
+  </div>
+
+  <!-- ── CHI TIẾT (ẩn mặc định) ── -->
+  <div id="vk-detail" style="display:none;margin-top:24px;">
+
+    <!-- Thanh bước -->
+    <div id="vk-steps-bar" style="display:flex;background:#fff;border-bottom:2px solid var(--cream2);border-radius:10px 10px 0 0;box-shadow:0 2px 8px var(--shadow);overflow:hidden;">
+      <div class="vk-step vk-step-active" id="vk-step-1" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-size:13px;font-weight:500;border-bottom:3px solid var(--red);color:var(--red);">
+        <span style="width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">1</span>
+        <span class="vk-step-label">Nhập thông tin</span>
+      </div>
+      <div class="vk-step" id="vk-step-2" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-size:13px;font-weight:500;color:#aaa;border-bottom:3px solid transparent;">
+        <span id="vk-step2-num" style="width:26px;height:26px;border-radius:50%;background:#e5e7eb;color:#666;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">2</span>
+        <span class="vk-step-label">Xem trước</span>
+      </div>
+      <div class="vk-step" id="vk-step-3" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 10px;font-size:13px;font-weight:500;color:#aaa;border-bottom:3px solid transparent;">
+        <span id="vk-step3-num" style="width:26px;height:26px;border-radius:50%;background:#e5e7eb;color:#666;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;">3</span>
+        <span class="vk-step-label">In / Lưu</span>
+      </div>
+    </div>
+
+    <!-- Nội dung chi tiết -->
+    <div style="background:#fff;border-radius:0 0 10px 10px;box-shadow:0 4px 20px var(--shadow);padding:28px 30px 36px;">
+      <div id="vk-bai-title" style="font-family:'Noto Serif',serif;font-size:20px;font-weight:700;color:var(--red);margin-bottom:5px;"></div>
+      <div id="vk-bai-desc" style="color:var(--ink3);font-size:13px;margin-bottom:22px;"></div>
+
+      <!-- Bước 1: Form -->
+      <div id="vk-step-form">
+        <div id="vk-form-fields" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;"></div>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+          <button onclick="vkBackToList()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:#fff;color:var(--red);border:2px solid var(--red);transition:all 0.2s;" onmouseover="this.style.background='var(--cream2)'" onmouseout="this.style.background='#fff'">← Quay lại danh mục</button>
+          <button id="vk-btn-preview" disabled onclick="vkShowPreview()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--red);color:#fff;border:none;box-shadow:0 4px 14px rgba(139,0,0,0.3);transition:all 0.2s;">Xem trước bài khấn →</button>
+        </div>
+      </div>
+
+      <!-- Bước 2: Preview -->
+      <div id="vk-step-preview" style="display:none;">
+        <div id="vk-preview-content" style="background:var(--cream);border:2px solid var(--cream3);border-radius:10px;padding:28px;font-family:'Noto Serif',serif;font-size:14px;line-height:1.9;color:var(--ink);white-space:pre-line;box-shadow:inset 0 2px 8px rgba(0,0,0,0.04);"></div>
+        <div id="vk-note-box" style="display:none;margin-top:16px;padding:14px 18px;background:#fffbeb;border:1.5px solid var(--gold);border-radius:8px;font-size:13px;color:var(--ink2);line-height:1.7;"></div>
+        <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;">
+          <button onclick="vkBackToForm()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:#fff;color:var(--red);border:2px solid var(--red);transition:all 0.2s;" onmouseover="this.style.background='var(--cream2)'" onmouseout="this.style.background='#fff'">← Quay lại sửa</button>
+          <button onclick="vkDoPrint()" style="padding:11px 24px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;background:var(--gold);color:#fff;border:none;box-shadow:0 4px 14px rgba(184,134,11,0.3);transition:all 0.2s;">🖨 In / Xuất PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- VÙNG IN VĂN KHẤN -->
+<div id="vk-print-area" style="display:none;"></div>
+
+</main>
+
+<!-- Popup chi tiết cung -->
+<div class="popup-overlay" id="cung-popup" onclick="closePopup(event)">
+  <div class="popup-box">
+    <span class="popup-close" onclick="document.getElementById('cung-popup').classList.remove('open')">✕</span>
+    <h2 id="popup-title">—</h2>
+    <div id="popup-content"></div>
   </div>
 </div>
 
-<div class="container">
-  <p class="section-title">Danh mục</p>
-  <div class="category-grid" id="cat-grid"></div>
-
-  <p class="section-title">Các bài văn khấn</p>
-  <div class="card-grid" id="card-grid"></div>
+<!-- Loading overlay -->
+<div class="loading-overlay hidden" id="loading-overlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loading-text">Đang tính toán...</div>
 </div>
 
-<script src="js/van-khan-data.js"></script>
-<script src="js/app.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════
+// CORE DATA TABLES
+// ══════════════════════════════════════════════════════════
+
+const THIEN_CAN = ['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const DIA_CHI   = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const NGU_HANH_CAN = ['Mộc','Mộc','Hỏa','Hỏa','Thổ','Thổ','Kim','Kim','Thủy','Thủy'];
+const NGU_HANH_CHI = ['Thủy','Thổ','Mộc','Mộc','Thổ','Hỏa','Hỏa','Thổ','Kim','Kim','Thổ','Thủy'];
+const HAN_CAN   = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const HAN_CHI   = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+
+const NAP_AM_60 = [
+  'Kim','Kim','Hỏa','Hỏa','Mộc','Mộc','Thủy','Thủy','Thổ','Thổ',
+  'Thổ','Thổ','Kim','Kim','Hỏa','Hỏa','Mộc','Mộc','Thủy','Thủy',
+  'Thủy','Thủy','Thổ','Thổ','Kim','Kim','Hỏa','Hỏa','Mộc','Mộc',
+  'Mộc','Mộc','Thủy','Thủy','Thổ','Thổ','Kim','Kim','Hỏa','Hỏa',
+  'Hỏa','Hỏa','Mộc','Mộc','Thủy','Thủy','Thổ','Thổ','Kim','Kim',
+  'Kim','Kim','Hỏa','Hỏa','Mộc','Mộc','Thủy','Thủy','Thổ','Thổ'
+];
+
+const CUNG_NAMES = ['Mệnh','Phụ Mẫu','Phúc Đức','Điền Trạch','Quan Lộc','Nô Bộc','Thiên Di','Tật Ách','Tài Bạch','Tử Tức','Phu Thê','Huynh Đệ'];
+const DOW_NAMES = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+
+// Vị trí 12 cung trong grid (theo địa chi Tý=0..Hợi=11)
+// Chuẩn lá số Tử Vi: nhìn mặt trước, chiều ngược kim đồng hồ
+// Hàng trên:  Tỵ(5) Ngọ(6) Mùi(7) Thân(8)
+// Cột trái (trên→dưới): Thìn(4) Mão(3)   — cột trái đi XUỐNG
+// Cột phải (trên→dưới): Dậu(9)  Tuất(10) — cột phải đi XUỐNG
+// Hàng dưới: Dần(2) Sửu(1) Tý(0) Hợi(11)
+// Thứ tự render trong grid CSS 4×4 (bỏ qua 2×2 center):
+// pos 0-3: top row (trái→phải)
+// pos 4,5: cột trái (Thìn, Mão) — theo grid row 2,3 cột 1
+// pos 6,7: cột phải (Dậu, Tuất) — theo grid row 2,3 cột 4
+// pos 8-11: bottom row (trái→phải)
+const CUNG_GRID_ORDER = [
+  // top row: Tỵ(5) Ngọ(6) Mùi(7) Thân(8)
+  5, 6, 7, 8,
+  // left col top→down: Thìn(4), Mão(3)
+  // right col top→down: Dậu(9), Tuất(10)
+  // Interleaved: left4, right9, left3, right10
+  4, 9, 3, 10,
+  // bottom row trái→phải: Dần(2) Sửu(1) Tý(0) Hợi(11)
+  2, 1, 0, 11
+];
+
+// ══════════════════════════════════════════════════════════
+// LUNAR CALENDAR ALGORITHMS (Hồ Ngọc Đức + Jean Meeus)
+// ══════════════════════════════════════════════════════════
+
+function jdFromDate(d, m, y) {
+  const a = Math.floor((14 - m) / 12);
+  const yy = y + 4800 - a;
+  const mm = m + 12 * a - 3;
+  let jd = d + Math.floor((153*mm+2)/5) + 365*yy + Math.floor(yy/4) - Math.floor(yy/100) + Math.floor(yy/400) - 32045;
+  if (jd < 2299161) jd = d + Math.floor((153*mm+2)/5) + 365*yy + Math.floor(yy/4) - 32083;
+  return jd;
+}
+
+function jdToDate(jd) {
+  let a, b, c, d, e, m;
+  if (jd > 2299160) {
+    a = jd + 32044; b = Math.floor((4*a+3)/146097);
+    c = a - Math.floor((146097*b)/4);
+  } else { b = 0; c = jd + 32082; }
+  d = Math.floor((4*c+3)/1461);
+  e = c - Math.floor((1461*d)/4);
+  m = Math.floor((5*e+2)/153);
+  const day   = e - Math.floor((153*m+2)/5) + 1;
+  const month = m + 3 - 12*Math.floor(m/10);
+  const year  = 100*b + d - 4800 + Math.floor(m/10);
+  return [day, month, year];
+}
+
+function getNewMoonDay(k, tz) {
+  const DR = Math.PI/180;
+  const T = k/1236.85, T2 = T*T, T3 = T2*T;
+  let jd1 = 2415020.75933 + 29.53058868*k + 0.0001178*T2 - 0.000000155*T3
+            + 0.00033*Math.sin((166.56+132.87*T-0.009173*T2)*DR);
+  const M   = (357.5291+29.10535608*k-0.0000333*T2-0.00000347*T3)*DR;
+  const Mpr = (306.0253+385.81691806*k+0.0107306*T2+0.00001236*T3)*DR;
+  const F   = (21.2964+390.67050646*k-0.0016528*T2-0.00000239*T3)*DR;
+  let C1 = (0.1734-0.000393*T)*Math.sin(M)+0.0021*Math.sin(2*M)
+           -0.4068*Math.sin(Mpr)+0.0161*Math.sin(2*Mpr)-0.0004*Math.sin(3*Mpr)
+           +0.0104*Math.sin(2*F)-0.0051*Math.sin(M+Mpr)-0.0074*Math.sin(M-Mpr)
+           +0.0004*Math.sin(2*F+M)-0.0004*Math.sin(2*F-M)-0.0006*Math.sin(2*F+Mpr)
+           +0.0010*Math.sin(2*F-Mpr)+0.0005*Math.sin(M+2*Mpr);
+  const deltaT = 0.000325+0.000032*Math.sin((M+0.00038)*DR);
+  return Math.floor(jd1+C1-deltaT+0.5+tz/24);
+}
+
+function getSunLongitude(jdn, tz) {
+  const DR = Math.PI/180;
+  const T  = (jdn-2451545.5-tz/24)/36525;
+  const T2 = T*T;
+  let M = 357.52910 + 35999.05030*T - 0.0001559*T2 - 0.00000048*T2*T;
+  let L0= 280.46645 + 36000.76983*T + 0.0003032*T2;
+  let DL = (1.9146-0.004817*T-0.000014*T2)*Math.sin(M*DR)
+           + (0.019993-0.000101*T)*Math.sin(2*M*DR)
+           + 0.00029*Math.sin(3*M*DR);
+  let theta = L0 + DL;
+  const omega = 125.04-1934.136*T;
+  theta -= 0.00569 - 0.00478*Math.sin(omega*DR);
+  theta = theta - 360*Math.floor(theta/360);
+  if (theta < 0) theta += 360;
+  return Math.floor(theta/30);
+}
+
+function getLunarMonth11(y, tz) {
+  const off = jdFromDate(31, 12, y) - 2415021;
+  const k = Math.floor(off/29.530588853);
+  let nm = getNewMoonDay(k, tz);
+  const sunLong = getSunLongitude(nm, tz);
+  if (sunLong >= 9) nm = getNewMoonDay(k-1, tz);
+  return nm;
+}
+
+function getLeapMonthOffset(a11, tz) {
+  let k = Math.round((a11-2415021.076998695)/29.530588853);
+  let last = 0, i = 1, arc;
+  do {
+    last = arc;
+    i++;
+    arc = getSunLongitude(getNewMoonDay(k+i, tz), tz);
+  } while (arc !== last && i < 14);
+  return i-1;
+}
+
+function solar2Lunar(day, month, year, tz=7) {
+  const dayNumber = jdFromDate(day, month, year);
+  const k = Math.floor((dayNumber-2415021.076998695)/29.530588853);
+  let monthStart = getNewMoonDay(k+1, tz);
+  if (monthStart > dayNumber) monthStart = getNewMoonDay(k, tz);
+  let a11 = getLunarMonth11(year, tz);
+  let b11 = a11;
+  let lunarYear;
+  if (a11 >= monthStart) {
+    lunarYear = year;
+    a11 = getLunarMonth11(year-1, tz);
+  } else {
+    lunarYear = year+1;
+    b11 = getLunarMonth11(year+1, tz);
+  }
+  const lunarDay = dayNumber - monthStart + 1;
+  const diff = Math.floor((monthStart-a11)/29);
+  let isLeap = false;
+  let lunarMonth = diff + 11;
+  if (b11 - a11 > 365) {
+    const leapOff = getLeapMonthOffset(a11, tz);
+    const leapMonth = leapOff - 2;
+    if (diff >= leapOff-2) {
+      lunarMonth = diff + 10;
+      if (diff === leapOff-2) isLeap = true;
+    }
+  }
+  if (lunarMonth > 12) lunarMonth -= 12;
+  if (lunarMonth >= 11 && diff < 4) lunarYear -= 1;
+  return [lunarDay, lunarMonth, lunarYear, isLeap];
+}
+
+// ══════════════════════════════════════════════════════════
+// TỨ TRỤ ENGINE
+// ══════════════════════════════════════════════════════════
+
+function getNamCanChi(lunarYear) {
+  const can = ((lunarYear - 4) % 10 + 10) % 10;
+  const chi = ((lunarYear - 4) % 12 + 12) % 12;
+  return { canIdx: can, chiIdx: chi };
+}
+
+function getNgayCanChi(jd) {
+  const can = ((jd + 9) % 10 + 10) % 10;
+  const chi = ((jd + 1) % 12 + 12) % 12;
+  return { canIdx: can, chiIdx: chi };
+}
+
+function getThangCanChi(lunarMonth, namCanIdx, solarMonth, solarYear, tz) {
+  // Tháng tính theo tiết khí thực → dùng lunarMonth để xác định chi
+  const chiIdx = (lunarMonth + 1) % 12; // tháng 1 âm = Dần (2)
+  const BASE_THANG = [2, 4, 6, 8, 0]; // Giáp/Kỷ=Bính(2), Ất/Canh=Mậu(4), Bính/Tân=Canh(6), Đinh/Nhâm=Nhâm(8), Mậu/Quý=Giáp(0)
+  const base = BASE_THANG[namCanIdx % 5];
+  const canIdx = (base + lunarMonth - 1) % 10;
+  return { canIdx, chiIdx };
+}
+
+function getGioCanChi(gioChiIdx, ngayCanIdx) {
+  const BASE_GIO = [0, 2, 4, 6, 8];
+  const canIdx = (BASE_GIO[ngayCanIdx % 5] + gioChiIdx) % 10;
+  return { canIdx, chiIdx: gioChiIdx };
+}
+
+function getTuTru(day, month, year, gioChiIdx, tz=7) {
+  const jd = jdFromDate(day, month, year);
+  const [ld, lm, ly, isLeap] = solar2Lunar(day, month, year, tz);
+
+  const nam = getNamCanChi(ly);
+  const ngay = getNgayCanChi(jd);
+  const thang = getThangCanChi(lm, nam.canIdx, month, year, tz);
+  let gio = null;
+  if (gioChiIdx >= 0) gio = getGioCanChi(gioChiIdx, ngay.canIdx);
+
+  const napAmIdx = (nam.canIdx % 10) + (nam.chiIdx % 12);
+  const napAmKey = (nam.canIdx * 6 + Math.floor(nam.chiIdx / 2)) % 30;
+  const napAm = NAP_AM_60[napAmKey * 2];
+
+  return { nam, ngay, thang, gio, lunarDate: [ld, lm, ly, isLeap], jd, napAm };
+}
+
+// ══════════════════════════════════════════════════════════
+// TIẾT KHÍ
+// ══════════════════════════════════════════════════════════
+
+const TIET_KHI = ['Tiểu Hàn','Đại Hàn','Lập Xuân','Vũ Thủy','Kinh Trập','Xuân Phân',
+  'Thanh Minh','Cốc Vũ','Lập Hạ','Tiểu Mãn','Mang Chủng','Hạ Chí',
+  'Tiểu Thử','Đại Thử','Lập Thu','Xử Thử','Bạch Lộ','Thu Phân',
+  'Hàn Lộ','Sương Giáng','Lập Đông','Tiểu Tuyết','Đại Tuyết','Đông Chí'];
+
+function getSolarTermForDate(day, month, year) {
+  const jdn = jdFromDate(day, month, year);
+  const T = (jdn - 2451545.0) / 36525;
+  const sunLong = getSunLongitude(jdn, 7) * 30;
+  // approximate: find nearest tiết khí
+  const idx = Math.floor(((month - 1) * 2 + (day > 20 ? 1 : 0)) % 24);
+  return TIET_KHI[idx];
+}
+
+// ══════════════════════════════════════════════════════════
+// THẬP NHỊ TRỰC
+// ══════════════════════════════════════════════════════════
+
+const THAP_NHI_TRUC = [
+  { name: 'Kiến', tot: 'Xây dựng, khai trương, ký kết', xau: 'Tang lễ, đào đất' },
+  { name: 'Trừ',  tot: 'Chữa bệnh, dọn dẹp, tắm gội', xau: 'Cưới hỏi, xuất hành xa' },
+  { name: 'Mãn',  tot: 'Kinh doanh, mừng lễ, nhập kho', xau: 'Chôn cất, tang lễ' },
+  { name: 'Bình', tot: 'Giao tiếp, học tập, ký hợp đồng', xau: 'Thi cử trọng yếu' },
+  { name: 'Định', tot: 'Cưới hỏi, ký hợp đồng, định cư', xau: 'Xuất hành xa, đi thuyền' },
+  { name: 'Chấp', tot: 'Bảo dưỡng, sửa chữa, thu tiền', xau: 'Kinh doanh lớn, mở hàng' },
+  { name: 'Phá',  tot: 'Phá dỡ, dọn kho cũ', xau: '⚠️ Ngày xấu — kiêng mọi việc lớn' },
+  { name: 'Nguy', tot: 'Cúng lễ, cầu an, thiền định', xau: 'Leo trèo, đi xa, mạo hiểm' },
+  { name: 'Thành',tot: 'Khai trương, nhập học, ra mắt', xau: 'Không có kiêng lớn' },
+  { name: 'Thu',  tot: 'Thu tiền, giao thương, buôn bán', xau: 'Đào đất, xây móng' },
+  { name: 'Khai', tot: '✅ Tốt mọi việc — ngày đại cát', xau: 'Không có kiêng lớn' },
+  { name: 'Bế',   tot: 'Tang lễ, an táng, tích trữ', xau: 'Khai trương, cưới hỏi' },
+];
+
+function getTruc(lunarDay, lunarMonth) {
+  return (lunarDay + lunarMonth + 9) % 12;
+}
+
+// ══════════════════════════════════════════════════════════
+// GIỜ HOÀNG ĐẠO
+// ══════════════════════════════════════════════════════════
+
+// 5 pattern theo Can ngày (Giáp/Kỷ, Ất/Canh, Bính/Tân, Đinh/Nhâm, Mậu/Quý)
+const HOANG_DAO_PAT = [
+  [1,1,0,1,0,1,0,1,1,0,1,0], // Giáp/Kỷ
+  [0,1,1,0,1,0,1,0,1,1,0,1], // Ất/Canh
+  [1,0,1,1,0,1,0,1,0,1,1,0], // Bính/Tân
+  [0,1,0,1,1,0,1,0,1,0,1,1], // Đinh/Nhâm
+  [1,0,1,0,1,1,0,1,0,1,0,1], // Mậu/Quý
+];
+const GIO_TIMES = ['23-1','1-3','3-5','5-7','7-9','9-11','11-13','13-15','15-17','17-19','19-21','21-23'];
+
+// ══════════════════════════════════════════════════════════
+// TỬ VI ENGINE — AN SAO
+// ══════════════════════════════════════════════════════════
+
+// Hành cục lookup: [napAm][diaChi cung Mệnh] → số cục
+const HANH_CUC_MAP = {
+  'Thủy': { 0:2, 1:5, 2:3, 3:6, 4:4, 5:2, 6:5, 7:3, 8:6, 9:4, 10:2, 11:5 },
+  'Mộc':  { 0:3, 1:6, 2:4, 3:2, 4:5, 5:3, 6:6, 7:4, 8:2, 9:5, 10:3, 11:6 },
+  'Hỏa':  { 0:6, 1:4, 2:5, 3:3, 4:2, 5:6, 6:4, 7:5, 8:3, 9:2, 10:6, 11:4 },
+  'Kim':  { 0:4, 1:2, 2:6, 3:5, 4:3, 5:4, 6:2, 7:6, 8:5, 9:3, 10:4, 11:2 },
+  'Thổ':  { 0:5, 1:3, 2:2, 3:4, 4:6, 5:5, 6:3, 7:2, 8:4, 9:6, 10:5, 11:3 },
+};
+const CUC_NAME = { 2:'Thủy Nhị Cục', 3:'Mộc Tam Cục', 4:'Kim Tứ Cục', 5:'Thổ Ngũ Cục', 6:'Hỏa Lục Cục' };
+
+// Vị trí Tử Vi theo ngày âm và số cục
+function getTuViPos(ngayAm, cuc) {
+  // An Tử Vi: ngayAm chia cho cục, dư r
+  // r=0 → cung Ngọ (6); r>0 → tùy theo quy tắc an sao cổ điển
+  const r = ngayAm % cuc;
+  if (r === 0) return 6; // Ngọ
+  // An theo bảng chuẩn (tính từ Ngọ, lần lượt lên/xuống)
+  const lutPos = [
+    [6],              // cục 2 không dùng
+    [6,6,6,6,6,6],    // không có cục 3 ở đây
+    [6,7,5,8,4,9],    // cục 2: Ngọ, Mùi, Tỵ, Thân, Thìn, Dậu
+    [6,7,8,5,9,4,10,3,11,2,0,1], // cục 3
+    [6,7,8,9,5,10,4,11,3,0,2,1], // cục 4
+    [6,7,8,9,10,5,11,4,0,3,1,2], // cục 5
+    [6,7,8,9,10,11,5,0,4,1,3,2], // cục 6
+  ];
+  if (cuc === 2) return [6,7,5,8,4,9][r] || 6;
+  if (cuc === 3) return [6,7,8,5,9,4,10,3,11,2,0,1][r] || 6;
+  if (cuc === 4) return [6,7,8,9,5,10,4,11,3,0,2,1][r] || 6;
+  if (cuc === 5) return [6,7,8,9,10,5,11,4,0,3,1,2][r] || 6;
+  if (cuc === 6) return [6,7,8,9,10,11,5,0,4,1,3,2][r] || 6;
+  return 6;
+}
+
+// Offset nhóm Tử Vi từ vị trí Tử Vi (mod 12)
+const TUVI_GROUP = [
+  { name: 'Tử Vi',    off: 0, cls: 'bac-dau' },
+  { name: 'Thiên Cơ', off: -1, cls: 'bac-dau' },
+  { name: 'Thái Dương',off:-3, cls: 'bac-dau' },
+  { name: 'Vũ Khúc',  off: -4, cls: 'bac-dau' },
+  { name: 'Thiên Đồng',off:-5, cls: 'bac-dau' },
+  { name: 'Liêm Trinh',off:-8, cls: 'bac-dau' },
+];
+
+// Offset nhóm Thiên Phủ từ vị trí Tử Vi (Phủ đối xứng qua Ngọ-Tý)
+const PHU_GROUP = [
+  { name: 'Thiên Phủ',  off: 0,  cls: 'nam-dau' },
+  { name: 'Thái Âm',    off: 1,  cls: 'nam-dau' },
+  { name: 'Tham Lang',  off: 2,  cls: 'nam-dau' },
+  { name: 'Cự Môn',     off: 3,  cls: 'nam-dau' },
+  { name: 'Thiên Tướng',off: 4,  cls: 'nam-dau' },
+  { name: 'Thiên Lương',off: 5,  cls: 'nam-dau' },
+  { name: 'Thất Sát',   off: 6,  cls: 'nam-dau' },
+  { name: 'Phá Quân',   off: 10, cls: 'nam-dau' },
+];
+
+function getThienPhuPos(tuviPos) {
+  // Thiên Phủ đối xứng với Tử Vi qua trục Ngọ(6)-Tý(0)
+  // Khoảng cách từ Tử Vi đến Ngọ → đặt Phủ cách Ngọ ngược lại
+  const dist = (6 - tuviPos + 12) % 12;
+  return (6 + dist) % 12;
+}
+
+// Tứ Hóa (Lộc/Quyền/Khoa/Kỵ) theo Can năm
+const TU_HOA = {
+  'Giáp': { Lộc:'Liêm Trinh', Quyền:'Phá Quân', Khoa:'Vũ Khúc',   Kỵ:'Thái Dương' },
+  'Ất':   { Lộc:'Thiên Cơ',   Quyền:'Thiên Lương',Khoa:'Tử Vi',    Kỵ:'Thái Âm' },
+  'Bính': { Lộc:'Thiên Đồng', Quyền:'Thiên Cơ',  Khoa:'Văn Xương', Kỵ:'Liêm Trinh' },
+  'Đinh': { Lộc:'Thái Âm',    Quyền:'Thiên Đồng', Khoa:'Thiên Cơ', Kỵ:'Cự Môn' },
+  'Mậu':  { Lộc:'Tham Lang',  Quyền:'Thái Âm',   Khoa:'Hữu Bật',  Kỵ:'Thiên Cơ' },
+  'Kỷ':   { Lộc:'Vũ Khúc',    Quyền:'Tham Lang', Khoa:'Thiên Lương',Kỵ:'Văn Khúc' },
+  'Canh': { Lộc:'Thái Dương',  Quyền:'Vũ Khúc',  Khoa:'Thái Âm',  Kỵ:'Thiên Đồng' },
+  'Tân':  { Lộc:'Cự Môn',     Quyền:'Thái Dương', Khoa:'Văn Khúc', Kỵ:'Văn Xương' },
+  'Nhâm': { Lộc:'Thiên Lương', Quyền:'Tử Vi',    Khoa:'Tả Phụ',   Kỵ:'Vũ Khúc' },
+  'Quý':  { Lộc:'Phá Quân',   Quyền:'Cự Môn',   Khoa:'Thái Âm',  Kỵ:'Tham Lang' },
+};
+
+// Sao theo giờ sinh (Văn Xương, Văn Khúc)
+const SAO_GIO = {
+  'Văn Xương': [5,6,7,8,9,10,11,0,1,2,3,4],
+  'Văn Khúc':  [3,2,1,0,11,10,9,8,7,6,5,4],
+};
+// Sao theo tháng sinh (Tả Phụ, Hữu Bật)
+const SAO_THANG = {
+  'Tả Phụ':  [11,0,1,2,3,4,5,6,7,8,9,10],
+  'Hữu Bật': [3,2,1,0,11,10,9,8,7,6,5,4],
+};
+// Thiên Khôi / Thiên Việt theo Can ngày
+const KHOI_VIET = {
+  0: { Khôi:1, Việt:7 },  // Giáp
+  1: { Khôi:0, Việt:8 },  // Ất
+  2: { Khôi:11,Việt:9 },  // Bính
+  3: { Khôi:11,Việt:9 },  // Đinh
+  4: { Khôi:1, Việt:7 },  // Mậu
+  5: { Khôi:0, Việt:8 },  // Kỷ
+  6: { Khôi:6, Việt:2 },  // Canh
+  7: { Khôi:5, Việt:3 },  // Tân
+  8: { Khôi:3, Việt:5 },  // Nhâm
+  9: { Khôi:3, Việt:5 },  // Quý
+};
+// Thiên Mã theo chi năm (Dần Ngọ Tuất→Thân, Thân Tý Thìn→Dần, Tỵ Dậu Sửu→Hợi, Hợi Mão Mùi→Tỵ)
+const THIEN_MA = [8,5,2,11,8,5,2,11,2,11,8,5]; // index theo chi năm
+// Hỏa Tinh theo chi năm (Dương Nam/Âm Nữ)
+const HOA_TINH_DN = [2,3,4,5,6,7,8,9,10,11,0,1];
+const HOA_TINH_AN = [9,10,11,0,1,2,3,4,5,6,7,8];
+// Linh Tinh (ngược Hỏa Tinh)
+const LINH_TINH_DN = [10,11,0,1,2,3,4,5,6,7,8,9];
+const LINH_TINH_AN = [3,4,5,6,7,8,9,10,11,0,1,2];
+
+// Vòng Trường Sinh (12 sao theo Hành Cục và chiều)
+const TRUONG_SINH_12 = ['Trường Sinh','Mộc Dục','Quan Đới','Lâm Quan','Đế Vượng','Suy','Bệnh','Tử','Mộ','Tuyệt','Thai','Dưỡng'];
+const TS_START = { 2: 8, 3: 11, 4: 5, 5: 8, 6: 2 }; // Thủy→Thân(8), Mộc→Hợi(11), Kim→Tỵ(5), Thổ→Thân(8), Hỏa→Dần(2)
+
+// ── Địa Không / Địa Kiếp (theo giờ sinh)
+// Địa Không: giờ Tý=Hợi, Sửu=Tuất, Dần=Dậu... (đối xứng)
+const DIA_KHONG_GIO = [11,10,9,8,7,6,5,4,3,2,1,0];
+// Địa Kiếp: giờ Tý=Sửu, Sửu=Dần... (liền tiếp +1)
+const DIA_KIEP_GIO  = [1,2,3,4,5,6,7,8,9,10,11,0];
+
+// ── Tuần / Triệt (theo Can Chi năm)
+// Tuần: mỗi 10 năm Giáp→Quý có 1 cặp địa chi bị Tuần Không
+// 60 hoa giáp → 6 tuần, mỗi tuần 2 chi bị tuần
+const TUAN_TRIET_MAP = {
+  // canNam(0-9) → [tuần chi idx1, tuần chi idx2, triệt chi idx1, triệt chi idx2]
+  // Giáp Tý tuần (Tý..Dậu → Tuất Hợi tuần không)
+  0:  { tuan:[10,11], triet:[0,1]  }, // Giáp: Tuất Hợi tuần không, Tý Sửu triệt
+  1:  { tuan:[8,9],   triet:[2,3]  }, // Ất:   Thân Dậu tuần không
+  2:  { tuan:[6,7],   triet:[4,5]  }, // Bính: Ngọ Mùi tuần không
+  3:  { tuan:[4,5],   triet:[6,7]  }, // Đinh: Thìn Tỵ tuần không
+  4:  { tuan:[2,3],   triet:[8,9]  }, // Mậu: Dần Mão tuần không
+  5:  { tuan:[0,1],   triet:[10,11]}, // Kỷ:  Tý Sửu tuần không
+  6:  { tuan:[10,11], triet:[0,1]  }, // Canh
+  7:  { tuan:[8,9],   triet:[2,3]  }, // Tân
+  8:  { tuan:[6,7],   triet:[4,5]  }, // Nhâm
+  9:  { tuan:[4,5],   triet:[6,7]  }, // Quý
+};
+
+function getLaSo(day, month, year, gioChiIdx, gioiTinh, tz=7) {
+  const tt = getTuTru(day, month, year, gioChiIdx, tz);
+  const [ld, lm, ly, isLeap] = tt.lunarDate;
+  const namCC = tt.nam;
+  const ngayCC = tt.ngay;
+
+  // Cung Mệnh
+  const cungMenhChi = ((14 - lm + (gioChiIdx >= 0 ? gioChiIdx : 0)) % 12 + 12) % 12;
+  const cungThanChi = ((gioChiIdx >= 0 ? gioChiIdx : 0) + lm + 2) % 12;
+
+  // Hành cục
+  const napAm = tt.napAm;
+  let cucNum = (HANH_CUC_MAP[napAm] || HANH_CUC_MAP['Thổ'])[cungMenhChi] || 3;
+  const cucName = CUC_NAME[cucNum];
+
+  // An sao Tử Vi
+  const tuviPos = getTuViPos(ld, cucNum);
+  const phuPos  = getThienPhuPos(tuviPos);
+
+  // Build cung array [12 cung], mỗi cung có list sao
+  const cungs = Array.from({length:12}, (_,i) => ({
+    diaChi: i, stars: [], cungName: '', isLeap: false,
+  }));
+
+  // Đặt tên cung theo Mệnh cung
+  for (let i=0; i<12; i++) {
+    const idx = (cungMenhChi + i) % 12;
+    cungs[idx].cungName = CUNG_NAMES[i];
+  }
+
+  // An 14 chính diệu
+  TUVI_GROUP.forEach(s => {
+    const pos = ((tuviPos + s.off) % 12 + 12) % 12;
+    cungs[pos].stars.push({ name: s.name, cls: s.cls, hoa: '' });
+  });
+  PHU_GROUP.forEach(s => {
+    const pos = ((phuPos + s.off) % 12 + 12) % 12;
+    cungs[pos].stars.push({ name: s.name, cls: s.cls, hoa: '' });
+  });
+
+  // Tứ Hóa
+  const canNam = THIEN_CAN[namCC.canIdx];
+  const tuHoa = TU_HOA[canNam] || {};
+  cungs.forEach(cung => {
+    cung.stars.forEach(s => {
+      if (tuHoa.Lộc === s.name)    s.hoa = 'Lộc';
+      if (tuHoa.Quyền === s.name)  s.hoa = 'Quyền';
+      if (tuHoa.Khoa === s.name)   s.hoa = 'Khoa';
+      if (tuHoa.Kỵ === s.name)     s.hoa = 'Kỵ';
+    });
+  });
+
+  // Sao theo giờ
+  if (gioChiIdx >= 0) {
+    cungs[SAO_GIO['Văn Xương'][gioChiIdx]].stars.push({name:'Văn Xương',cls:'van-xuong',hoa:''});
+    cungs[SAO_GIO['Văn Khúc'][gioChiIdx]].stars.push({name:'Văn Khúc',cls:'van-xuong',hoa:''});
+  }
+  // Sao theo tháng
+  cungs[SAO_THANG['Tả Phụ'][lm-1]].stars.push({name:'Tả Phụ',cls:'ta-phu',hoa:tuHoa.Khoa==='Tả Phụ'?'Khoa':''});
+  cungs[SAO_THANG['Hữu Bật'][lm-1]].stars.push({name:'Hữu Bật',cls:'ta-phu',hoa:''});
+  // Thiên Khôi / Thiên Việt
+  const kv = KHOI_VIET[ngayCC.canIdx] || {Khôi:0, Việt:0};
+  cungs[kv.Khôi].stars.push({name:'Thiên Khôi',cls:'khoi-viet',hoa:''});
+  cungs[kv.Việt].stars.push({name:'Thiên Việt',cls:'khoi-viet',hoa:''});
+  // Thiên Mã
+  cungs[THIEN_MA[namCC.chiIdx]].stars.push({name:'Thiên Mã',cls:'hoa-tinh',hoa:''});
+  // Hỏa Tinh / Linh Tinh
+  const isDuongNam = (namCC.canIdx % 2 === 0 && gioiTinh === 'nam') || (namCC.canIdx % 2 === 1 && gioiTinh === 'nu');
+  cungs[isDuongNam ? HOA_TINH_DN[namCC.chiIdx] : HOA_TINH_AN[namCC.chiIdx]].stars.push({name:'Hỏa Tinh',cls:'hoa-tinh',hoa:''});
+  cungs[isDuongNam ? LINH_TINH_DN[namCC.chiIdx] : LINH_TINH_AN[namCC.chiIdx]].stars.push({name:'Linh Tinh',cls:'hoa-tinh',hoa:''});
+
+  // ── Địa Không / Địa Kiếp (theo giờ sinh)
+  if (gioChiIdx >= 0) {
+    cungs[DIA_KHONG_GIO[gioChiIdx]].stars.push({name:'Địa Không', cls:'dia-khong', hoa:''});
+    cungs[DIA_KIEP_GIO[gioChiIdx]].stars.push({name:'Địa Kiếp',  cls:'dia-kiep',  hoa:''});
+  }
+
+  // ── Tuần / Triệt (theo Can năm)
+  const tt_map = TUAN_TRIET_MAP[namCC.canIdx];
+  if (tt_map) {
+    tt_map.tuan.forEach(ci  => cungs[ci].stars.push({name:'Tuần',   cls:'tuan-triet', hoa:''}));
+    tt_map.triet.forEach(ci => cungs[ci].stars.push({name:'Triệt',  cls:'tuan-triet', hoa:''}));
+  }
+
+  // Vòng Trường Sinh
+  const tsStart = TS_START[cucNum] || 8;
+  for (let i=0; i<12; i++) {
+    const pos = isDuongNam ? (tsStart + i) % 12 : (tsStart - i + 12) % 12;
+    cungs[pos].stars.push({name: TRUONG_SINH_12[i], cls:'truong-sinh', hoa:''});
+  }
+
+  // Đại Vận
+  const daiVans = [];
+  for (let i=0; i<12; i++) {
+    const tuoi = cucNum + i*10;
+    const cung = isDuongNam ? (cungMenhChi + 1 + i) % 12 : (cungMenhChi - 1 - i + 120) % 12;
+    daiVans.push({ tuoiStart: tuoi, tuoiEnd: tuoi+9, cung, canChi: getCungCanChi(cung, namCC.canIdx) });
+  }
+
+  return { cungs, cungMenhChi, cungThanChi, cucNum, cucName, napAm, tuviPos, phuPos, daiVans, tt, namCC, gioiTinh, isDuongNam };
+}
+
+function getCungCanChi(chiIdx, namCanIdx) {
+  // Can chi của cung (dùng cho Đại Vận)
+  const BASE = [2,4,6,8,0]; // Dần bắt đầu từ Bính nếu năm Giáp/Kỷ
+  const base = BASE[namCanIdx % 5];
+  // chi offset từ Dần (chiIdx 2 = Dần)
+  const offset = (chiIdx - 2 + 12) % 12;
+  const canIdx = (base + offset) % 10;
+  return THIEN_CAN[canIdx] + ' ' + DIA_CHI[chiIdx];
+}
+
+// ══════════════════════════════════════════════════════════
+// LUẬN GIẢI
+// ══════════════════════════════════════════════════════════
+
+const SAO_DESC = {
+  'Tử Vi':     { tc:'Đế tinh — uy quyền, lãnh đạo bẩm sinh, được nhiều người kính phục. Có chí lớn và khát vọng thành công.', tai:'Phú quý, tài lộc từ quyền lực và địa vị xã hội.', hn:'Vợ/chồng hiền hòa, gia đạo thuận. Dễ làm chủ trong hôn nhân.', sn:'Phù hợp chính trị, quản lý, lãnh đạo tập thể. Thích chỉ huy.' },
+  'Thiên Cơ':  { tc:'Thông minh nhanh nhạy, biến hóa linh hoạt. Hay thay đổi, giỏi mưu lược và phân tích.', tai:'Tài lộc từ trí tuệ, tư vấn, nghiên cứu.', hn:'Hôn nhân nhiều thay đổi, cần chọn người kiên định.', sn:'Phù hợp kỹ thuật, nghiên cứu, lập kế hoạch.' },
+  'Thái Dương': { tc:'Quang minh rộng rãi, hào phóng, nhiệt tình. Sáng tạo và truyền cảm hứng cho người khác.', tai:'Tài lộc từ công việc ngoài trời, kinh doanh, xuất ngoại.', hn:'Hy sinh cho gia đình, dễ bị lợi dụng.', sn:'Phù hợp chính trị, ngoại giao, giảng dạy.' },
+  'Vũ Khúc':   { tc:'Cứng rắn quyết đoán, ý chí mạnh mẽ. Thực tế, không ưa hoa mỹ. Tự lực cánh sinh.', tai:'Có khả năng tích lũy tài sản tốt, giỏi kinh doanh và tài chính.', hn:'Lạnh lùng trong tình cảm, cần thời gian mở lòng.', sn:'Phù hợp tài chính, quân sự, kỹ thuật nặng.' },
+  'Thiên Đồng': { tc:'Nhân hậu ôn hòa, thích hưởng thụ cuộc sống. Có phúc phận, dễ được người giúp đỡ.', tai:'Tài lộc đến nhẹ nhàng, không vất vả nhiều.', hn:'Hôn nhân ổn định, gia đạo êm ấm.', sn:'Phù hợp phúc lợi, giáo dục, nghệ thuật.' },
+  'Liêm Trinh': { tc:'Đa tài đa nghệ nhưng khắc khổ. Có tính bướng bỉnh và cầu toàn. Phải qua nhiều thử thách.', tai:'Tài lộc thất thường, lên xuống theo vận hạn.', hn:'Hôn nhân lắm trắc trở, cần kiên nhẫn.', sn:'Phù hợp luật pháp, y tế, nghiên cứu.' },
+  'Thiên Phủ':  { tc:'Ổn định bảo thủ, thận trọng cẩn thận. Giỏi tích lũy và gìn giữ. Có uy tín trong cộng đồng.', tai:'Tích lũy tài sản bền vững, không giàu đột biến nhưng ổn định lâu dài.', hn:'Hôn nhân bền vững, gia đình giàu có.', sn:'Phù hợp quản lý tài sản, công chức, bất động sản.' },
+  'Thái Âm':   { tc:'Nhu mì tinh tế, giàu cảm xúc và trực giác. Thích nghệ thuật và cái đẹp. Dễ bị ảnh hưởng môi trường.', tai:'Tài lộc từ bất động sản, phụ nữ, nông nghiệp.', hn:'Hôn nhân cần người mạnh mẽ bù đắp. Đa cảm trong tình yêu.', sn:'Phù hợp nghệ thuật, bất động sản, dịch vụ phụ nữ.' },
+  'Tham Lang':  { tc:'Đa dục đa năng, thích hưởng lạc và khám phá. Có sức hút cá nhân mạnh. Biến hóa khôn lường.', tai:'Tài lộc đến nhiều lĩnh vực, nhưng chi tiêu cũng nhiều.', hn:'Đào hoa, hôn nhân nhiều biến động. Cần cẩn thận ngoại tình.', sn:'Phù hợp giải trí, kinh doanh đa dạng, marketing.' },
+  'Cự Môn':    { tc:'Biện tài, ăn nói lưu loát. Hay tranh luận và nghi ngờ. Thích phân tích sự thật.', tai:'Tài lộc từ ngôn ngữ, truyền thông, tư vấn pháp lý.', hn:'Hay xảy ra xung đột khẩu tài trong hôn nhân. Cần học lắng nghe.', sn:'Phù hợp luật sư, giảng dạy, truyền thông, chính trị.' },
+  'Thiên Tướng':{ tc:'Chính trực công bằng, có uy quyền. Là người thực thi pháp luật và kỷ cương.', tai:'Tài lộc từ địa vị và quyền lực trong tổ chức.', hn:'Hôn nhân ổn định nhưng đôi khi cứng nhắc.', sn:'Phù hợp hành chính, tư pháp, quân đội.' },
+  'Thiên Lương':{ tc:'Cao thượng từ thiện, hay giúp đỡ người khác. Trọng đạo đức và tâm linh.', tai:'Tài lộc không lớn nhưng phúc lộc bền dài.', hn:'Hôn nhân bền vững, có lòng thủy chung.', sn:'Phù hợp y tế, từ thiện, tôn giáo, giáo dục.' },
+  'Thất Sát':  { tc:'Mạnh mẽ quyết liệt, thích mạo hiểm và chinh phục. Khó kiểm soát nhưng tài năng xuất chúng.', tai:'Tài lộc từ liều lĩnh kinh doanh, đầu tư mạo hiểm.', hn:'Hôn nhân nhiều xung đột, cần học nhẫn nhịn.', sn:'Phù hợp quân sự, thám hiểm, khởi nghiệp.' },
+  'Phá Quân':  { tc:'Phá cũ lập mới, cách mạng, không thích an phận. Thích đập phá và xây dựng lại từ đầu.', tai:'Tài lộc thất thường, giàu rồi lại phá tan.', hn:'Hôn nhân nhiều biến cố, dễ ly hôn nếu không cố gắng.', sn:'Phù hợp khởi nghiệp, cải cách, sáng tạo.' },
+};
+
+// ══════════════════════════════════════════════════════════
+// UI STATE
+// ══════════════════════════════════════════════════════════
+
+let calYear, calMonth, calSelected;
+let laSoData = null;
+
+function init() {
+  const now = new Date();
+  calYear  = now.getFullYear();
+  calMonth = now.getMonth() + 1;
+  calSelected = { d: now.getDate(), m: now.getMonth()+1, y: now.getFullYear() };
+
+  // Set input defaults for today
+  document.getElementById('inp-day').value   = now.getDate();
+  document.getElementById('inp-month').value = now.getMonth()+1;
+  document.getElementById('inp-year').value  = now.getFullYear();
+  document.getElementById('pt-day').value    = now.getDate();
+  document.getElementById('pt-month').value  = now.getMonth()+1;
+  document.getElementById('pt-year').value   = now.getFullYear();
+  document.getElementById('dc-d').value      = now.getDate();
+  document.getElementById('dc-m').value      = now.getMonth()+1;
+  document.getElementById('dc-y').value      = now.getFullYear();
+
+  renderCalendar();
+  updateDayInfo(calSelected.d, calSelected.m, calSelected.y);
+  renderTrucTable();
+}
+
+// ══════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════
+
+function showSection(name) {
+  if(name==='vankhan') setTimeout(initVanKhan,50);
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sect-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showSubTab(name) {
+  document.querySelectorAll('[id^=sub-]').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sub-' + name).classList.remove('hidden');
+  event.target.classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════
+// CALENDAR RENDER
+// ══════════════════════════════════════════════════════════
+
+function renderCalendar() {
+  const tz = 7;
+  const grid = document.getElementById('cal-grid');
+  const title = document.getElementById('cal-title');
+  const now = new Date();
+
+  title.textContent = `Tháng ${calMonth} / ${calYear}`;
+  grid.innerHTML = '';
+
+  const dayNames = ['CN','T2','T3','T4','T5','T6','T7'];
+  dayNames.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'cal-day-name';
+    el.textContent = n;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(calYear, calMonth-1, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth, 0).getDate();
+  const prevDays = new Date(calYear, calMonth-1, 0).getDate();
+
+  for (let i=0; i<firstDay; i++) {
+    const d = prevDays - firstDay + 1 + i;
+    const el = createCalDay(d, calMonth-1||12, calMonth===1?calYear-1:calYear, true, tz);
+    grid.appendChild(el);
+  }
+  for (let d=1; d<=daysInMonth; d++) {
+    const el = createCalDay(d, calMonth, calYear, false, tz);
+    if (d===now.getDate() && calMonth===now.getMonth()+1 && calYear===now.getFullYear())
+      el.classList.add('today');
+    if (d===calSelected.d && calMonth===calSelected.m && calYear===calSelected.y)
+      el.classList.add('selected');
+    grid.appendChild(el);
+  }
+  const rem = (firstDay + daysInMonth) % 7;
+  if (rem > 0) {
+    for (let d=1; d<=7-rem; d++) {
+      const el = createCalDay(d, calMonth%12+1, calMonth===12?calYear+1:calYear, true, tz);
+      grid.appendChild(el);
+    }
+  }
+}
+
+function createCalDay(d, m, y, isOther, tz) {
+  const el = document.createElement('div');
+  el.className = 'cal-day' + (isOther ? ' other-month' : '');
+  try {
+    const [ld, lm, ly, isLeap] = solar2Lunar(d, m, y, tz);
+    const lunarLabel = ld === 1 ? `${ld}/${lm}` : `${ld}`;
+    el.innerHTML = `<span class="solar-day">${d}</span><span class="lunar-day">${lunarLabel}${isLeap?'n':''}</span>`;
+    // Check giờ Hoàng Đạo (dùng Can ngày)
+    const jd = jdFromDate(d, m, y);
+    const ngay = getNgayCanChi(jd);
+    const pat = HOANG_DAO_PAT[ngay.canIdx % 5];
+    if (pat && pat.some(v => v)) el.classList.add('hoang-dao');
+  } catch(e) {
+    el.innerHTML = `<span class="solar-day">${d}</span>`;
+  }
+  el.onclick = () => {
+    document.querySelectorAll('.cal-day.selected').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    calSelected = { d, m, y };
+    updateDayInfo(d, m, y);
+  };
+  return el;
+}
+
+function calPrev() {
+  calMonth--; if (calMonth < 1) { calMonth = 12; calYear--; }
+  renderCalendar();
+}
+function calNext() {
+  calMonth++; if (calMonth > 12) { calMonth = 1; calYear++; }
+  renderCalendar();
+}
+
+// ══════════════════════════════════════════════════════════
+// DAY INFO
+// ══════════════════════════════════════════════════════════
+
+function updateDayInfo(d, m, y) {
+  const tz = 7;
+  const [ld, lm, ly, isLeap] = solar2Lunar(d, m, y, tz);
+  const jd = jdFromDate(d, m, y);
+  const ngay = getNgayCanChi(jd);
+  const namCC = getNamCanChi(ly);
+  const thangCC = getThangCanChi(lm, namCC.canIdx, m, y, tz);
+  const trucIdx = getTruc(ld, lm);
+  const dow = new Date(y, m-1, d).getDay();
+
+  document.getElementById('di-solar').textContent = `${d}/${m}`;
+  document.getElementById('di-dow').textContent = DOW_NAMES[dow] + ', ' + y;
+  document.getElementById('di-am').textContent = `Ngày ${ld} tháng ${lm}${isLeap?'(nhuận)':''} năm ${THIEN_CAN[namCC.canIdx]} ${DIA_CHI[namCC.chiIdx]} (${ly})`;
+  document.getElementById('di-ngay').textContent = `${THIEN_CAN[ngay.canIdx]} ${DIA_CHI[ngay.chiIdx]}`;
+  document.getElementById('di-tiet').textContent = getSolarTermForDate(d, m, y);
+  document.getElementById('di-truc').textContent = THAP_NHI_TRUC[trucIdx].name;
+}
+
+// ══════════════════════════════════════════════════════════
+// CONVERT / LOOKUP
+// ══════════════════════════════════════════════════════════
+
+function doConvert() {
+  const d = +document.getElementById('inp-day').value;
+  const m = +document.getElementById('inp-month').value;
+  const y = +document.getElementById('inp-year').value;
+  const tz = +document.getElementById('inp-tz').value;
+  if (!d||!m||!y) { alert('Vui lòng nhập đầy đủ ngày tháng năm'); return; }
+
+  try {
+    const [ld, lm, ly, isLeap] = solar2Lunar(d, m, y, tz);
+    const jd = jdFromDate(d, m, y);
+    const ngay = getNgayCanChi(jd);
+    const namCC = getNamCanChi(ly);
+    const thangCC = getThangCanChi(lm, namCC.canIdx, m, y, tz);
+    const trucIdx = getTruc(ld, lm);
+    const truc = THAP_NHI_TRUC[trucIdx];
+
+    document.getElementById('r-am-lich').textContent = `${ld}/${lm}/${ly}`;
+    document.getElementById('r-leap').textContent = isLeap ? '(Tháng nhuận)' : '';
+    document.getElementById('r-ngay-cc').textContent = `${THIEN_CAN[ngay.canIdx]} ${DIA_CHI[ngay.chiIdx]}`;
+    document.getElementById('r-thang-cc').textContent = `${THIEN_CAN[thangCC.canIdx]} ${DIA_CHI[thangCC.chiIdx]}`;
+    document.getElementById('r-nam-cc').textContent = `${THIEN_CAN[namCC.canIdx]} ${DIA_CHI[namCC.chiIdx]}`;
+    document.getElementById('r-tiet-khi').textContent = getSolarTermForDate(d, m, y);
+    document.getElementById('r-truc').textContent = truc.name;
+    document.getElementById('r-nhan-dinh').textContent =
+      `${truc.name}: Tốt cho ${truc.tot}. Kiêng kỵ: ${truc.xau}. Ngũ Hành ngày: ${NGU_HANH_CAN[ngay.canIdx]}.`;
+    document.getElementById('result-lich').classList.remove('hidden');
+  } catch(e) {
+    alert('Lỗi tính toán: ' + e.message);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// TỬ VI — LẬP LÁ SỐ
+// ══════════════════════════════════════════════════════════
+
+function lapLaSo() {
+  const d  = +document.getElementById('tv-day').value;
+  const m  = +document.getElementById('tv-month').value;
+  const y  = +document.getElementById('tv-year').value;
+  const gio = +document.getElementById('tv-gio').value;
+  const tz  = +document.getElementById('tv-tz').value;
+  const gt  = document.querySelector('input[name=gt]:checked').value;
+  const ten = document.getElementById('tv-ten').value || 'Chủ Nhân';
+
+  if (!d||!m||!y) { alert('Vui lòng nhập ngày tháng năm sinh'); return; }
+
+  showLoading('Đang an sao, lập lá số...');
+  setTimeout(() => {
+  try {
+    laSoData = getLaSo(d, m, y, gio, gt, tz);
+    laSoData.ten = ten;
+    laSoData.day = d; laSoData.month = m; laSoData.year = y;
+    laSoData.gio = gio;
+
+    renderTuTru(laSoData);
+    renderLaSo(laSoData);
+    renderDaiVan(laSoData);
+    renderLuanGiai(laSoData);
+
+    document.getElementById('tuvi-summary').style.display = '';
+    document.getElementById('tuvi-main').style.display = '';
+  } catch(e) {
+    alert('Lỗi lập lá số: ' + e.message + '\n' + e.stack);
+  } finally {
+    hideLoading();
+  }
+  }, 80);
+}
+
+function renderTuTru(data) {
+  const tt = data.tt;
+  const [ld, lm, ly, isLeap] = tt.lunarDate;
+  const namCC = tt.nam;
+  const ngayCC = tt.ngay;
+  const thangCC = tt.thang;
+  const gioCC = tt.gio;
+
+  function tru(title, canIdx, chiIdx) {
+    const nh = NGU_HANH_CAN[canIdx];
+    return `<div class="tru-box">
+      <div class="tru-title">${title}</div>
+      <div class="can-chi">${HAN_CAN[canIdx]}${HAN_CHI[chiIdx]}</div>
+      <div class="can-chi-viet">${THIEN_CAN[canIdx]} ${DIA_CHI[chiIdx]}</div>
+      <div class="ngu-hanh ngu-hanh-${nh.toLowerCase()}">${nh} / ${NGU_HANH_CHI[chiIdx]}</div>
+    </div>`;
+  }
+
+  let html = tru('Trụ Năm', namCC.canIdx, namCC.chiIdx);
+  html += tru('Trụ Tháng', thangCC.canIdx, thangCC.chiIdx);
+  html += tru('Trụ Ngày', ngayCC.canIdx, ngayCC.chiIdx);
+  if (gioCC) html += tru('Trụ Giờ', gioCC.canIdx, gioCC.chiIdx);
+  else html += `<div class="tru-box" style="opacity:0.5"><div class="tru-title">Trụ Giờ</div><div class="can-chi">?</div><div class="can-chi-viet">Không rõ giờ</div></div>`;
+
+  document.getElementById('tu-tru-display').innerHTML = html;
+
+  const menhChi = data.cungMenhChi;
+  const thanChi = data.cungThanChi;
+  document.getElementById('menh-info-grid').innerHTML = `
+    <div class="result-box highlight">
+      <div class="rb-label">Âm Lịch</div>
+      <div class="rb-value">${ld}/${lm}${isLeap?'(n)':''}</div>
+      <div class="rb-sub">Năm ${THIEN_CAN[namCC.canIdx]} ${DIA_CHI[namCC.chiIdx]} (${ly})</div>
+    </div>
+    <div class="result-box">
+      <div class="rb-label">Cung Mệnh</div>
+      <div class="rb-value text-red">${DIA_CHI[menhChi]}</div>
+      <div class="rb-sub">${CUNG_NAMES[0]} — ${data.cucName}</div>
+    </div>
+    <div class="result-box">
+      <div class="rb-label">Cung Thân</div>
+      <div class="rb-value">${DIA_CHI[thanChi]}</div>
+      <div class="rb-sub">Nạp Âm: ${data.napAm}</div>
+    </div>
+    <div class="result-box">
+      <div class="rb-label">Hành Cục</div>
+      <div class="rb-value text-red">${data.cucNum}</div>
+      <div class="rb-sub">${data.cucName} — ĐV bắt đầu tuổi ${data.cucNum}</div>
+    </div>`;
+}
+
+function renderLaSo(data) {
+  const grid = document.getElementById('tuvi-grid');
+  grid.innerHTML = '';
+
+  // Center
+  const center = document.createElement('div');
+  center.className = 'tuvi-center';
+  const [ld, lm, ly] = data.tt.lunarDate;
+  const namCC = data.tt.nam;
+  const now = new Date();
+  const age = now.getFullYear() - data.year + 1;
+  // Current Đại Vận
+  const curDV = data.daiVans.find(dv => age >= dv.tuoiStart && age <= dv.tuoiEnd);
+
+  center.innerHTML = `
+    <div class="la-so-title">命盤</div>
+    <div class="chu-nhan">${data.ten}</div>
+    <div class="tu-tru">${data.year}.${data.month}.${data.day}</div>
+    <div class="hanh-cuc">
+      <strong>${data.cucName}</strong><br>
+      Mệnh: <strong>${DIA_CHI[data.cungMenhChi]}</strong> · Thân: <strong>${DIA_CHI[data.cungThanChi]}</strong><br>
+      ${curDV ? `<span style="color:var(--gold);font-size:11px">Đại Vận: Tuổi ${curDV.tuoiStart}–${curDV.tuoiEnd} · ${DIA_CHI[curDV.cung]}</span>` : ''}
+    </div>`;
+  grid.style.position = 'relative';
+
+  // Render 12 cung theo layout
+  CUNG_GRID_ORDER.forEach((chiIdx, pos) => {
+    const cung = data.cungs[chiIdx];
+    const isMenh = chiIdx === data.cungMenhChi;
+    const isThan = chiIdx === data.cungThanChi;
+    const curDVCung = data.daiVans.find(dv => { const a = now.getFullYear() - data.year + 1; return a >= dv.tuoiStart && a <= dv.tuoiEnd && dv.cung === chiIdx; });
+
+    const el = document.createElement('div');
+    el.className = 'tuvi-cung' + (isMenh ? ' menh-cung' : '') + (isThan ? ' than-cung' : '') + (curDVCung ? ' active-van' : '');
+
+    let saoHtml = '<div class="sao-list">';
+    cung.stars.forEach(s => {
+      const hoa = s.hoa ? `<span class="sao ${s.hoa.toLowerCase()}">${s.hoa}</span>` : '';
+      saoHtml += `<span class="sao ${s.cls}">${s.name}${s.hoa ? ' ●'+s.hoa[0] : ''}</span>`;
+    });
+    saoHtml += '</div>';
+
+    // Đại Vận info
+    const dvInfo = data.daiVans.filter(dv => dv.cung === chiIdx).map(dv => `${dv.tuoiStart}-${dv.tuoiEnd}`).join(' ');
+
+    el.innerHTML = `
+      ${isMenh ? '<span class="cung-menh-badge">Mệnh</span>' : ''}
+      ${isThan && !isMenh ? '<span class="cung-menh-badge" style="background:var(--gold);color:var(--ink)">Thân</span>' : ''}
+      <div class="cung-name">${cung.cungName}</div>
+      <div class="cung-diachi">${DIA_CHI[chiIdx]}</div>
+      ${saoHtml}
+      ${dvInfo ? `<div class="van-info">${dvInfo}</div>` : ''}`;
+    el.onclick = () => showCungPopup(cung, isMenh, chiIdx, data);
+    grid.appendChild(el);
+
+    // Insert center block vào đúng vị trí 2×2 giữa lá số
+    // Grid layout: 4 top (pos 0-3), rồi left[0] + right[0] (pos 4,5), CENTER, left[1] + right[1] (pos 6,7), 4 bottom (pos 8-11)
+    // Sau pos 5 (index 5) tức là sau khi append phần tử thứ 6 (0-based)
+    if (pos === 5) grid.appendChild(center);
+  });
+}
+
+function showCungPopup(cung, isMenh, chiIdx, data) {
+  const popup = document.getElementById('cung-popup');
+  document.getElementById('popup-title').textContent = `Cung ${cung.cungName} — ${DIA_CHI[chiIdx]}`;
+
+  let html = `<p style="font-size:12px;color:var(--ink3);margin-bottom:12px">Các sao trong cung:</p>`;
+
+  // Sao chính
+  const chinhDieu = cung.stars.filter(s => s.cls === 'bac-dau' || s.cls === 'nam-dau');
+  if (chinhDieu.length) {
+    html += `<div style="margin-bottom:12px">`;
+    chinhDieu.forEach(s => {
+      const desc = SAO_DESC[s.name];
+      html += `<div style="margin-bottom:10px">
+        <div style="font-family:'Noto Serif',serif;font-weight:700;color:var(--red);font-size:14px">${s.name}${s.hoa ? ` — Hóa ${s.hoa}` : ''}</div>`;
+      if (desc) {
+        html += `<p style="font-size:12px;color:var(--ink2);margin:4px 0 0;line-height:1.6">${desc.tc}</p>`;
+        if (cung.cungName === 'Mệnh') html += `<p style="font-size:12px;color:var(--ink3);margin:2px 0 0">💼 ${desc.sn}</p>`;
+        if (cung.cungName === 'Phu Thê') html += `<p style="font-size:12px;color:var(--ink3);margin:2px 0 0">💑 ${desc.hn}</p>`;
+        if (cung.cungName === 'Tài Bạch') html += `<p style="font-size:12px;color:var(--ink3);margin:2px 0 0">💰 ${desc.tai}</p>`;
+      }
+      html += `</div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Phụ tinh
+  const phuTinh = cung.stars.filter(s => !['bac-dau','nam-dau'].includes(s.cls));
+  if (phuTinh.length) {
+    html += `<div style="border-top:1px solid var(--cream3);padding-top:10px;margin-top:6px">
+      <p style="font-size:11px;color:var(--ink3);margin-bottom:6px;font-weight:600">PHỤ TINH</p>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">`;
+    phuTinh.forEach(s => {
+      if (s.cls !== 'truong-sinh')
+        html += `<span class="tag tag-gold">${s.name}</span>`;
+    });
+    html += '</div></div>';
+  }
+
+  document.getElementById('popup-content').innerHTML = html;
+  popup.classList.add('open');
+}
+
+function closePopup(e) {
+  if (e.target === document.getElementById('cung-popup'))
+    document.getElementById('cung-popup').classList.remove('open');
+}
+
+function renderDaiVan(data) {
+  const now = new Date();
+  const age = now.getFullYear() - data.year + 1;
+  let html = '';
+  data.daiVans.slice(0, 10).forEach(dv => {
+    const isCur = age >= dv.tuoiStart && age <= dv.tuoiEnd;
+    html += `<div class="dv-item${isCur ? ' current' : ''}">
+      <div class="dv-age">Tuổi ${dv.tuoiStart}–${dv.tuoiEnd}${isCur ? ' ★' : ''}</div>
+      <div class="dv-cung">${DIA_CHI[dv.cung]}</div>
+      <div class="dv-cc">${dv.canChi}</div>
+    </div>`;
+  });
+  document.getElementById('dai-van-list').innerHTML = html;
+
+  // Tiểu Vận: mỗi năm trong Đại Vận chạy 1 tiểu vận
+  const curDV = data.daiVans.find(dv => age >= dv.tuoiStart && age <= dv.tuoiEnd);
+  if (curDV) {
+    const birthYear = data.year;
+    let tvHtml = `<div class="tieu-van-wrap">
+      <div class="tieu-van-title">⏱ Tiểu Vận — Đại Vận Hiện Tại (Tuổi ${curDV.tuoiStart}–${curDV.tuoiEnd} · ${curDV.canChi})</div>
+      <div class="tv-grid">`;
+
+    for (let i = 0; i < 10; i++) {
+      const tvAge = curDV.tuoiStart + i;
+      const tvYear = birthYear + tvAge - 1;
+      // Tiểu Vận đi theo chiều Đại Vận, bắt đầu từ cung Đại Vận
+      const tvCungChi = data.isDuongNam
+        ? (curDV.cung + i) % 12
+        : (curDV.cung - i + 120) % 12;
+      const tvCC = getCungCanChi(tvCungChi, data.namCC.canIdx);
+      const isCurTV = now.getFullYear() === tvYear;
+      tvHtml += `<div class="tv-item${isCurTV ? ' tv-cur' : ''}">
+        <div class="tv-age">Tuổi ${tvAge}${isCurTV ? ' ★' : ''} (${tvYear})</div>
+        <div class="tv-cc">${tvCC}</div>
+      </div>`;
+    }
+    tvHtml += '</div></div>';
+    document.getElementById('dai-van-list').innerHTML += tvHtml;
+  }
+}
+
+function renderLuanGiai(data) {
+  const menhCung = data.cungs[data.cungMenhChi];
+  const chinhDieu = menhCung.stars.filter(s => s.cls === 'bac-dau' || s.cls === 'nam-dau');
+  const namCC = data.tt.nam;
+  const tt = data.tt;
+
+  let html = '';
+
+  // Tổng quát
+  html += `<div class="luan-giai-box" style="margin-bottom:14px">
+    <h3>⭐ Cung Mệnh — ${DIA_CHI[data.cungMenhChi]}</h3>
+    <p>Hành Cục <strong>${data.cucName}</strong>. Nạp Âm năm sinh: <strong>${data.napAm}</strong>. 
+    Cung Thân tại <strong>${DIA_CHI[data.cungThanChi]}</strong>. 
+    Đại Vận khởi hành từ tuổi <strong>${data.cucNum}</strong>.</p>
+  </div>`;
+
+  // Tứ Trụ Bát Tự summary
+  const score = getNguHanhStrength([tt.nam, tt.thang, tt.ngay, tt.gio]);
+  const nhChu = NGU_HANH_CAN[tt.ngay.canIdx];
+  const total = Object.values(score).reduce((a,b)=>a+b,0)||1;
+  const isVuong = (score[nhChu]||0)/total >= 0.3;
+  const dungThan = isVuong ? TUONG_KHAC[nhChu] : Object.keys(TUONG_SINH).find(k=>TUONG_SINH[k]===nhChu);
+
+  html += `<div class="luan-giai-box" style="margin-bottom:14px">
+    <h3>🏮 Tứ Trụ Bát Tự</h3>
+    <p>
+      Tứ Trụ: <strong>${THIEN_CAN[tt.nam.canIdx]} ${DIA_CHI[tt.nam.chiIdx]}</strong> · 
+      <strong>${THIEN_CAN[tt.thang.canIdx]} ${DIA_CHI[tt.thang.chiIdx]}</strong> · 
+      <strong>${THIEN_CAN[tt.ngay.canIdx]} ${DIA_CHI[tt.ngay.chiIdx]}</strong> · 
+      <strong>${tt.gio ? THIEN_CAN[tt.gio.canIdx]+' '+DIA_CHI[tt.gio.chiIdx] : '?'}</strong>
+    </p>
+    <p style="margin-top:6px">
+      Nhật Chủ hành <strong style="color:${NGU_HANH_COLORS[nhChu]}">${nhChu}</strong> — Thân <strong>${isVuong?'Vượng':'Nhược'}</strong>.
+      Dụng Thần: <strong style="color:${NGU_HANH_COLORS[dungThan]||'var(--red)'}">${dungThan||'—'}</strong>.
+    </p>
+    <p style="margin-top:6px;font-size:12px;color:var(--ink3)">
+      Phân tích chi tiết Tứ Trụ: xem tab <strong>🏮 Tứ Trụ</strong> trên menu.
+    </p>
+  </div>`;
+
+  if (chinhDieu.length === 0) {
+    html += `<div class="luan-giai-box"><h3>🔮 Tính Cách</h3>
+      <p>Cung Mệnh vô chính diệu (không có chính tinh). Tính cách chịu ảnh hưởng mạnh từ các cung lân cận và sao phụ. Cần xem tam hợp để luận đầy đủ.</p>
+    </div>`;
+  } else {
+    chinhDieu.forEach(s => {
+      const desc = SAO_DESC[s.name];
+      if (!desc) return;
+      html += `<div class="luan-giai-box" style="margin-bottom:12px">
+        <h3>🌟 ${s.name}${s.hoa ? ` — Hóa ${s.hoa}` : ''} tại Cung Mệnh</h3>
+        <p><strong>Tính cách:</strong> ${desc.tc}</p>
+        <p style="margin-top:8px"><strong>Sự nghiệp:</strong> ${desc.sn}</p>
+        <p style="margin-top:8px"><strong>Tài lộc:</strong> ${desc.tai}</p>
+        <p style="margin-top:8px"><strong>Hôn nhân:</strong> ${desc.hn}</p>
+      </div>`;
+    });
+  }
+
+  // Tứ Hóa summary
+  const canNam = THIEN_CAN[namCC.canIdx];
+  const tuHoa = TU_HOA[canNam] || {};
+  html += `<div class="luan-giai-box">
+    <h3>☯ Tứ Hóa Năm ${canNam}</h3>
+    <p>
+      Hóa <strong style="color:var(--red)">Lộc</strong>: ${tuHoa.Lộc || '—'} · 
+      Hóa <strong style="color:var(--gold)">Quyền</strong>: ${tuHoa.Quyền || '—'} · 
+      Hóa <strong style="color:var(--tuvi-b)">Khoa</strong>: ${tuHoa.Khoa || '—'} · 
+      Hóa <strong>Kỵ</strong>: ${tuHoa.Kỵ || '—'}
+    </p>
+  </div>`;
+
+  document.getElementById('luan-giai-content').innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════
+// PHONG THỦY
+// ══════════════════════════════════════════════════════════
+
+function doPhongThuy() {
+  const d = +document.getElementById('pt-day').value;
+  const m = +document.getElementById('pt-month').value;
+  const y = +document.getElementById('pt-year').value;
+  if (!d||!m||!y) { alert('Vui lòng nhập ngày'); return; }
+
+  const [ld, lm, ly, isLeap] = solar2Lunar(d, m, y, 7);
+  const jd = jdFromDate(d, m, y);
+  const ngay = getNgayCanChi(jd);
+  const canIdx = ngay.canIdx;
+  const pat = HOANG_DAO_PAT[canIdx % 5];
+
+  document.getElementById('pt-can-ngay').textContent = THIEN_CAN[canIdx] + ' ' + DIA_CHI[ngay.chiIdx];
+  document.getElementById('pt-thang-am').textContent = `Tháng ${lm} / ${ly}`;
+
+  const gioGrid = document.getElementById('gio-grid');
+  gioGrid.innerHTML = '';
+  DIA_CHI.forEach((chi, i) => {
+    const isHD = pat[i] === 1;
+    const el = document.createElement('div');
+    el.className = 'gio-item ' + (isHD ? 'hoang' : 'hac');
+    el.innerHTML = `<div class="gio-chi">${chi}</div>
+      <div class="gio-time">${GIO_TIMES[i]}h</div>
+      <div class="gio-badge">${isHD ? '★ Hoàng Đạo' : '✕ Hắc Đạo'}</div>`;
+    gioGrid.appendChild(el);
+  });
+
+  document.getElementById('gio-hoang-dao').classList.remove('hidden');
+  renderHuongXuatHanh(canIdx, ngay.chiIdx, lm);
+}
+
+function renderHuongXuatHanh(canIdx, chiIdx, lm) {
+  // Simplified: Hỷ Thần, Tài Thần, Cát Thần directions
+  const HUONG = ['Đông Bắc','Bắc','Tây Bắc','Tây','Tây Nam','Nam','Đông Nam','Đông','Trung Tâm'];
+  const HUONG_CAT_PATTERN = [
+    // [canIdx % 5] → [ĐB, B, TB, T, TN, N, ĐN, Đ, TT]
+    [2,0,1,0,1,2,0,1,0], // Giáp/Kỷ
+    [0,1,2,0,1,0,2,1,0], // Ất/Canh
+    [1,2,0,1,0,1,0,2,0], // Bính/Tân
+    [0,0,1,2,0,1,1,0,2], // Đinh/Nhâm
+    [1,0,0,1,2,0,1,0,2], // Mậu/Quý
+  ];
+  const LABELS = ['⚠️ Hung','✅ Cát','🔥 Đại Cát'];
+  const COLORS = ['#fee2e2','#dcfce7','#fef9c3'];
+
+  const pat = HUONG_CAT_PATTERN[canIdx % 5];
+  const grid = document.getElementById('huong-grid');
+  grid.innerHTML = '';
+  HUONG.forEach((h, i) => {
+    const lv = pat[i];
+    const el = document.createElement('div');
+    el.className = 'result-box';
+    el.style.background = COLORS[lv];
+    el.style.textAlign = 'center';
+    el.innerHTML = `<div class="rb-label">${h}</div><div class="rb-value" style="font-size:15px">${LABELS[lv]}</div>`;
+    grid.appendChild(el);
+  });
+}
+
+function renderTrucTable() {
+  const tbody = document.getElementById('truc-tbody');
+  tbody.innerHTML = '';
+  THAP_NHI_TRUC.forEach((t, i) => {
+    const tr = document.createElement('tr');
+    if (i % 2 === 0) tr.className = 'truc-highlight';
+    tr.innerHTML = `<td class="truc-name">${t.name}</td>
+      <td class="tot">${t.tot}</td>
+      <td class="xau">${t.xau}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function doQuickConvert() {
+  const d = +document.getElementById('dc-d').value;
+  const m = +document.getElementById('dc-m').value;
+  const y = +document.getElementById('dc-y').value;
+  if (!d||!m||!y) return;
+  const [ld, lm, ly, isLeap] = solar2Lunar(d, m, y, 7);
+  const jd = jdFromDate(d, m, y);
+  const ngay = getNgayCanChi(jd);
+  const namCC = getNamCanChi(ly);
+  const el = document.getElementById('quick-result');
+  el.innerHTML = `<h3>📅 Kết Quả Đổi Lịch</h3>
+    <p>Dương: <strong>${d}/${m}/${y}</strong> → Âm: <strong>${ld}/${lm}${isLeap?'(nhuận)':''}/${ly}</strong></p>
+    <p>Can Chi ngày: <strong>${THIEN_CAN[ngay.canIdx]} ${DIA_CHI[ngay.chiIdx]}</strong> · Năm: <strong>${THIEN_CAN[namCC.canIdx]} ${DIA_CHI[namCC.chiIdx]}</strong></p>`;
+  el.classList.remove('hidden');
+}
+
+// ══════════════════════════════════════════════════════════
+// LOADING HELPERS
+// ══════════════════════════════════════════════════════════
+
+function showLoading(msg='Đang tính toán...') {
+  document.getElementById('loading-text').textContent = msg;
+  document.getElementById('loading-overlay').classList.remove('hidden');
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.add('hidden');
+}
+
+// ══════════════════════════════════════════════════════════
+// TỨ TRỤ BÁT TỰ — PHÂN TÍCH ĐẦY ĐỦ
+// ══════════════════════════════════════════════════════════
+
+const NGU_HANH_COLORS = {
+  'Mộc': '#2D6A00', 'Hỏa': '#B80000', 'Thổ': '#7A5500', 'Kim': '#555555', 'Thủy': '#004080'
+};
+const NGU_HANH_BG = {
+  'Mộc': 'rgba(45,106,0,0.12)', 'Hỏa': 'rgba(184,0,0,0.12)',
+  'Thổ': 'rgba(122,85,0,0.12)', 'Kim': 'rgba(85,85,85,0.12)', 'Thủy': 'rgba(0,64,128,0.12)'
+};
+
+// Tương sinh: Mộc→Hỏa→Thổ→Kim→Thủy→Mộc
+const TUONG_SINH = { 'Mộc':'Hỏa','Hỏa':'Thổ','Thổ':'Kim','Kim':'Thủy','Thủy':'Mộc' };
+// Tương khắc: Mộc→Thổ, Thổ→Thủy, Thủy→Hỏa, Hỏa→Kim, Kim→Mộc
+const TUONG_KHAC = { 'Mộc':'Thổ','Thổ':'Thủy','Thủy':'Hỏa','Hỏa':'Kim','Kim':'Mộc' };
+
+function getNguHanhStrength(trus) {
+  const score = { Mộc:0, Hỏa:0, Thổ:0, Kim:0, Thủy:0 };
+  trus.forEach((t, i) => {
+    if (!t) return;
+    const w = i === 2 ? 2 : 1; // Trụ Ngày (Nhật Chủ) tính đôi
+    score[NGU_HANH_CAN[t.canIdx]] = (score[NGU_HANH_CAN[t.canIdx]] || 0) + w;
+    score[NGU_HANH_CHI[t.chiIdx]] = (score[NGU_HANH_CHI[t.chiIdx]] || 0) + 1;
+  });
+  return score;
+}
+
+function renderBatuDisplay(tt) {
+  function tru(title, canIdx, chiIdx) {
+    const nhCan = NGU_HANH_CAN[canIdx], nhChi = NGU_HANH_CHI[chiIdx];
+    return `<div class="tru-box">
+      <div class="tru-title">${title}</div>
+      <div class="can-chi">${HAN_CAN[canIdx]}${HAN_CHI[chiIdx]}</div>
+      <div class="can-chi-viet">${THIEN_CAN[canIdx]} ${DIA_CHI[chiIdx]}</div>
+      <div class="ngu-hanh ngu-hanh-${nhCan.toLowerCase()}">${nhCan} / ${nhChi}</div>
+    </div>`;
+  }
+  let html = tru('Trụ Năm', tt.nam.canIdx, tt.nam.chiIdx);
+  html += tru('Trụ Tháng', tt.thang.canIdx, tt.thang.chiIdx);
+  html += tru('Trụ Ngày', tt.ngay.canIdx, tt.ngay.chiIdx);
+  if (tt.gio) html += tru('Trụ Giờ', tt.gio.canIdx, tt.gio.chiIdx);
+  else html += `<div class="tru-box" style="opacity:0.4"><div class="tru-title">Trụ Giờ</div><div class="can-chi">?</div></div>`;
+  document.getElementById('batu-display').innerHTML = html;
+}
+
+function renderNguHanhBars(score) {
+  const total = Object.values(score).reduce((a,b)=>a+b,0) || 1;
+  const ORDER = ['Mộc','Hỏa','Thổ','Kim','Thủy'];
+  let html = '';
+  ORDER.forEach(h => {
+    const v = score[h] || 0;
+    const pct = Math.round(v / total * 100);
+    html += `<div class="hanh-bar-row">
+      <div class="hanh-bar-label" style="color:${NGU_HANH_COLORS[h]}">${h}</div>
+      <div class="hanh-bar-track">
+        <div class="hanh-bar-fill" style="width:${pct}%;background:${NGU_HANH_COLORS[h]}"></div>
+      </div>
+      <div class="hanh-bar-count">${v} điểm</div>
+    </div>`;
+  });
+  document.getElementById('batu-hanh-bars').innerHTML = html;
+}
+
+function renderSinhKhac(score) {
+  const ORDER = ['Mộc','Hỏa','Thổ','Kim','Thủy'];
+  let sinhHtml = '', khacHtml = '';
+  ORDER.forEach(h => {
+    const sinhTarget = TUONG_SINH[h];
+    const khacTarget = TUONG_KHAC[h];
+    const s1 = score[h] || 0, s2sinh = score[sinhTarget] || 0, s2khac = score[khacTarget] || 0;
+    if (s1 > 0) {
+      sinhHtml += `<div class="sk-item sk-sinh">
+        <span style="color:${NGU_HANH_COLORS[h]};font-weight:700">${h}</span> 
+        sinh <span style="color:${NGU_HANH_COLORS[sinhTarget]};font-weight:700">${sinhTarget}</span>
+        ${s1>0&&s2sinh>0 ? '✅ Tương hỗ' : s1>s2sinh ? '→ Vượng sinh' : '→ Yếu sinh'}
+      </div>`;
+      khacHtml += `<div class="sk-item sk-khac">
+        <span style="color:${NGU_HANH_COLORS[h]};font-weight:700">${h}</span> 
+        khắc <span style="color:${NGU_HANH_COLORS[khacTarget]};font-weight:700">${khacTarget}</span>
+        ${s1>s2khac ? '⚔️ Khắc mạnh' : s1<s2khac ? '→ Bị chế' : '→ Cân bằng'}
+      </div>`;
+    }
+  });
+  document.getElementById('batu-sinh-khac').innerHTML = `
+    <div class="sk-grid">
+      <div class="sk-box"><div class="sk-title">🌱 Tương Sinh</div>${sinhHtml}</div>
+      <div class="sk-box"><div class="sk-title">⚔️ Tương Khắc</div>${khacHtml}</div>
+    </div>
+    <div class="luan-giai-box mt-4" style="margin-top:14px">
+      <h3>📋 Nguyên Lý</h3>
+      <p><strong style="color:#2D6A00">Mộc</strong> sinh <strong style="color:#B80000">Hỏa</strong> → <strong style="color:#B80000">Hỏa</strong> sinh <strong style="color:#7A5500">Thổ</strong> → <strong style="color:#7A5500">Thổ</strong> sinh <strong style="color:#555">Kim</strong> → <strong style="color:#555">Kim</strong> sinh <strong style="color:#004080">Thủy</strong> → <strong style="color:#004080">Thủy</strong> sinh <strong style="color:#2D6A00">Mộc</strong></p>
+      <p style="margin-top:6px"><strong style="color:#2D6A00">Mộc</strong> khắc <strong style="color:#7A5500">Thổ</strong> · <strong style="color:#7A5500">Thổ</strong> khắc <strong style="color:#004080">Thủy</strong> · <strong style="color:#004080">Thủy</strong> khắc <strong style="color:#B80000">Hỏa</strong> · <strong style="color:#B80000">Hỏa</strong> khắc <strong style="color:#555">Kim</strong> · <strong style="color:#555">Kim</strong> khắc <strong style="color:#2D6A00">Mộc</strong></p>
+    </div>`;
+}
+
+function renderThanAnalysis(tt, score) {
+  const nhChu = NGU_HANH_CAN[tt.ngay.canIdx];
+  const thuanHanh = ['Mộc','Hỏa','Thổ','Kim','Thủy'];
+  const nhChuScore = score[nhChu] || 0;
+  const total = Object.values(score).reduce((a,b)=>a+b,0) || 1;
+  const pct = nhChuScore / total;
+  const isVuong = pct >= 0.3;
+  const isTrung = pct >= 0.2 && pct < 0.3;
+
+  const STATUS = isVuong ? '⚡ Thân Vượng' : isTrung ? '⚖️ Thân Trung Bình' : '🌙 Thân Nhược';
+  const STATUS_COLOR = isVuong ? 'var(--red)' : isTrung ? 'var(--gold)' : '#003366';
+
+  document.getElementById('batu-than-analysis').innerHTML = `
+    <div class="luan-giai-box">
+      <h3>☀️ Nhật Chủ: <span style="color:${NGU_HANH_COLORS[nhChu]}">${THIEN_CAN[tt.ngay.canIdx]} (${nhChu})</span></h3>
+      <p>Điểm Nhật Chủ: <strong>${nhChuScore}</strong> / ${total} tổng điểm 
+         → <strong style="color:${STATUS_COLOR}">${STATUS}</strong></p>
+      <p style="margin-top:8px">
+        ${isVuong
+          ? `Thân Vượng: Hành ${nhChu} quá mạnh. Cần các hành tương khắc (${TUONG_KHAC[nhChu]}) và tiết khí (${TUONG_SINH[nhChu]}) làm Dụng Thần để điều tiết.`
+          : `Thân Nhược/Trung: Hành ${nhChu} chưa đủ mạnh. Cần được trợ giúp bởi hành tương sinh (${Object.keys(TUONG_SINH).find(k=>TUONG_SINH[k]===nhChu)}) làm Dụng Thần.`
+        }
+      </p>
+    </div>
+    <div class="result-grid mt-4" style="margin-top:14px">
+      ${thuanHanh.map(h => `
+        <div class="result-box" style="background:${NGU_HANH_BG[h]};border-color:${NGU_HANH_COLORS[h]}22">
+          <div class="rb-label" style="color:${NGU_HANH_COLORS[h]}">${h}</div>
+          <div class="rb-value" style="color:${NGU_HANH_COLORS[h]};font-size:16px">${score[h]||0} điểm</div>
+          <div class="rb-sub">${Math.round((score[h]||0)/total*100)}%</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function renderDungThan(tt, score) {
+  const nhChu = NGU_HANH_CAN[tt.ngay.canIdx];
+  const total = Object.values(score).reduce((a,b)=>a+b,0)||1;
+  const isVuong = (score[nhChu]||0)/total >= 0.3;
+
+  // Dụng thần: nếu vượng → cần hành khắc bản thân & tiết khí; nếu nhược → cần hành sinh bản thân
+  let dungThan, hyThan, kyThan, bieuThan;
+  if (isVuong) {
+    dungThan = TUONG_KHAC[nhChu]; // hành khắc nhật chủ
+    hyThan   = Object.keys(TUONG_SINH).find(k=>TUONG_SINH[k]===nhChu); // hành bị nhật chủ tiết
+    kyThan   = Object.keys(TUONG_SINH).find(k=>TUONG_SINH[k]===nhChu) || nhChu;
+    bieuThan = TUONG_SINH[nhChu]; // hành nhật chủ sinh ra
+  } else {
+    dungThan = Object.keys(TUONG_SINH).find(k=>TUONG_SINH[k]===nhChu); // hành sinh nhật chủ
+    hyThan   = nhChu; // cùng hành
+    kyThan   = TUONG_KHAC[nhChu];
+    bieuThan = TUONG_SINH[nhChu];
+  }
+
+  document.getElementById('batu-dung-than').innerHTML = `
+    <div class="result-grid">
+      <div class="result-box highlight">
+        <div class="rb-label">⚙️ Dụng Thần</div>
+        <div class="rb-value" style="color:${NGU_HANH_COLORS[dungThan]||'var(--red)'}">${dungThan}</div>
+        <div class="rb-sub">Hành cần bổ sung/phát huy</div>
+      </div>
+      <div class="result-box">
+        <div class="rb-label">💛 Hỷ Thần</div>
+        <div class="rb-value" style="color:${NGU_HANH_COLORS[hyThan]||'var(--gold)'}">${hyThan}</div>
+        <div class="rb-sub">Hành hỗ trợ Dụng Thần</div>
+      </div>
+      <div class="result-box">
+        <div class="rb-label">⚠️ Kỵ Thần</div>
+        <div class="rb-value" style="color:var(--red2)">${kyThan}</div>
+        <div class="rb-sub">Hành cần tránh/kiêng</div>
+      </div>
+      <div class="result-box">
+        <div class="rb-label">⚖️ Bình Thần</div>
+        <div class="rb-value" style="color:var(--ink3)">${bieuThan}</div>
+        <div class="rb-sub">Hành trung tính</div>
+      </div>
+    </div>
+    <div class="luan-giai-box mt-4" style="margin-top:14px">
+      <h3>🏠 Màu Sắc & Hướng Hợp Mệnh</h3>
+      <p>Dụng Thần <strong style="color:${NGU_HANH_COLORS[dungThan]}">${dungThan}</strong>: 
+        ${dungThan==='Mộc'?'Màu xanh lá, hướng Đông, số 3-8':
+          dungThan==='Hỏa'?'Màu đỏ/tím, hướng Nam, số 2-7':
+          dungThan==='Thổ'?'Màu vàng/nâu, hướng Trung tâm, số 5-10':
+          dungThan==='Kim'?'Màu trắng/bạc, hướng Tây, số 4-9':
+          'Màu đen/xanh đậm, hướng Bắc, số 1-6'}
+      </p>
+    </div>`;
+}
+
+function renderLuanDoan(tt, score, ten, gt) {
+  const nhChu = NGU_HANH_CAN[tt.ngay.canIdx];
+  const canNgay = THIEN_CAN[tt.ngay.canIdx];
+  const chiNgay = DIA_CHI[tt.ngay.chiIdx];
+  const total = Object.values(score).reduce((a,b)=>a+b,0)||1;
+  const isVuong = (score[nhChu]||0)/total >= 0.3;
+
+  const TINH_CACH_HANH = {
+    'Mộc': 'Nhân từ, rộng lượng, có lý tưởng cao cả. Thích phát triển và đổi mới. Tính kiên trì nhưng đôi khi cứng đầu.',
+    'Hỏa': 'Nhiệt huyết, năng động, truyền cảm hứng. Thông minh sáng tạo. Dễ nóng nảy nhưng cũng mau nguội.',
+    'Thổ': 'Chân thật đáng tin, bảo thủ nhưng bền bỉ. Giỏi tích lũy. Trung thành và có trách nhiệm.',
+    'Kim': 'Cứng rắn quyết đoán, chính trực. Tự trọng cao. Giỏi phân tích và đánh giá.',
+    'Thủy': 'Linh hoạt thông minh, ứng biến tốt. Giàu cảm xúc và trực giác. Đa mưu túc kế.'
+  };
+
+  const SUC_KHOE = {
+    'Mộc': 'Cần chú ý: gan mật, gân cốt, hệ thần kinh. Tránh stress kéo dài.',
+    'Hỏa': 'Cần chú ý: tim mạch, huyết áp, mắt. Tránh quá căng thẳng.',
+    'Thổ': 'Cần chú ý: dạ dày, tỳ vị, tiêu hóa. Ăn uống điều độ.',
+    'Kim': 'Cần chú ý: phổi, da, hô hấp. Tránh nơi ô nhiễm.',
+    'Thủy': 'Cần chú ý: thận, bàng quang, hệ sinh dục. Giữ ấm.'
+  };
+
+  document.getElementById('batu-luan-doan').innerHTML = `
+    <div class="luan-giai-box">
+      <h3>👤 Tổng Quan — ${ten || 'Chủ Nhân'} (${gt === 'nam' ? 'Nam' : 'Nữ'})</h3>
+      <p>Nhật Chủ <strong>${canNgay} ${chiNgay}</strong>, hành <strong style="color:${NGU_HANH_COLORS[nhChu]}">${nhChu}</strong>.
+         Thân <strong>${isVuong ? 'Vượng' : 'Nhược'}</strong>. 
+         Tứ Trụ: <strong>${THIEN_CAN[tt.nam.canIdx]} ${DIA_CHI[tt.nam.chiIdx]}</strong> · 
+         <strong>${THIEN_CAN[tt.thang.canIdx]} ${DIA_CHI[tt.thang.chiIdx]}</strong> · 
+         <strong>${THIEN_CAN[tt.ngay.canIdx]} ${DIA_CHI[tt.ngay.chiIdx]}</strong> · 
+         <strong>${tt.gio ? THIEN_CAN[tt.gio.canIdx]+' '+DIA_CHI[tt.gio.chiIdx] : '?'}</strong>
+      </p>
+    </div>
+    <div class="luan-giai-box" style="margin-top:12px">
+      <h3>✨ Tính Cách & Bản Chất</h3>
+      <p>${TINH_CACH_HANH[nhChu]}</p>
+    </div>
+    <div class="luan-giai-box" style="margin-top:12px">
+      <h3>💼 Sự Nghiệp & Tài Lộc</h3>
+      <p>Hành ${nhChu} phù hợp nghề nghiệp:
+        ${nhChu==='Mộc' ? 'Giáo dục, y tế, nông nghiệp, thiết kế, môi trường.' :
+          nhChu==='Hỏa' ? 'Truyền thông, nghệ thuật, chính trị, IT, marketing.' :
+          nhChu==='Thổ' ? 'Bất động sản, tài chính, kế toán, hành chính.' :
+          nhChu==='Kim' ? 'Kỹ thuật, luật pháp, quân sự, tài chính, kim loại.' :
+          'Hàng hải, ngoại giao, du lịch, dược phẩm, tâm linh.'}
+      </p>
+    </div>
+    <div class="luan-giai-box" style="margin-top:12px">
+      <h3>❤️ Tình Duyên & Hôn Nhân</h3>
+      <p>${gt === 'nam'
+        ? `Nam mệnh ${nhChu}: ${nhChu==='Mộc'?'Hợp với người hành Thủy hoặc Hỏa. Cần tránh mệnh Kim.':nhChu==='Hỏa'?'Hợp với người hành Mộc. Tình cảm nồng nhiệt nhưng dễ xung đột.':nhChu==='Thổ'?'Hợp với mệnh Hỏa, bền vững gia đình.':nhChu==='Kim'?'Hợp với mệnh Thổ. Chọn người điềm tĩnh bổ sung.':'Hợp với mệnh Kim. Cần người ổn định bù đắp.'}`
+        : `Nữ mệnh ${nhChu}: ${nhChu==='Mộc'?'Hợp với người hành Thủy. Tình cảm sâu sắc, trung thành.':nhChu==='Hỏa'?'Nhiệt tình trong tình yêu. Hợp mệnh Mộc, Thổ.':nhChu==='Thổ'?'Chung thủy bền vững. Hợp mệnh Hỏa.':nhChu==='Kim'?'Độc lập mạnh mẽ. Hợp mệnh Thổ.':'Đa cảm, trực giác tốt. Hợp mệnh Kim.'}`
+      }</p>
+    </div>
+    <div class="luan-giai-box" style="margin-top:12px">
+      <h3>🏥 Sức Khỏe Cần Lưu Ý</h3>
+      <p>${SUC_KHOE[nhChu]}</p>
+    </div>`;
+}
+
+function doBatuAnalysis() {
+  const d   = +document.getElementById('batu-day').value;
+  const m   = +document.getElementById('batu-month').value;
+  const y   = +document.getElementById('batu-year').value;
+  const gio = +document.getElementById('batu-gio').value;
+  const tz  = +document.getElementById('batu-tz').value;
+  const gt  = document.querySelector('input[name=batu-gt]:checked').value;
+  const ten = document.getElementById('batu-ten').value || 'Chủ Nhân';
+
+  if (!d||!m||!y) { alert('Vui lòng nhập ngày tháng năm sinh'); return; }
+
+  showLoading('Đang lập Tứ Trụ Bát Tự...');
+  setTimeout(() => {
+    try {
+      const tt = getTuTru(d, m, y, gio, tz);
+      const trus = [tt.nam, tt.thang, tt.ngay, tt.gio].filter(Boolean);
+      const score = getNguHanhStrength([tt.nam, tt.thang, tt.ngay, tt.gio]);
+
+      renderBatuDisplay(tt);
+      renderNguHanhBars(score);
+      renderSinhKhac(score);
+      renderThanAnalysis(tt, score);
+      renderDungThan(tt, score);
+      renderLuanDoan(tt, score, ten, gt);
+
+      document.getElementById('batu-result').style.display = '';
+      document.getElementById('batu-analysis').style.display = '';
+    } catch(e) {
+      alert('Lỗi phân tích: ' + e.message);
+    } finally {
+      hideLoading();
+    }
+  }, 100);
+}
+
+function showBatuTab(name) {
+  document.querySelectorAll('[id^=batu-sub-]').forEach(s => s.classList.add('hidden'));
+  document.querySelectorAll('#batu-analysis .sub-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('batu-sub-' + name).classList.remove('hidden');
+  event.target.classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+// VAN-KHAN-DATA.JS — Dữ liệu 24 bài văn khấn truyền thống
+// ══════════════════════════════════════════════════════
+
+const VAN_KHAN_DATA = [
+
+// ─── GIA TIÊN ───────────────────────────────────────
+{
+  id: "1",
+  slug: "van-khan-gia-tien-ram-mung-1",
+  title: "Văn Khấn Gia Tiên Ngày Rằm & Mùng 1",
+  category: "gia-tien",
+  description: "Bài văn khấn cúng gia tiên vào ngày Rằm và Mùng 1 hàng tháng",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân cùng chư vị Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Thúc Bá Đệ Huynh, Cô Di Tỷ Muội họ nội họ ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, tín chủ con thành tâm sửa biện hương hoa phẩm vật, trà quả và các thứ cúng dâng, bày ra trước án, thành tâm kính mời:
+
+Các cụ Tổ Khảo, Tổ Tỷ, chư vị Hương linh gia tiên nội ngoại của họ {{tenChuNha}}, cúi xin thương xót tín chủ, giáng về linh sàng, chứng giám lòng thành, thụ hưởng lễ vật.
+
+Cúi xin phù hộ độ trì cho con cháu được vạn sự bình an, gia đạo hưng long thịnh vượng, mọi việc hanh thông, bổng lộc đủ đầy, gia đình hòa thuận, trên thuận dưới hòa.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ, cúi xin được phù hộ độ trì.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Hương thơm, hoa tươi, trầu cau, rượu, nước, trái cây ngũ quả, xôi chè hoặc cơm canh, vàng mã."
+},
+
+{
+  id: "2",
+  slug: "van-khan-cung-gio",
+  title: "Văn Khấn Cúng Giỗ",
+  category: "gia-tien",
+  description: "Bài văn khấn ngày giỗ kỵ hằng năm của người thân đã khuất",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenOngBa","moiQuanHe"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân.
+
+Hôm nay là {{ngayAmLich}}, là ngày kỵ nhật của {{moiQuanHe}} chúng con.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Thành tâm sửa biện hương hoa, lễ vật, trà quả, cơm canh, thức ăn, vàng mã, dâng lên trước linh vị của:
+
+{{moiQuanHe}}: {{tenOngBa}}
+
+Kính cẩn trình thưa: Năm qua tháng lại, ngày kỵ nhật lại đến. Con cháu trong gia đình tưởng nhớ ân đức sinh thành dưỡng dục của {{moiQuanHe}}, nay sắm sửa lễ vật, hoa quả, hương đăng, dâng lên cúng kính, kính mời {{moiQuanHe}} {{tenOngBa}} linh thiêng về chứng giám, thụ hưởng lễ vật.
+
+Cúi xin {{moiQuanHe}} phù hộ độ trì cho toàn thể con cháu được mạnh khỏe bình an, công việc hanh thông, gia đạo hưng long, con cháu học hành tấn tới, phúc lộc song toàn.
+
+Chúng con lễ bạc tâm thành, cúi đầu kính lễ, kính xin {{moiQuanHe}} chứng giám.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Hương, hoa tươi, trầu cau, rượu trắng, cơm canh các món mà người đã khuất yêu thích, trái cây, bánh kẹo, vàng mã."
+},
+
+// ─── LỄ TẾT ─────────────────────────────────────────
+{
+  id: "3",
+  slug: "van-khan-giao-thua-ngoai-troi",
+  title: "Văn Khấn Giao Thừa Ngoài Trời",
+  category: "le-tet",
+  description: "Bài văn khấn cúng Giao Thừa ngoài sân, tiễn Quan Hành Khiển cũ, đón Quan Hành Khiển mới",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Đức Đương Lai Hạ Sinh Di Lặc Tôn Phật.
+Con lạy Đức Thiên Địa, Đức Bình Đẳng Đại Từ Phật.
+
+Nay là {{ngayAmLich}}, nhằm đêm Trừ Tịch, năm cũ sắp qua, năm mới sắp đến.
+
+Tín chủ con là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Thành tâm kính lễ, sắm sửa hương hoa, trà quả, phẩm vật dâng lên trước án, kính mời:
+
+Ngài Cựu Niên Đương Cai Hành Khiển Hành Binh Chi Thần, Ngài Tân Niên Đương Cai Hành Khiển Hành Binh Chi Thần, Quan Phán Quan, cùng chư vị Thần Linh cai quản trong khu vực này.
+
+Kính cẩn thưa: Năm cũ sắp qua, tín chủ con thành tâm bày tiệc kính tiễn Quan Hành Khiển năm cũ, và thành tâm nghênh đón Quan Hành Khiển năm mới cùng chư vị Thần Linh về khu vực này. Kính xin chư vị phù hộ độ trì cho gia đình tín chủ con và toàn thể mọi người trong năm mới được mọi điều tốt lành, bình an hạnh phúc, vạn sự như ý, công thành danh toại.
+
+Kính xin tiêu tai giải nạn, phù hộ độ trì, ban phước lộc cho gia đình chúng con.
+
+Chúng con lễ bạc tâm thành, cúi đầu kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mâm cỗ mặn hoặc chay, hương, đèn nến, hoa tươi, trầu cau, rượu, trái cây, vàng mã (tiền vàng, mũ áo). Cúng ngoài sân, hướng về phía Đông hoặc phương tốt."
+},
+
+{
+  id: "4",
+  slug: "van-khan-giao-thua-trong-nha",
+  title: "Văn Khấn Giao Thừa Trong Nhà",
+  category: "le-tet",
+  description: "Bài văn khấn cúng Giao Thừa tại bàn thờ gia tiên trong nhà",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Đức Phật Hoàng Trời Đất, Bề Trên chư vị Tôn Thần.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân cùng chư vị Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Thúc Bá Đệ Huynh, Cô Di Tỷ Muội họ nội họ ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, nhằm đêm Giao Thừa thiêng liêng, năm cũ sắp qua, năm mới sắp đến. Tín chủ con thành tâm sắm sửa hương hoa, phẩm vật, lễ nghi kính dâng trước bàn thờ tổ tiên.
+
+Kính mời các cụ Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, chư vị Hương linh gia tiên nội ngoại họ {{tenChuNha}}, cúi xin giáng về chứng giám tấm lòng thành kính của con cháu trong đêm Giao Thừa này.
+
+Cúi xin tổ tiên phù hộ độ trì cho gia đình chúng con trong năm mới: sức khỏe dồi dào, bình an hạnh phúc, công việc hanh thông thuận lợi, tài lộc phong phú, gia đạo hưng long, con cháu học hành tấn tới, vạn sự như ý.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mâm cỗ đầy đủ, hương, đèn nến, hoa tươi, trầu cau, rượu, nước, trái cây ngũ quả, bánh chưng, mứt kẹo, vàng mã."
+},
+
+{
+  id: "5",
+  slug: "van-khan-mung-1-tet",
+  title: "Văn Khấn Mùng 1 Tết Nguyên Đán",
+  category: "le-tet",
+  description: "Bài văn khấn cúng ngày đầu năm mới Tết Nguyên Đán",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Đức Phật Hoàng Trời Đất, Sơn Thần, Thổ Địa, Táo Quân, Long Mạch cùng tất cả các vị Thần Linh cai quản trong xứ này.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Thúc Bá Đệ Huynh, Cô Di Tỷ Muội họ nội họ ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày mùng 1 Tết Nguyên Đán, tín chủ con thành tâm sắm sửa hương hoa, lễ vật dâng lên trước bàn thờ, kính mời các bậc Cao Tổ, Tổ tiên, Hương linh nội ngoại về hưởng lễ.
+
+Kính xin các cụ gia tiên phù hộ độ trì cho toàn thể con cháu trong năm mới: thân tâm an lạc, gia đạo hưng long, tài lộc dồi dào, công danh sự nghiệp thăng tiến, tình duyên thuận lợi, con cháu học hành tấn tới, sức khỏe tốt lành, vạn sự hanh thông.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ, cúi xin chứng giám.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Bánh chưng, xôi gấc, gà luộc, các món truyền thống ngày Tết, hoa tươi, trái cây, hương, rượu, vàng mã."
+},
+
+{
+  id: "6",
+  slug: "van-khan-mung-2-tet-tien-ong-ba",
+  title: "Văn Khấn Mùng 2 Tết - Tiễn Ông Bà",
+  category: "le-tet",
+  description: "Bài văn khấn cúng tiễn ông bà tổ tiên sau những ngày Tết",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy các cụ Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Thúc Bá Đệ Huynh, Cô Di Tỷ Muội họ nội họ ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày mùng 2 Tết Nguyên Đán. Những ngày Tết con cháu đã thành tâm phụng dưỡng, trà quả hương hoa, nay kính dâng thêm mâm lễ thết tiễn.
+
+Kính thưa các cụ Tổ Tiên, chư vị Hương linh gia tiên nội ngoại: con cháu chúng con lòng thành kính dâng lễ vật, kính mời các cụ thụ hưởng và hồi hướng âm phủ. Xin các cụ phù hộ độ trì cho con cháu trong năm mới an khang thịnh vượng, gia đình hòa thuận hạnh phúc.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Như mâm cỗ ngày Tết, hương, hoa, vàng mã, sau khi cúng xong hóa vàng tiễn ông bà."
+},
+
+{
+  id: "7",
+  slug: "van-khan-mung-3-tet-hoa-vang",
+  title: "Văn Khấn Mùng 3 Tết - Hóa Vàng",
+  category: "le-tet",
+  description: "Bài văn khấn lễ hóa vàng mùng 3 Tết, tiễn vong linh tổ tiên về âm phủ",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân, Long mạch Tôn thần.
+Con lạy các cụ Tổ Tiên, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày mùng 3 Tết Nguyên Đán, tín chủ con thành tâm sắm sửa lễ vật, hương hoa, trà quả, vàng mã, dâng lên cúng tế, kính tiễn Tổ Tiên, chư vị Hương linh gia tiên.
+
+Kính thưa các cụ: Nhân dịp Tết Nguyên Đán, con cháu đã được hưởng không khí ấm áp, đoàn tụ gia đình. Nay ngày mùng 3, kính xin các cụ Tổ Tiên phù hộ cho toàn thể con cháu, hồi hướng âm phủ, và tiếp tục phù hộ độ trì cho gia đình chúng con suốt năm mới được bình an, khỏe mạnh, hạnh phúc, sự nghiệp thăng tiến.
+
+Chúng con nay xin hóa vàng mã, kính dâng các cụ nhận lấy để dùng nơi âm phủ.
+
+Chúng con lễ bạc tâm thành, cúi đầu kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mâm cúng, hương, hoa, vàng mã nhiều loại (tiền vàng, quần áo, đồ dùng). Sau cúng tiến hành hóa vàng tại sân."
+},
+
+{
+  id: "8",
+  slug: "van-khan-ram-thang-gieng",
+  title: "Văn Khấn Rằm Tháng Giêng (Tết Nguyên Tiêu)",
+  category: "le-tet",
+  description: "Bài văn khấn cúng Rằm tháng Giêng — Tết Nguyên Tiêu, lễ cúng quan trọng đầu năm",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Đức Phật Thích Ca Mâu Ni.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân, Long mạch Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày Rằm tháng Giêng — Tết Nguyên Tiêu. Tín chủ con thành tâm sắm sửa hương hoa, phẩm vật, lễ nghi, dâng lên trước án.
+
+Kính mời Chư Phật, Bồ Tát, chư vị Tôn thần, Tổ tiên, Hương linh gia tiên nội ngoại giáng lâm chứng giám, thụ hưởng lễ vật.
+
+Cúi xin phù hộ độ trì cho gia đình chúng con trong năm mới: thân tâm an lạc, bình an khỏe mạnh, công việc thuận lợi hanh thông, tài lộc dồi dào, gia đạo hưng long, con cháu học hành tấn tới.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Hương, hoa tươi, trái cây, xôi chè, bánh trôi, chè trôi nước, vàng mã. Nên cúng chay để cầu phúc đầu năm."
+},
+
+{
+  id: "9",
+  slug: "van-khan-tet-thanh-minh",
+  title: "Văn Khấn Tết Thanh Minh (Tảo Mộ)",
+  category: "le-tet",
+  description: "Bài văn khấn cúng tại mộ phần trong dịp Tết Thanh Minh tảo mộ",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenOngBa","moiQuanHe"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ, Nhạc Sơn Thần Linh.
+Con lạy các ngài Thổ địa, Mộ phần Thổ thần, các ngài Thần linh cai quản nơi đây.
+
+Con lạy: {{moiQuanHe}} {{tenOngBa}} đang yên nghỉ tại đây.
+
+Tín chủ con là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, nhân ngày Tết Thanh Minh, con cháu chúng con đến thăm viếng, sửa sang mộ phần cho {{moiQuanHe}}, dâng lên lễ vật nhỏ mọn: hương hoa, trà quả, vàng mã.
+
+Kính thưa {{moiQuanHe}} {{tenOngBa}}: Con cháu luôn tưởng nhớ công ơn của {{moiQuanHe}}. Nay nhân dịp Thanh Minh, con cháu thành kính đến thắp hương, dọn dẹp mộ phần, xin {{moiQuanHe}} an lòng nơi cõi vĩnh hằng, phù hộ cho con cháu mạnh khỏe, bình an, làm ăn thuận lợi.
+
+Chúng con lễ bạc tâm thành, kính cẩn cúi lạy.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Hương, hoa tươi, trái cây, xôi gà, cơm nếp hoặc các lễ vật đơn giản. Mang theo xẻng, cuốc để dọn cỏ mộ phần."
+},
+
+{
+  id: "10",
+  slug: "van-khan-tet-doan-ngo",
+  title: "Văn Khấn Tết Đoan Ngọ (Mùng 5/5)",
+  category: "le-tet",
+  description: "Bài văn khấn cúng ngày Tết Đoan Ngọ mùng 5 tháng 5 Âm lịch",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày Tết Đoan Ngọ — ngày diệt sâu bọ, xua đuổi tà ma, cầu bình an sức khỏe. Tín chủ con thành tâm sắm sửa hương hoa, lễ vật, rượu nếp, hoa quả dâng lên trước án.
+
+Kính cẩn trình thưa: Tín chủ con thành tâm dâng lễ, kính mời chư vị Thần Linh, Tổ tiên giáng về chứng giám. Cúi xin chư vị phù hộ cho gia đình chúng con trong ngày Đoan Ngọ: xua tan tà khí bệnh tật, ban phúc lộc bình an, gia đình khỏe mạnh hạnh phúc, mùa màng bội thu, mọi việc hanh thông.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Rượu nếp cái hoa vàng, bánh tro, hoa quả (vải, mận, xoài...), cơm rượu, thịt vịt. Theo phong tục, buổi sáng ăn hoa quả, cơm rượu để diệt sâu bọ."
+},
+
+{
+  id: "11",
+  slug: "van-khan-le-vu-lan",
+  title: "Văn Khấn Lễ Vu Lan (Rằm Tháng 7)",
+  category: "le-tet",
+  description: "Bài văn khấn lễ Vu Lan báo hiếu và cúng cô hồn ngày Rằm tháng 7",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Đức Địa Tạng Vương Bồ Tát.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy các cụ Tổ Tiên, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày Rằm tháng Bảy — Lễ Vu Lan Bồn, ngày báo hiếu cha mẹ tổ tiên. Tín chủ con thành tâm sắm sửa hương hoa, lễ vật, cháo lá đa, gạo muối, vàng mã dâng lên trước án.
+
+Kính dâng lên Chư Phật, Bồ Tát, kính mời Tổ Tiên, Hương linh gia tiên giáng về chứng giám. Tín chủ con cũng thành tâm cúng dường cho các cô hồn, các vong linh lang thang không nơi nương tựa, xin Phật Trời chứng giám lòng thành.
+
+Cúi xin Chư Phật phù hộ cho cha mẹ, tổ tiên chúng con được siêu độ về cõi Phật. Cúi xin các cụ gia tiên phù hộ độ trì cho con cháu được bình an, hạnh phúc.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Cúng Phật: xôi, chè, hoa quả chay. Cúng gia tiên: mâm mặn. Cúng cô hồn: cháo loãng, gạo muối, bánh kẹo, tiền vàng, quần áo giấy. Cúng cô hồn ở ngoài sân hoặc trước cửa."
+},
+
+{
+  id: "12",
+  slug: "van-khan-ram-trung-thu",
+  title: "Văn Khấn Rằm Trung Thu",
+  category: "le-tet",
+  description: "Bài văn khấn cúng ngày Rằm Trung Thu tháng 8 Âm lịch",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày Rằm tháng Tám — Tết Trung Thu, đêm trăng tròn sáng nhất trong năm. Tín chủ con thành tâm sắm sửa hương hoa, bánh Trung Thu, hoa quả, trà ngon dâng lên trước án.
+
+Kính mời chư vị Thần Linh, Tổ Tiên, Hương linh gia tiên giáng về chứng giám, thụ hưởng lễ vật. Cúi xin phù hộ cho toàn thể gia đình chúng con: hòa thuận hạnh phúc, con cháu được vui tươi khỏe mạnh, học hành giỏi giang, mọi người được đoàn tụ sum vầy.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Bánh Trung Thu, hoa quả (bưởi, hồng, chuối...), trà, hương, đèn nến, đèn lồng. Cúng vào tối Rằm khi trăng mọc."
+},
+
+{
+  id: "13",
+  slug: "van-khan-ong-cong-ong-tao",
+  title: "Văn Khấn Ông Công Ông Táo (23 Tháng Chạp)",
+  category: "le-tet",
+  description: "Bài văn khấn tiễn Táo Quân về trời ngày 23 tháng Chạp",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Đức Đông Trù Tư Mệnh Táo Phủ Thần Quân.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày hai mươi ba tháng Chạp, tín chủ con thành tâm sắm sửa hương hoa, trà quả, y phục (mũ, áo hia), cá chép vàng, vàng mã và các thứ phẩm vật dâng lên trước án thờ Táo Quân.
+
+Kính cẩn thưa với ngài Đông Trù Tư Mệnh Táo Phủ Thần Quân: Năm qua, ngài đã ngự tại gia đình chúng con, chứng kiến mọi việc lớn nhỏ trong nhà. Nay đến ngày về trời tâu báo, kính xin ngài lên thiên đình tâu với Ngọc Hoàng Thượng Đế những điều tốt đẹp, phù hộ cho gia đình chúng con trong năm mới gặp nhiều may mắn, bình an hạnh phúc. Kính xin ngài nhận lễ vật mọn mà con cháu thành tâm dâng cúng.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ, tiễn ngài lên đường.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mũ, áo, hia (bằng giấy), cá chép (thả sông hoặc cá chép giấy), hương, hoa, trái cây, xôi chè, kẹo. Sau khi cúng, hóa vàng mã và thả cá chép."
+},
+
+{
+  id: "14",
+  slug: "van-khan-tat-nien",
+  title: "Văn Khấn Cúng Tất Niên",
+  category: "le-tet",
+  description: "Bài văn khấn cúng Tất Niên cuối năm, tạ ơn thần linh và tổ tiên",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, ngài Bản xứ Thổ địa, ngài Bản gia Táo quân cùng chư vị Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Thúc Bá Đệ Huynh, Cô Di Tỷ Muội họ nội họ ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày cuối năm — Tất Niên. Tín chủ con thành tâm sắm sửa hương hoa, phẩm vật, cỗ bàn dâng lên trước án, kính tạ ơn chư vị Thần Linh và gia tiên đã phù hộ trong suốt một năm qua.
+
+Kính thưa chư vị Thần Linh và Tổ Tiên: Năm cũ sắp qua, con cháu chúng con xin tạ ơn sự phù hộ độ trì trong suốt năm qua. Kính mời chư vị về thụ hưởng lễ vật, chứng giám lòng thành. Kính xin tiếp tục phù hộ cho gia đình chúng con trong năm mới được an khang thịnh vượng, vạn sự hanh thông.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mâm cỗ đầy đủ (gà luộc, xôi, canh, các món mặn), hương, hoa, trầu cau, rượu, vàng mã."
+},
+
+// ─── NHÀ MỚI ────────────────────────────────────────
+{
+  id: "15",
+  slug: "van-khan-nhap-trach",
+  title: "Văn Khấn Nhập Trạch (Về Nhà Mới)",
+  category: "nha-moi",
+  description: "Bài văn khấn lễ nhập trạch khi chuyển về nhà mới, cầu xin thần linh phù hộ",
+  requiredFields: ["tenChuNha","diaChi","diaChiMoi","ngayDuong"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Đông Trù Tư Mệnh Táo Phủ Thần Quân.
+Con lạy ngài Bản cảnh Thành Hoàng, ngài Bản xứ Thổ địa, Long mạch Tôn thần cai quản tại địa chỉ: {{diaChiMoi}}
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Nơi ở cũ: {{diaChi}}
+Nay chuyển về nhà mới tại: {{diaChiMoi}}
+
+Hôm nay là {{ngayAmLich}}, là ngày lành tháng tốt, tín chủ con thành tâm sắm sửa hương hoa, phẩm vật, lễ nghi dâng lên trước án, kính cáo các đấng Thần Linh.
+
+Kính cẩn trình thưa: Tín chủ con nay được an cư lạc nghiệp tại ngôi nhà mới, địa chỉ {{diaChiMoi}}. Kính xin các ngài Thổ thần, Long mạch, Táo quân và các vị Thần Linh cai quản nơi đây chứng giám, phù hộ cho gia đình tín chủ con được định cư bình an. Kính mời Tổ Tiên, Hương linh gia tiên theo về ngôi nhà mới, tiếp tục phù hộ cho con cháu.
+
+Cúi xin chư vị phù hộ độ trì: nhà cửa bình an, gia đình hòa thuận, làm ăn phát đạt, sức khỏe dồi dào, vạn sự hanh thông như ý.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mâm ngũ quả, hoa tươi, hương, đèn nến, trầu cau, rượu, gạo muối, nước, vàng mã. Mang theo bếp lửa (đèn thắp sẵn) từ nhà cũ sang nhà mới."
+},
+
+{
+  id: "16",
+  slug: "van-khan-dong-tho",
+  title: "Văn Khấn Động Thổ",
+  category: "nha-moi",
+  description: "Bài văn khấn lễ động thổ trước khi khởi công xây dựng nhà",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ Địa kỳ linh.
+Con lạy ngài Bản xứ Thổ địa Tôn thần, Long mạch Tôn thần, các ngài Đương Niên Phương Vị chi Thần, các ngài Tiền Hậu Địa Chủ Tài Thần.
+
+Tín chủ con là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày lành tháng tốt, tín chủ con chuẩn bị khởi công xây dựng nhà tại: {{diaChi}}
+
+Tín chủ con thành tâm sắm sửa hương hoa, lễ vật, trầu rượu, dâng lên trước án, kính cáo các đấng Thần Linh cai quản đất đai nơi đây.
+
+Kính cẩn trình thưa: Tín chủ con nay khởi công xây dựng nhà ở, kính xin các ngài Thổ thần, Long mạch, Thần Đất chứng giám và phù hộ độ trì cho công trình được hanh thông suôn sẻ, công thợ bình an không tai nạn, nhà xây kiên cố vững chắc, hoàn thành đúng kế hoạch, gia đình an cư lạc nghiệp.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ, kính xin được phù hộ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Hương, hoa, trầu cau, rượu, gạo muối, ngũ quả, vàng mã. Chủ nhà tự tay cuốc xuống đất 3 nhát đầu tiên sau khi cúng."
+},
+
+// ─── KHAI TRƯƠNG ────────────────────────────────────
+{
+  id: "17",
+  slug: "van-khan-khai-truong",
+  title: "Văn Khấn Khai Trương",
+  category: "khai-truong",
+  description: "Bài văn khấn cúng khai trương cửa hàng, công ty, doanh nghiệp",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenCuaHang"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Thần Tài, Thổ Địa, Táo Quân, Môn Quan, Hộ Xá, Tỉnh Môn Lộ Thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Bản xứ Thổ địa cai quản nơi đây.
+
+Tín chủ con là: {{tenChuNha}}
+Địa chỉ kinh doanh: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, ngày khai trương {{tenCuaHang}}, tín chủ con thành tâm sắm sửa hương hoa, phẩm vật dâng lên trước án, kính cáo chư vị Thần Linh.
+
+Kính cẩn trình thưa: Tín chủ con nay mở cửa kinh doanh tại địa chỉ {{diaChi}}, cơ sở mang tên {{tenCuaHang}}. Kính xin chư vị Thần Linh, Thần Tài Thổ Địa chứng giám và phù hộ độ trì cho việc kinh doanh được thuận lợi, khách hàng tấp nập, buôn may bán đắt, tài lộc dồi dào, làm ăn phát đạt, nhân viên bình an, công việc hanh thông. Cầu cho {{tenCuaHang}} ngày càng lớn mạnh, uy tín và phát triển bền vững.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Mâm ngũ quả (không dùng quả lê, chuối xanh), hoa tươi, hương, đèn nến, gà luộc hoặc heo quay, rượu, trầu cau, bánh kẹo. Chú ý chọn ngày tốt để khai trương."
+},
+
+// ─── THÔI NÔI / ĐẦY THÁNG ──────────────────────────
+{
+  id: "18",
+  slug: "van-khan-thoi-noi-be-trai",
+  title: "Văn Khấn Thôi Nôi Bé Trai",
+  category: "thoi-noi",
+  description: "Bài văn khấn lễ thôi nôi cho bé trai tròn 1 tuổi",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenCon"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Đức Phật Thích Ca, Đức Quan Âm Bồ Tát.
+Con lạy Hoàng Thiên Hậu Thổ, chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân.
+Con lạy Mười Hai Bà Mụ, Đức Ông Bổn Mạng.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, gia đình chúng con tổ chức lễ thôi nôi cho con trai là {{tenCon}}, tròn một tuổi.
+
+Tín chủ con thành tâm sắm sửa hương hoa, xôi chè, lễ vật dâng lên trước án, kính cáo chư vị Thần Linh và Mười Hai Bà Mụ.
+
+Kính cẩn thưa: Nhờ ơn Trời Phật, Mười Hai Bà Mụ, Đức Ông Bổn Mạng và Tổ Tiên phù hộ, con trai chúng con {{tenCon}} nay đã tròn một tuổi, khỏe mạnh bình an. Chúng con thành tâm dâng lễ tạ ơn, kính xin chư vị tiếp tục phù hộ cho {{tenCon}} lớn lên khỏe mạnh, thông minh, học hành giỏi giang, trở thành người có ích cho gia đình và xã hội.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Xôi gấc (12 đĩa nhỏ tượng trưng 12 Bà Mụ), chè đậu, bánh trôi, hoa quả, hương, đèn nến, vàng mã. Làm lễ bày ra 12 vật dụng cho bé chọn."
+},
+
+{
+  id: "19",
+  slug: "van-khan-thoi-noi-be-gai",
+  title: "Văn Khấn Thôi Nôi Bé Gái",
+  category: "thoi-noi",
+  description: "Bài văn khấn lễ thôi nôi cho bé gái tròn 1 tuổi",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenCon"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Đức Phật Thích Ca, Đức Quan Âm Bồ Tát.
+Con lạy Hoàng Thiên Hậu Thổ, chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân.
+Con lạy Mười Hai Bà Mụ, Đức Bà Bổn Mạng.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, gia đình chúng con tổ chức lễ thôi nôi cho con gái là {{tenCon}}, tròn một tuổi.
+
+Tín chủ con thành tâm sắm sửa hương hoa, xôi chè, lễ vật dâng lên trước án, kính cáo chư vị Thần Linh và Mười Hai Bà Mụ.
+
+Kính cẩn thưa: Nhờ ơn Trời Phật, Mười Hai Bà Mụ, Đức Bà Bổn Mạng và Tổ Tiên phù hộ, con gái chúng con {{tenCon}} nay đã tròn một tuổi, khỏe mạnh bình an. Chúng con thành tâm dâng lễ tạ ơn, kính xin chư vị tiếp tục phù hộ cho {{tenCon}} lớn lên khỏe mạnh, xinh đẹp, hiền ngoan, thông minh, học hành tấn tới, tương lai tươi sáng.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Xôi gấc (12 đĩa nhỏ), chè đậu, bánh trôi, hoa quả, hương, đèn nến, vàng mã. Làm lễ bày ra 12 vật dụng cho bé chọn (kim chỉ, sách vở, gương, tiền...)."
+},
+
+{
+  id: "20",
+  slug: "van-khan-day-thang",
+  title: "Văn Khấn Đầy Tháng",
+  category: "thoi-noi",
+  description: "Bài văn khấn lễ đầy tháng cho em bé mới sinh",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenCon","gioiTinhCon"],
+  optionalFields: ["tenVo"],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Đức Quan Âm Bồ Tát, Đức Phật Thích Ca Mâu Ni.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân Tôn thần.
+Con lạy Mười Hai Bà Mụ, Đức Ông (Bà) Bổn Mạng.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại.
+
+Tín chủ (chúng) con là: {{tenChuNha}}{{tenVoSuffix}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, gia đình chúng con tổ chức lễ đầy tháng cho {{conLabel}} là {{tenCon}}.
+
+Tín chủ con thành tâm sắm sửa hương hoa, xôi chè, lễ vật dâng lên trước án.
+
+Kính cẩn thưa: Nhờ ân Phật Thánh, Mười Hai Bà Mụ và các bậc Tổ Tiên phù hộ, {{conLabel}} {{tenCon}} của chúng con nay đã tròn một tháng, mẹ tròn con vuông. Chúng con thành tâm dâng lễ, tạ ơn Mười Hai Bà Mụ đã nặn hình hài, tạo dáng hảo tướng cho {{tenCon}}. Kính xin Mười Hai Bà Mụ, Tổ Tiên tiếp tục phù hộ cho {{tenCon}} lớn lên khỏe mạnh, ngoan ngoãn, thông minh sáng dạ.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Xôi gấc (12 đĩa nhỏ tượng trưng 12 Bà Mụ), chè, bánh trôi, hoa quả, hương, đèn nến, vàng mã, quần áo đỏ cho bé."
+},
+
+// ─── XE MỚI ─────────────────────────────────────────
+{
+  id: "21",
+  slug: "van-khan-cung-xe-moi",
+  title: "Văn Khấn Cúng Xe Mới",
+  category: "xe-moi",
+  description: "Bài văn khấn cúng xe mới mua, cầu bình an khi lưu thông trên đường",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","bienSoXe"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Thần Xe, Thần Giao Thông, Thần Đường Sá.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa Tôn thần.
+
+Tín chủ con là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, tín chủ con vừa sắm được chiếc xe mới, biển số: {{bienSoXe}}.
+
+Tín chủ con thành tâm sắm sửa hương hoa, lễ vật, trái cây dâng lên trước mũi xe và trước án thờ, kính cáo chư vị Thần Linh.
+
+Kính cẩn thưa với chư vị Thần Linh: Tín chủ con hôm nay làm lễ ra mắt xe mới biển số {{bienSoXe}}, kính xin chư vị Thần Linh, Thần Xe, Thần Đường Sá chứng giám và phù hộ độ trì cho tín chủ con mỗi khi đi lại đều được bình an vô sự, xuất hành gặp may, không tai nạn, không va chạm, đi đến nơi về đến chốn. Phù hộ cho chiếc xe này luôn hoạt động bền bỉ, an toàn.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Hoa quả ngũ sắc, hương, đèn, rượu, tiền vàng. Cúng tại xe hoặc bàn thờ gia tiên. Sau đó dán bùa bình an vào xe."
+},
+
+// ─── CHÙA / ĐỀN / PHỦ ───────────────────────────────
+{
+  id: "22",
+  slug: "van-khan-di-chua-cau-binh-an",
+  title: "Văn Khấn Đi Chùa Cầu Bình An",
+  category: "chua-den",
+  description: "Bài văn khấn khi đến chùa, đền, phủ để cầu bình an cho bản thân và gia đình",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenChua"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy Đức Phật Thích Ca Mâu Ni, Đức Phật A Di Đà, Đức Quan Âm Bồ Tát, Đức Đại Thế Chí Bồ Tát.
+Con lạy chư vị Bồ Tát, La Hán, Hộ Pháp, Già Lam tại {{tenChua}}.
+Con lạy Tam Bảo thường trụ.
+
+Con tên là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay là {{ngayAmLich}}, con thành tâm đến {{tenChua}}, dâng lên trước Tam Bảo hương hoa, lễ vật mọn, thành tâm khấu đầu đảnh lễ.
+
+Kính lạy Đức Phật từ bi, kính lạy chư vị Bồ Tát hỷ xả: Con là người phàm trần, nghiệp chướng còn nhiều. Con thành tâm quy y Tam Bảo, xin sám hối những lỗi lầm đã phạm trong cuộc đời. Kính xin Chư Phật, Bồ Tát gia hộ cho con và toàn thể gia đình được thân tâm an lạc, bệnh tật tiêu trừ, tai ương xa lánh, cuộc sống bình an, hạnh phúc, sự nghiệp thuận lợi, công việc hanh thông.
+
+Nguyện đem công đức này hướng về tất cả. Đệ tử và chúng sinh đều trọn thành Phật đạo.
+
+Con lễ bạc tâm thành, kính cẩn cúi lạy.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật chùa: Hoa tươi, trái cây, bánh kẹo chay, nhang, đèn. Không dùng lễ mặn khi cúng Phật. Ăn mặc lịch sự, kín đáo khi vào chùa."
+},
+
+// ─── HÔN NHÂN ────────────────────────────────────────
+{
+  id: "23",
+  slug: "van-khan-le-dam-ngo",
+  title: "Văn Khấn Lễ Dạm Ngõ",
+  category: "hon-nhan",
+  description: "Bài văn khấn tại lễ dạm ngõ, xin phép gia tiên nhà gái cho đôi trẻ được tìm hiểu",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenChong","tenVo"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Hương linh gia tiên nội ngoại hai họ.
+
+Hôm nay là {{ngayAmLich}}, gia đình chúng con tổ chức lễ Dạm Ngõ.
+
+Gia đình tín chủ con là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Hôm nay, hai gia đình chúng con gặp gỡ để chàng trai {{tenChong}} và cô gái {{tenVo}} được chính thức tìm hiểu nhau trước sự chứng kiến của hai họ.
+
+Tín chủ con thành tâm sắm sửa hương hoa, trầu cau, lễ vật dâng lên trước án gia tiên, kính cáo Tổ Tiên hai họ.
+
+Kính cẩn thưa: Con cháu {{tenChong}} và {{tenVo}} nay đã đến tuổi dựng vợ gả chồng, hai gia đình xin trình thưa với Tổ Tiên hai họ về mối lương duyên này. Kính xin Tổ Tiên, các bậc Hương linh chứng giám và phù hộ cho đôi trẻ được duyên phận tốt lành, sau này nên vợ nên chồng, gia đình hạnh phúc, trăm năm bền vững.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Trầu cau, rượu, hoa quả, bánh kẹo, chè. Nhà trai mang sang nhà gái trình gia tiên."
+},
+
+{
+  id: "24",
+  slug: "van-khan-le-an-hoi",
+  title: "Văn Khấn Lễ Ăn Hỏi",
+  category: "hon-nhan",
+  description: "Bài văn khấn tại lễ ăn hỏi, chính thức đặt vấn đề hôn nhân với hai họ và tổ tiên",
+  requiredFields: ["tenChuNha","diaChi","ngayDuong","tenChong","tenVo"],
+  optionalFields: [],
+  content: `Nam mô A Di Đà Phật! (3 lần)
+
+Con lạy chín phương Trời, mười phương Chư Phật.
+Con lạy Hoàng Thiên Hậu Thổ chư vị Tôn thần.
+Con lạy ngài Bản cảnh Thành Hoàng, Thổ địa, Táo quân Tôn thần.
+Con lạy Cao Tằng Tổ Khảo, Cao Tằng Tổ Tỷ, Thúc Bá Đệ Huynh, Cô Di Tỷ Muội Hương linh gia tiên hai họ.
+
+Hôm nay là {{ngayAmLich}}, gia đình chúng con long trọng tổ chức lễ Ăn Hỏi.
+
+Gia đình chúng con là: {{tenChuNha}}
+Ngụ tại: {{diaChi}}
+
+Nay, chàng trai {{tenChong}} và cô gái {{tenVo}} được hai bên gia đình và dòng họ đồng ý hứa hôn. Lễ ăn hỏi hôm nay là bước đầu chính thức xác nhận hôn ước của đôi trẻ.
+
+Tín chủ con thành tâm sắm sửa lễ vật, hương hoa dâng lên trước ban thờ Tổ Tiên, kính cáo gia tiên hai họ.
+
+Kính cẩn thưa: Hôm nay nhân ngày lành tháng tốt, hai gia đình chúng con chính thức tổ chức lễ Ăn Hỏi, xin trình thưa với Tổ Tiên hai họ về mối lương duyên giữa {{tenChong}} và {{tenVo}}. Kính xin các bậc Tổ Tiên, Hương linh hai họ chứng giám và ban phước lành cho đôi trẻ. Kính xin phù hộ cho đám cưới được tổ chức tốt lành, đôi trẻ sau này ăn ở hòa thuận, gia đình hạnh phúc, con cái đầy đàn, trăm năm bền chặt.
+
+Chúng con lễ bạc tâm thành, trước án kính lễ.
+
+Nam mô A Di Đà Phật! (3 lần)`,
+  note: "Lễ vật: Tráp trầu cau, bánh cốm, bánh phu thê, mứt sen, chè, rượu, hoa quả, nến hồng (theo phong tục địa phương). Số tráp lẻ: 3, 5, 7, 9, hoặc 11 tráp."
+}
+
+]; // end VAN_KHAN_DATA
+
+
+
+// ══════════════════════════════════════════════════════
+// VĂN KHẤN — Tích hợp vào LịchViệt Pro
+// ══════════════════════════════════════════════════════
+
+// Note: solar2Lunar, THIEN_CAN, DIA_CHI already defined above
+// We reuse them. Only define THANG_TEN & formatNgayAmLich if not already:
+if (typeof THANG_TEN === 'undefined') {
+  var THANG_TEN = ['Giêng','Hai','Ba','Tư','Năm','Sáu','Bảy','Tám','Chín','Mười','Mười Một','Chạp'];
+}
+
+function vkFormatNgayAmLich(dd, mm, yy) {
+  var d = parseInt(dd), m = parseInt(mm), y = parseInt(yy);
+  var res = solar2Lunar(d, m, y);
+  var ld = res[0], lm = res[1], ly = res[2], isLeap = res[3];
+  var can = ((ly - 4) % 10 + 10) % 10;
+  var chi = ((ly - 4) % 12 + 12) % 12;
+  var canChi = THIEN_CAN[can] + ' ' + DIA_CHI[chi];
+  var tenThang = THANG_TEN[lm - 1];
+  return 'ngày ' + d + ' tháng ' + m + ' năm ' + y + ' (nhằm ngày ' + ld + ' tháng ' + tenThang + (isLeap ? ' nhuận' : '') + ' năm ' + canChi + ')';
+}
+
+const VK_CATEGORIES = [
+  { id: 'all',        name: 'Tất cả',            icon: '📜' },
+  { id: 'gia-tien',   name: 'Cúng Gia Tiên',     icon: '🏠' },
+  { id: 'le-tet',     name: 'Lễ Tết',            icon: '🧧' },
+  { id: 'hon-nhan',   name: 'Hôn Nhân',          icon: '💒' },
+  { id: 'thoi-noi',   name: 'Thôi Nôi - Đầy Tháng', icon: '👶' },
+  { id: 'tang-le',    name: 'Tang Lễ',            icon: '🕯️' },
+  { id: 'nha-moi',    name: 'Nhà Mới',           icon: '🏡' },
+  { id: 'khai-truong',name: 'Khai Trương',        icon: '🎊' },
+  { id: 'chua-den',   name: 'Chùa - Đền - Phủ',  icon: '⛩️' },
+  { id: 'xe-moi',     name: 'Cúng Xe Mới',       icon: '🚗' },
+];
+const VK_CAT_MAP = {};
+VK_CATEGORIES.forEach(function(c){ VK_CAT_MAP[c.id] = c.name; });
+
+let vkCurrentCat = 'all';
+let vkCurrentVanKhan = null;
+
+function vkRenderCategoryBtns() {
+  const wrap = document.getElementById('vk-cat-grid');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  VK_CATEGORIES.forEach(function(c) {
+    const btn = document.createElement('button');
+    btn.style.cssText = 'display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:50px;border:2px solid var(--border);background:' + (c.id === vkCurrentCat ? 'var(--red)' : '#fff') + ';color:' + (c.id === vkCurrentCat ? '#fff' : 'var(--ink2)') + ';font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.2s;';
+    btn.innerHTML = '<span style="font-size:15px;">' + c.icon + '</span>' + c.name;
+    btn.addEventListener('click', function() {
+      vkCurrentCat = c.id;
+      vkRenderCategoryBtns();
+      vkRenderCards();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+function vkRenderCards() {
+  const grid = document.getElementById('vk-card-grid');
+  if (!grid) return;
+  const term = (document.getElementById('vk-search').value || '').toLowerCase();
+
+  let list = VAN_KHAN_DATA;
+  if (vkCurrentCat !== 'all') list = list.filter(function(v){ return v.category === vkCurrentCat; });
+  if (term) list = list.filter(function(v){ return v.title.toLowerCase().includes(term) || v.description.toLowerCase().includes(term); });
+
+  if (list.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:50px 20px;color:var(--ink3);grid-column:1/-1;"><div style="font-size:40px;margin-bottom:10px;">🔍</div><p>Không tìm thấy bài văn khấn phù hợp.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  list.forEach(function(v) {
+    const catName = VK_CAT_MAP[v.category] || v.category;
+    const div = document.createElement('div');
+    div.style.cssText = 'background:#fff;border-radius:12px;border-top:4px solid var(--red);box-shadow:0 2px 12px var(--shadow);padding:20px;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;display:flex;flex-direction:column;gap:10px;';
+    div.innerHTML = '<div style="font-family:'Noto Serif',serif;font-size:15px;font-weight:700;color:var(--red);">' + v.title + '</div><div style="font-size:12px;color:var(--ink3);line-height:1.5;flex:1;">' + v.description + '</div><span style="display:inline-block;padding:3px 11px;border-radius:50px;background:var(--cream2);color:var(--gold2);font-size:11px;font-weight:600;border:1px solid var(--cream3);align-self:flex-start;">' + catName + '</span>';
+    div.addEventListener('mouseenter', function(){ this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(139,0,0,0.18)'; });
+    div.addEventListener('mouseleave', function(){ this.style.transform='';this.style.boxShadow='0 2px 12px var(--shadow)'; });
+    div.addEventListener('click', function(){ vkOpenDetail(v); });
+    grid.appendChild(div);
+  });
+}
+
+function vkOpenDetail(vanKhan) {
+  vkCurrentVanKhan = vanKhan;
+  document.getElementById('vk-detail').style.display = 'block';
+  document.getElementById('vk-bai-title').textContent = vanKhan.title;
+  document.getElementById('vk-bai-desc').textContent = vanKhan.description;
+  vkRenderForm(vanKhan);
+  vkSetStep(1);
+  document.getElementById('vk-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function vkBackToList() {
+  document.getElementById('vk-detail').style.display = 'none';
+  vkCurrentVanKhan = null;
+}
+
+function vkGetTodayString() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function vkRenderForm(vanKhan) {
+  const wrap = document.getElementById('vk-form-fields');
+  wrap.innerHTML = '';
+
+  const allFields = vanKhan.requiredFields.map(function(f){ return {key:f,required:true}; })
+    .concat(vanKhan.optionalFields.map(function(f){ return {key:f,required:false}; }));
+  const seen = new Set();
+  const uniqFields = allFields.filter(function(f){ if(seen.has(f.key))return false;seen.add(f.key);return true; });
+
+  uniqFields.forEach(function(item) {
+    const cfg = FIELD_CONFIG[item.key];
+    if (!cfg) return;
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;flex-direction:column;gap:5px;' + (cfg.type === 'textarea' ? 'grid-column:1/-1;' : '');
+    if (cfg.type === 'textarea') div.setAttribute('style', 'display:flex;flex-direction:column;gap:5px;grid-column:1/-1;');
+
+    let labelHTML = '<label style="font-size:12px;font-weight:600;color:var(--ink2);">' + cfg.label + (item.required ? '<span style="color:var(--red);margin-left:2px;">*</span>' : '') + '</label>';
+    let inputHTML = '';
+    const inputStyle = 'padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;color:var(--ink);background:#fff;outline:none;width:100%;transition:border-color 0.2s;';
+
+    if (cfg.type === 'select') {
+      inputHTML = '<select id="vkf-' + item.key + '" data-vkfield="' + item.key + '" style="' + inputStyle + '">' + cfg.opts.map(function(o){ return '<option value="'+o+'">'+o+'</option>'; }).join('') + '</select>';
+    } else if (cfg.type === 'textarea') {
+      inputHTML = '<textarea id="vkf-' + item.key + '" data-vkfield="' + item.key + '" placeholder="' + (cfg.ph||'') + '" rows="3" style="' + inputStyle + 'resize:vertical;min-height:70px;"></textarea>';
+    } else if (cfg.type === 'date') {
+      inputHTML = '<input type="date" id="vkf-' + item.key + '" data-vkfield="' + item.key + '" value="' + vkGetTodayString() + '" style="' + inputStyle + '">';
+    } else {
+      inputHTML = '<input type="text" id="vkf-' + item.key + '" data-vkfield="' + item.key + '" placeholder="' + (cfg.ph||'') + '" style="' + inputStyle + '">';
+    }
+
+    div.innerHTML = labelHTML + inputHTML;
+    wrap.appendChild(div);
+  });
+
+  wrap.addEventListener('input', function(){ vkValidateForm(vanKhan); });
+  wrap.addEventListener('change', function(){ vkValidateForm(vanKhan); });
+  vkValidateForm(vanKhan);
+}
+
+function vkValidateForm(vanKhan) {
+  let valid = true;
+  vanKhan.requiredFields.forEach(function(key) {
+    const el = document.getElementById('vkf-' + key);
+    if (!el || !el.value || !el.value.trim()) valid = false;
+  });
+  const btn = document.getElementById('vk-btn-preview');
+  if (btn) {
+    btn.disabled = !valid;
+    btn.style.background = valid ? 'var(--red)' : '#d1d5db';
+    btn.style.color = valid ? '#fff' : '#9ca3af';
+    btn.style.cursor = valid ? 'pointer' : 'not-allowed';
+    btn.style.boxShadow = valid ? '0 4px 14px rgba(139,0,0,0.3)' : 'none';
+  }
+}
+
+function vkGetFormData() {
+  const data = {};
+  document.querySelectorAll('[data-vkfield]').forEach(function(el) { data[el.dataset.vkfield] = el.value; });
+  return data;
+}
+
+function vkWrapFilled(value) {
+  return '<strong style="color:var(--red);font-weight:700;">' + value + '</strong>';
+}
+
+function vkProcessTemplate(vanKhan, formData) {
+  let content = vanKhan.content;
+
+  if (formData.ngayDuong) {
+    const parts = formData.ngayDuong.split('-');
+    if (parts.length === 3) {
+      const ngayFormatted = vkFormatNgayAmLich(parts[2], parts[1], parts[0]);
+      content = content.replace(/\{\{ngayAmLich\}\}/g, vkWrapFilled(ngayFormatted));
+    }
+  }
+
+  if (formData.tenVo && formData.tenVo.trim()) {
+    content = content.replace(/\{\{tenVoSuffix\}\}/g, vkWrapFilled(' cùng vợ là ' + formData.tenVo.trim()));
+  } else { content = content.replace(/\{\{tenVoSuffix\}\}/g, ''); }
+
+  if (formData.tenChong && formData.tenChong.trim()) {
+    content = content.replace(/\{\{tenChongSuffix\}\}/g, vkWrapFilled(' cùng chồng là ' + formData.tenChong.trim()));
+  } else { content = content.replace(/\{\{tenChongSuffix\}\}/g, ''); }
+
+  if (formData.gioiTinhCon === 'Gái') {
+    content = content.replace(/\{\{conLabel\}\}/g, 'con gái');
+  } else { content = content.replace(/\{\{conLabel\}\}/g, 'con trai'); }
+
+  ['tenChuNha','tenChong','tenVo','tenCon','diaChi','diaChiMoi','tenOngBa','moiQuanHe','tenCuaHang','tenChua','bienSoXe','gioiTinhCon'].forEach(function(field) {
+    const regex = new RegExp('\\{\\{' + field + '\\}\\}', 'g');
+    const val = formData[field] ? formData[field].trim() : '';
+    if (val) { content = content.replace(regex, vkWrapFilled(val)); }
+    else { content = content.replace(regex, '<span style="color:#aaa;font-style:italic;">............</span>'); }
+  });
+
+  content = content.replace(/\{\{[^}]+\}\}/g, '<span style="color:#aaa;font-style:italic;">............</span>');
+  return content;
+}
+
+function vkProcessTemplatePrint(vanKhan, formData) {
+  let content = vanKhan.content;
+
+  if (formData.ngayDuong) {
+    const parts = formData.ngayDuong.split('-');
+    if (parts.length === 3) {
+      const ngayFormatted = vkFormatNgayAmLich(parts[2], parts[1], parts[0]);
+      content = content.replace(/\{\{ngayAmLich\}\}/g, '<strong>' + ngayFormatted + '</strong>');
+    }
+  }
+  if (formData.tenVo && formData.tenVo.trim()) {
+    content = content.replace(/\{\{tenVoSuffix\}\}/g, '<strong> cùng vợ là ' + formData.tenVo.trim() + '</strong>');
+  } else { content = content.replace(/\{\{tenVoSuffix\}\}/g, ''); }
+  if (formData.tenChong && formData.tenChong.trim()) {
+    content = content.replace(/\{\{tenChongSuffix\}\}/g, '<strong> cùng chồng là ' + formData.tenChong.trim() + '</strong>');
+  } else { content = content.replace(/\{\{tenChongSuffix\}\}/g, ''); }
+  if (formData.gioiTinhCon === 'Gái') { content = content.replace(/\{\{conLabel\}\}/g, 'con gái'); }
+  else { content = content.replace(/\{\{conLabel\}\}/g, 'con trai'); }
+  ['tenChuNha','tenChong','tenVo','tenCon','diaChi','diaChiMoi','tenOngBa','moiQuanHe','tenCuaHang','tenChua','bienSoXe','gioiTinhCon'].forEach(function(field) {
+    const regex = new RegExp('\\{\\{' + field + '\\}\\}', 'g');
+    const val = formData[field] ? formData[field].trim() : '';
+    if (val) { content = content.replace(regex, '<strong>' + val + '</strong>'); }
+    else { content = content.replace(regex, '............'); }
+  });
+  content = content.replace(/\{\{[^}]+\}\}/g, '............');
+  return content;
+}
+
+function vkShowPreview() {
+  const formData = vkGetFormData();
+  const html = vkProcessTemplate(vkCurrentVanKhan, formData);
+  document.getElementById('vk-preview-content').innerHTML = html;
+
+  const noteBox = document.getElementById('vk-note-box');
+  if (vkCurrentVanKhan.note) {
+    noteBox.innerHTML = '<strong style="color:var(--gold2);">📋 Lễ vật chuẩn bị:</strong><br>' + vkCurrentVanKhan.note;
+    noteBox.style.display = 'block';
+  } else { noteBox.style.display = 'none'; }
+
+  // Build print area
+  const printHtml = vkProcessTemplatePrint(vkCurrentVanKhan, formData);
+  document.getElementById('vk-print-area').innerHTML = '<div class="vkprint-title">' + vkCurrentVanKhan.title + '</div>\n' + printHtml;
+
+  vkSetStep(2);
+}
+
+function vkBackToForm() { vkSetStep(1); }
+
+function vkDoPrint() { window.print(); }
+
+function vkSetStep(n) {
+  document.getElementById('vk-step-form').style.display = n === 1 ? 'block' : 'none';
+  document.getElementById('vk-step-preview').style.display = n === 2 ? 'block' : 'none';
+
+  // Update step indicators
+  [1,2,3].forEach(function(i) {
+    const el = document.getElementById('vk-step-' + i);
+    if (!el) return;
+    if (i === n) {
+      el.style.color = 'var(--red)';
+      el.style.borderBottomColor = 'var(--red)';
+      el.querySelector('span').style.background = 'var(--red)';
+      el.querySelector('span').style.color = '#fff';
+    } else if (i < n) {
+      el.style.color = 'var(--gold2)';
+      el.style.borderBottomColor = 'var(--gold2)';
+      el.querySelector('span').style.background = 'var(--gold2)';
+      el.querySelector('span').style.color = '#fff';
+    } else {
+      el.style.color = '#aaa';
+      el.style.borderBottomColor = 'transparent';
+      el.querySelector('span').style.background = '#e5e7eb';
+      el.querySelector('span').style.color = '#666';
+    }
+  });
+}
+
+// Init Văn Khấn when section becomes visible
+function initVanKhan() {
+  if (document.getElementById('vk-cat-grid').children.length === 0) {
+    vkRenderCategoryBtns();
+    vkRenderCards();
+  }
+}
+
+
+
+window.onload = init;
+</script>
 </body>
 </html>
