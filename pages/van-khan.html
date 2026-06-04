@@ -1,0 +1,79 @@
+<!-- pages/van-khan.html — Trang Văn Khấn Truyền Thống -->
+<link rel="stylesheet" href="css/van-khan.css">
+
+<div class="app-container">
+
+  <!-- ===== HERO BANNER ===== -->
+  <div class="vk-hero">
+    <h1 class="vk-hero-title">🪷 Văn Khấn Truyền Thống</h1>
+    <p class="vk-hero-subtitle">24 bài văn khấn chính thống — Điền thông tin, in ngay lập tức</p>
+    <div class="vk-search-wrap">
+      <input
+        type="text"
+        id="vk-search"
+        class="vk-search-input"
+        placeholder="Tìm bài khấn... VD: cúng giỗ, khai trương, thôi nôi..."
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+      >
+      <span class="vk-search-icon">🔍</span>
+    </div>
+  </div>
+
+  <!-- ===== DANH MỤC ===== -->
+  <div class="vk-cats" id="vk-cats">
+    <!-- Render bởi JS -->
+  </div>
+
+  <!-- ===== LƯỚI BÀI KHẤN ===== -->
+  <div class="vk-grid" id="vk-grid">
+    <!-- Render bởi JS -->
+  </div>
+
+  <!-- ===== NÚT TÌM BẰNG AI ===== -->
+  <button class="vk-ai-btn hidden" id="vk-ai-search-btn">
+    <span class="sparkle">✨</span>
+    <span id="vk-ai-search-label">Tìm bài văn khấn phù hợp bằng AI</span>
+  </button>
+
+</div><!-- /.app-container -->
+
+<!-- ===== OVERLAY MODAL 3 BƯỚC ===== -->
+<div class="vk-overlay" id="vk-overlay">
+  <div class="vk-modal" id="vk-modal">
+
+    <!-- Header -->
+    <div class="vk-modal-header">
+      <h2 class="vk-modal-title" id="vk-modal-title">Văn Khấn</h2>
+      <button class="vk-modal-close" id="vk-modal-close" title="Đóng">✕</button>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="vk-steps">
+      <div class="vk-step active" id="vk-step-1">
+        <div class="vk-step-num">1</div>
+        <span class="vk-step-label">Nhập thông tin</span>
+      </div>
+      <div class="vk-step-sep"></div>
+      <div class="vk-step" id="vk-step-2">
+        <div class="vk-step-num">2</div>
+        <span class="vk-step-label">Xem trước</span>
+      </div>
+      <div class="vk-step-sep"></div>
+      <div class="vk-step" id="vk-step-3">
+        <div class="vk-step-num">3</div>
+        <span class="vk-step-label">In / PDF</span>
+      </div>
+    </div>
+
+    <!-- Body — nội dung thay đổi theo bước -->
+    <div class="vk-modal-body" id="vk-modal-body">
+      <!-- Render bởi JS -->
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== VÙNG IN ẤN (ẩn trên màn hình, hiện khi print) ===== -->
+<div id="vk-print-area"></div>

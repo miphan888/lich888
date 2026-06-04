@@ -1,0 +1,33 @@
+/* ============================================================
+   config.js — Cấu hình ứng dụng & API Key
+   Lịch Việt Nam 888
+   ============================================================ */
+
+var APP_CONFIG = {
+  /* ---- Gemini API ---- */
+  GEMINI_API_KEY: 'AQ.Ab8RN6IJ02QfvigeMedh3ILK9JEZbapMQJUc8vNHQotACeXSbQ',
+  GEMINI_MODEL: 'gemini-2.0-flash',
+  GEMINI_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/',
+
+  /* ---- Cài đặt chung ---- */
+  TIMEZONE: 7,         // UTC+7 (Việt Nam)
+  VERSION: '2.0',
+  APP_NAME: 'Lịch Việt Nam 888',
+
+  /* ---- AI Settings ---- */
+  AI_MAX_TOKENS: 1024,
+  AI_TEMPERATURE: 0.7,
+  AI_CACHE_TTL: 3600000,   // 1 giờ (ms)
+  AI_RETRY_COUNT: 2,
+  AI_RETRY_DELAY: 1000,    // 1 giây
+
+  /* ---- UI Settings ---- */
+  TOAST_DURATION: 3000,    // 3 giây
+  SECTION_CACHE: true,     // Cache HTML section đã load
+
+  /* ---- Các section hợp lệ ---- */
+  SECTIONS: ['lich-am', 'tu-vi', 'tu-tru', 'phong-thuy', 'van-khan'],
+
+  /* ---- Default section ---- */
+  DEFAULT_SECTION: 'lich-am'
+};

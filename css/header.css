@@ -1,0 +1,311 @@
+/* ============================================================
+   header.css — Header + Navigation Tabs
+   Lịch Việt Nam 888
+   ============================================================ */
+
+/* ---- Site Header ---- */
+.site-header {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--red) 40%, var(--ink2) 100%);
+  padding: var(--sp-lg) var(--content-pad);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+/* Hiệu ứng viền hoa văn */
+.site-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right,
+    transparent 0%,
+    var(--gold2) 15%,
+    var(--gold) 30%,
+    var(--cream3) 50%,
+    var(--gold) 70%,
+    var(--gold2) 85%,
+    transparent 100%
+  );
+}
+
+/* Hoa văn trang trí góc */
+.site-header::after {
+  content: '❧ ❦ ❧ ❦ ❧ ❦ ❧ ❦ ❧ ❦ ❧';
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 10px;
+  color: var(--gold);
+  opacity: 0.3;
+  letter-spacing: 4px;
+  pointer-events: none;
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+/* ---- Brand Block ---- */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.brand-icon {
+  font-size: 2rem;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px var(--gold2));
+}
+
+.brand-icon-right {
+  animation-delay: -1.5s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-4px) rotate(5deg); }
+}
+
+.brand-text {
+  text-align: center;
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 20px rgba(200,146,10,0.6),
+    0 2px 4px rgba(0,0,0,0.5);
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* Hiệu ứng gradient chữ tiêu đề */
+.brand-title {
+  background: linear-gradient(to bottom, var(--cream) 30%, var(--gold2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-sub {
+  font-size: 0.78rem;
+  color: var(--cream3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 300;
+}
+
+/* ---- Header Today Info ---- */
+.header-today {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  font-size: 0.82rem;
+  color: var(--cream3);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(200,146,10,0.3);
+  border-radius: var(--r-pill);
+  padding: var(--sp-xs) var(--sp-md);
+  font-family: var(--font-sans);
+  backdrop-filter: blur(4px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.header-today .sep {
+  opacity: 0.4;
+  margin: 0 2px;
+}
+
+#today-solar,
+#today-lunar,
+#today-canchi {
+  white-space: nowrap;
+}
+
+/* ---- Main Navigation ---- */
+.main-nav {
+  background: linear-gradient(to bottom, rgba(44,24,0,0.95) 0%, rgba(74,40,0,0.98) 100%);
+  border-bottom: 2px solid var(--gold);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+/* Khi header sticky đẩy nav xuống */
+@supports (position: sticky) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .main-nav {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav-inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Navigation Tab Buttons ---- */
+.nav-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--sp-sm) var(--sp-lg);
+  min-width: 80px;
+  flex: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: all var(--trans-normal);
+  position: relative;
+  color: var(--cream2);
+  white-space: nowrap;
+}
+
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--gold2));
+  transition: transform var(--trans-normal);
+  border-radius: var(--r-pill);
+}
+
+.nav-tab:hover {
+  background: rgba(200,146,10,0.12);
+  color: var(--gold2);
+}
+
+.nav-tab:hover::after {
+  transform: translateX(-50%) scaleX(0.6);
+}
+
+.nav-tab.active {
+  background: linear-gradient(to bottom, rgba(200,146,10,0.2) 0%, rgba(200,146,10,0.1) 100%);
+  color: var(--gold2);
+}
+
+.nav-tab.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.tab-icon {
+  font-size: 1.3rem;
+  display: block;
+  transition: transform var(--trans-fast);
+}
+
+.nav-tab:hover .tab-icon,
+.nav-tab.active .tab-icon {
+  transform: scale(1.15);
+}
+
+.tab-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ---- Responsive Header ---- */
+@media (max-width: 768px) {
+  .site-header {
+    padding: var(--sp-md) var(--content-pad);
+  }
+
+  .brand-title {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .brand-icon {
+    font-size: 1.6rem;
+  }
+
+  .brand-sub {
+    font-size: 0.7rem;
+  }
+
+  .header-today {
+    font-size: 0.75rem;
+    padding: 3px var(--sp-sm);
+  }
+
+  .nav-tab {
+    padding: var(--sp-sm) var(--sp-md);
+    min-width: 60px;
+  }
+
+  .tab-icon {
+    font-size: 1.1rem;
+  }
+
+  .tab-label {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-title { font-size: 1.3rem; }
+
+  .header-today {
+    font-size: 0.7rem;
+  }
+
+  .nav-tab {
+    padding: var(--sp-sm) var(--sp-sm);
+    min-width: 52px;
+  }
+
+  .tab-label {
+    display: none;
+  }
+
+  .tab-icon {
+    font-size: 1.3rem;
+  }
+}

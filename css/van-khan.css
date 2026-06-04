@@ -1,0 +1,676 @@
+/* ============================================================
+   van-khan.css — Styles cho module Văn Khấn
+   Lịch Việt Nam 888
+   ============================================================ */
+
+/* ===========================================================
+   HERO BANNER VĂN KHẤN
+   =========================================================== */
+.vk-hero {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--red) 40%, var(--red2) 70%, var(--gold) 100%);
+  border-radius: var(--r-xl);
+  padding: var(--sp-xl) var(--sp-lg);
+  text-align: center;
+  margin-bottom: var(--sp-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hoa văn trang trí góc */
+.vk-hero::before,
+.vk-hero::after {
+  content: '❧';
+  position: absolute;
+  font-size: 5rem;
+  opacity: 0.07;
+  color: var(--gold2);
+  pointer-events: none;
+}
+
+.vk-hero::before {
+  top: -10px;
+  left: -10px;
+  transform: rotate(-20deg);
+}
+
+.vk-hero::after {
+  bottom: -10px;
+  right: -10px;
+  transform: rotate(160deg);
+}
+
+.vk-hero-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--gold2);
+  margin-bottom: var(--sp-sm);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.vk-hero-subtitle {
+  color: var(--cream2);
+  font-size: 0.95rem;
+  margin-bottom: var(--sp-lg);
+  opacity: 0.9;
+}
+
+/* Ô tìm kiếm */
+.vk-search-wrap {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.vk-search-input {
+  width: 100%;
+  padding: 14px 52px 14px 20px;
+  border: 2px solid rgba(200,146,10,0.5);
+  border-radius: var(--r-pill);
+  background: rgba(253,243,224,0.95);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--trans-normal), box-shadow var(--trans-normal);
+}
+
+.vk-search-input:focus {
+  border-color: var(--gold2);
+  box-shadow: 0 0 0 4px rgba(200,146,10,0.2);
+}
+
+.vk-search-input::placeholder {
+  color: var(--ink3);
+  font-style: italic;
+}
+
+.vk-search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--gold);
+  pointer-events: none;
+}
+
+/* ===========================================================
+   DANH MỤC (CATEGORY TABS)
+   =========================================================== */
+.vk-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+  justify-content: center;
+}
+
+.vk-cat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-pill);
+  background: var(--cream);
+  color: var(--ink2);
+  font-size: 0.875rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--trans-normal);
+  white-space: nowrap;
+}
+
+.vk-cat-btn:hover {
+  border-color: var(--gold);
+  background: var(--cream2);
+  color: var(--red);
+  transform: translateY(-1px);
+}
+
+.vk-cat-btn.active {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--red) 100%);
+  color: var(--gold2);
+  border-color: var(--red);
+  box-shadow: 0 3px 10px rgba(44,24,0,0.3);
+}
+
+.vk-cat-btn .cat-icon {
+  font-size: 1rem;
+}
+
+.vk-cat-btn .cat-count {
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.2);
+  border-radius: var(--r-pill);
+  padding: 1px 7px;
+  font-weight: 600;
+}
+
+.vk-cat-btn.active .cat-count {
+  background: rgba(200,146,10,0.3);
+}
+
+/* ===========================================================
+   LƯỚI BÀI VĂN KHẤN
+   =========================================================== */
+.vk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-xl);
+}
+
+/* Card bài văn khấn */
+.vk-card {
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  cursor: pointer;
+  transition: all var(--trans-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.vk-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--gold), var(--gold2), var(--gold));
+  opacity: 0;
+  transition: opacity var(--trans-normal);
+}
+
+.vk-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+
+.vk-card:hover::before {
+  opacity: 1;
+}
+
+.vk-card-icon {
+  font-size: 2rem;
+  margin-bottom: var(--sp-sm);
+  display: block;
+}
+
+.vk-card-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: var(--sp-xs);
+  line-height: 1.4;
+}
+
+.vk-card-cat {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 10px;
+  border-radius: var(--r-pill);
+  background: var(--cream2);
+  color: var(--ink3);
+  border: 1px solid var(--border);
+  margin-bottom: var(--sp-sm);
+}
+
+.vk-card-desc {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Nút AI tìm kiếm */
+.vk-ai-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+  width: 100%;
+  padding: 14px;
+  border: 2px dashed var(--gold);
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, rgba(200,146,10,0.06) 0%, rgba(253,243,224,0.9) 100%);
+  color: var(--red2);
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--trans-normal);
+  margin-bottom: var(--sp-lg);
+}
+
+.vk-ai-btn:hover {
+  background: linear-gradient(135deg, rgba(200,146,10,0.15) 0%, rgba(200,146,10,0.08) 100%);
+  border-color: var(--gold2);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.vk-ai-btn .sparkle {
+  font-size: 1.2rem;
+  animation: vk-sparkle 1.8s ease-in-out infinite;
+}
+
+@keyframes vk-sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50%       { transform: scale(1.25) rotate(10deg); }
+}
+
+/* Thông báo không có kết quả */
+.vk-empty {
+  text-align: center;
+  padding: var(--sp-xl);
+  color: var(--ink3);
+}
+
+.vk-empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--sp-md);
+  display: block;
+  opacity: 0.5;
+}
+
+/* ===========================================================
+   MODAL — 3 BƯỚC
+   =========================================================== */
+.vk-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44,24,0,0.65);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--sp-lg) var(--sp-md);
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--trans-normal);
+}
+
+.vk-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.vk-modal {
+  background: var(--cream);
+  border: 2px solid var(--gold);
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 680px;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  transform: translateY(20px);
+  transition: transform var(--trans-normal);
+  margin: auto;
+}
+
+.vk-overlay.open .vk-modal {
+  transform: translateY(0);
+}
+
+/* Header modal */
+.vk-modal-header {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--red) 100%);
+  padding: var(--sp-md) var(--sp-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+}
+
+.vk-modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--gold2);
+  margin: 0;
+  flex: 1;
+}
+
+.vk-modal-close {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(200,146,10,0.4);
+  color: var(--cream2);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--trans-fast);
+  flex-shrink: 0;
+}
+
+.vk-modal-close:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Step indicator */
+.vk-steps {
+  display: flex;
+  align-items: center;
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--cream2);
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+
+.vk-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  font-size: 0.82rem;
+  color: var(--ink3);
+  flex: 1;
+  justify-content: center;
+}
+
+.vk-step.active {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.vk-step.done {
+  color: var(--green-good);
+}
+
+.vk-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.vk-step.active .vk-step-num {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--cream);
+}
+
+.vk-step.done .vk-step-num {
+  background: var(--green-good);
+  border-color: var(--green-good);
+  color: #fff;
+}
+
+.vk-step-sep {
+  width: 24px;
+  height: 2px;
+  background: var(--border);
+  margin: 0 var(--sp-xs);
+}
+
+/* Body modal */
+.vk-modal-body {
+  padding: var(--sp-lg);
+}
+
+/* ===========================================================
+   BƯỚC 1 — FORM NHẬP THÔNG TIN
+   =========================================================== */
+.vk-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-md);
+}
+
+.vk-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+}
+
+.vk-form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.vk-form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink2);
+}
+
+.vk-form-label .req {
+  color: var(--red-bad);
+  margin-left: 2px;
+}
+
+.vk-form-input,
+.vk-form-select,
+.vk-form-textarea {
+  padding: 9px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  background: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+.vk-form-input:focus,
+.vk-form-select:focus,
+.vk-form-textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200,146,10,0.15);
+}
+
+.vk-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+/* Textarea lời cầu khấn bổ sung */
+#vkf-loiCauKhanBoSung {
+  min-height: 80px;
+  resize: vertical;
+  font-style: italic;
+  color: var(--ink2);
+}
+
+.vk-form-note {
+  font-size: 0.78rem;
+  color: var(--ink3);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.vk-form-footer {
+  margin-top: var(--sp-lg);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===========================================================
+   BƯỚC 2 — PREVIEW VĂN KHẤN
+   =========================================================== */
+.vk-preview-box {
+  background: linear-gradient(180deg, #fffdf7 0%, #fff9ed 100%);
+  border: 2px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-xl) var(--sp-lg);
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.95;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: var(--sp-lg);
+  position: relative;
+}
+
+.vk-preview-box::before {
+  content: '❧ Văn Khấn ❧';
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--gold);
+  letter-spacing: 4px;
+  margin-bottom: var(--sp-md);
+  opacity: 0.8;
+}
+
+/* Phần đã điền — màu đỏ đậm */
+.vk-filled {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* Lời cầu bổ sung — highlight riêng */
+.vk-bonus-highlight {
+  background: rgba(200,146,10,0.1);
+  border-left: 3px solid var(--gold);
+  padding: 6px 12px;
+  margin: 4px 0;
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  font-style: italic;
+}
+
+/* Box lễ vật */
+.vk-le-vat {
+  background: var(--amber-light);
+  border: 1.5px solid var(--amber);
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+}
+
+.vk-le-vat-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--amber);
+  margin-bottom: var(--sp-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+}
+
+.vk-le-vat-text {
+  font-size: 0.875rem;
+  color: var(--ink2);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Footer bước 2 */
+.vk-preview-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+/* ===========================================================
+   TRẠNG THÁI LOADING AI
+   =========================================================== */
+.vk-ai-loading {
+  text-align: center;
+  padding: var(--sp-xl) var(--sp-lg);
+}
+
+.vk-ai-loading-icon {
+  font-size: 2.5rem;
+  animation: vk-spin 1.5s linear infinite;
+  display: block;
+  margin-bottom: var(--sp-md);
+}
+
+@keyframes vk-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.vk-ai-loading p {
+  color: var(--ink3);
+  font-size: 0.9rem;
+}
+
+/* Lỗi AI */
+.vk-ai-error {
+  background: var(--red-light);
+  border: 1.5px solid var(--red-bad);
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+  text-align: center;
+  color: var(--red-bad);
+  font-size: 0.9rem;
+}
+
+/* ===========================================================
+   VÙNG IN ẤN
+   =========================================================== */
+#vk-print-area {
+  display: none;
+}
+
+/* ===========================================================
+   RESPONSIVE
+   =========================================================== */
+@media (max-width: 600px) {
+  .vk-hero-title {
+    font-size: 1.5rem;
+  }
+
+  .vk-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vk-form-group.full-width {
+    grid-column: 1;
+  }
+
+  .vk-preview-footer {
+    flex-direction: column;
+  }
+
+  .vk-preview-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .vk-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vk-modal {
+    margin: 0;
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    margin-top: auto;
+  }
+
+  .vk-steps {
+    padding: var(--sp-sm) var(--sp-md);
+  }
+
+  .vk-step-label {
+    display: none;
+  }
+}
