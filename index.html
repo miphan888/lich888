@@ -10,8 +10,11 @@
                connect-src 'self' https://tuvi888-api.miphan888.workers.dev;
                img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Lịch Việt Nam 888 - Tra cứu lịch âm, tử vi, tứ trụ, phong thủy và văn khấn truyền thống Việt Nam">
-  <title>Lịch Việt Nam 888 🌸</title>
+  <meta name="description" content="Lịch Việt Nam 888 - Tra cứu lịch âm dương, xem tử vi, tứ trụ bát tự, phong thủy và văn khấn truyền thống Việt Nam.">
+  <meta property="og:title" content="Lịch Việt Nam 888 🌸">
+  <meta property="og:description" content="Tra cứu lịch âm dương, tử vi, tứ trụ, phong thủy và văn khấn truyền thống Việt Nam.">
+  <meta property="og:url" content="index.html">
+  <title>Lịch Việt Nam 888 🌸 | Lịch Âm - Tử Vi - Tứ Trụ - Phong Thủy - Văn Khấn</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,15 +26,73 @@
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/components.css">
 
-  <!-- CSS Per-Feature -->
-  <link rel="stylesheet" href="css/lich-am.css">
-  <link rel="stylesheet" href="css/tu-vi.css">
-  <link rel="stylesheet" href="css/tu-tru.css">
-  <link rel="stylesheet" href="css/phong-thuy.css">
-  <link rel="stylesheet" href="css/van-khan.css">
-
-  <!-- Print CSS — phải để cuối cùng -->
-  <link rel="stylesheet" href="css/print.css" media="print">
+  <style>
+    /* ---- Landing page styles ---- */
+    .landing-hero {
+      text-align: center;
+      padding: var(--sp-2xl) var(--content-pad) var(--sp-xl);
+    }
+    .landing-hero-title {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--red);
+      margin-bottom: var(--sp-sm);
+    }
+    .landing-hero-sub {
+      color: var(--ink3);
+      font-size: 1.05rem;
+      margin-bottom: var(--sp-xl);
+    }
+    .landing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--sp-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 var(--content-pad) var(--sp-2xl);
+    }
+    .landing-card {
+      display: block;
+      background: var(--cream);
+      border: 2px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--sp-xl) var(--sp-lg);
+      text-align: center;
+      text-decoration: none;
+      color: var(--ink);
+      transition: transform var(--trans-normal), box-shadow var(--trans-normal), border-color var(--trans-normal);
+      box-shadow: var(--shadow-sm);
+    }
+    .landing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--gold);
+    }
+    .landing-card-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: var(--sp-sm);
+    }
+    .landing-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: var(--sp-xs);
+    }
+    .landing-card-desc {
+      font-size: 0.88rem;
+      color: var(--ink3);
+      line-height: 1.5;
+    }
+    .landing-ornament {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.5rem;
+      letter-spacing: 8px;
+      margin-bottom: var(--sp-xl);
+    }
+  </style>
 </head>
 <body>
 
@@ -55,34 +116,64 @@
   <!-- ===== NAVIGATION ===== -->
   <nav class="main-nav" id="main-nav">
     <div class="nav-inner">
-      <button class="nav-tab" data-section="lich-am" onclick="loadSection('lich-am')">
+      <a class="nav-tab" href="lich-am.html">
         <span class="tab-icon">📅</span>
         <span class="tab-label">Lịch Âm</span>
-      </button>
-      <button class="nav-tab" data-section="tu-vi" onclick="loadSection('tu-vi')">
+      </a>
+      <a class="nav-tab" href="tu-vi.html">
         <span class="tab-icon">⭐</span>
         <span class="tab-label">Tử Vi</span>
-      </button>
-      <button class="nav-tab" data-section="tu-tru" onclick="loadSection('tu-tru')">
+      </a>
+      <a class="nav-tab" href="tu-tru.html">
         <span class="tab-icon">🔮</span>
         <span class="tab-label">Tứ Trụ</span>
-      </button>
-      <button class="nav-tab" data-section="phong-thuy" onclick="loadSection('phong-thuy')">
+      </a>
+      <a class="nav-tab" href="phong-thuy.html">
         <span class="tab-icon">🧭</span>
         <span class="tab-label">Phong Thủy</span>
-      </button>
-      <button class="nav-tab" data-section="van-khan" onclick="loadSection('van-khan')">
+      </a>
+      <a class="nav-tab" href="van-khan.html">
         <span class="tab-icon">🙏</span>
         <span class="tab-label">Văn Khấn</span>
-      </button>
+      </a>
     </div>
   </nav>
 
-  <!-- ===== APP CONTAINER ===== -->
-  <main id="app" class="app-container">
-    <div class="app-loading" id="app-loading">
-      <div class="loading-spinner"></div>
-      <p>Đang tải...</p>
+  <!-- ===== LANDING CONTENT ===== -->
+  <main>
+    <div class="landing-hero">
+      <h2 class="landing-hero-title">🌸 Chào mừng đến Lịch Việt Nam 888</h2>
+      <p class="landing-hero-sub">Kết hợp tri thức cổ truyền phương Đông và công nghệ hiện đại</p>
+    </div>
+
+    <div class="landing-ornament">❧ ✦ ❧ ✦ ❧</div>
+
+    <div class="landing-grid">
+      <a class="landing-card" href="lich-am.html">
+        <span class="landing-card-icon">📅</span>
+        <div class="landing-card-title">Lịch Âm Dương</div>
+        <div class="landing-card-desc">Tra cứu ngày âm, can chi, tiết khí, giờ Hoàng Đạo chính xác từ 1900–2100</div>
+      </a>
+      <a class="landing-card" href="tu-vi.html">
+        <span class="landing-card-icon">⭐</span>
+        <div class="landing-card-title">Tử Vi Đẩu Số</div>
+        <div class="landing-card-desc">Lập lá số tử vi trọn đời, luận giải 12 cung, đại vận, tiểu vận</div>
+      </a>
+      <a class="landing-card" href="tu-tru.html">
+        <span class="landing-card-icon">🔮</span>
+        <div class="landing-card-title">Tứ Trụ Bát Tự</div>
+        <div class="landing-card-desc">Phân tích mệnh vận theo tứ trụ, ngũ hành, thân vượng nhược, dụng thần</div>
+      </a>
+      <a class="landing-card" href="phong-thuy.html">
+        <span class="landing-card-icon">🧭</span>
+        <div class="landing-card-title">Phong Thủy</div>
+        <div class="landing-card-desc">Giờ Hoàng Đạo, hướng xuất hành tốt, thập nhị trực, ngũ hành tương sinh</div>
+      </a>
+      <a class="landing-card" href="van-khan.html">
+        <span class="landing-card-icon">🙏</span>
+        <div class="landing-card-title">Văn Khấn</div>
+        <div class="landing-card-desc">24+ bài văn khấn chính thống, điền thông tin cá nhân, in ngay lập tức</div>
+      </a>
     </div>
   </main>
 
@@ -92,53 +183,32 @@
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <p>🌸 Lịch Việt Nam 888 &copy; 2024 &nbsp;|&nbsp; Kết hợp truyền thống &amp; hiện đại &nbsp;|&nbsp; Powered by Gemini AI</p>
+      <p>🌸 Lịch Việt Nam 888 &copy; 2024 &nbsp;|&nbsp; Kết hợp truyền thống &amp; hiện đại</p>
       <p class="footer-note">Thông tin mang tính tham khảo, không thay thế tư vấn chuyên gia.</p>
     </div>
   </footer>
 
-  <!-- ===== VÙNG IN VĂN KHẤN (ẩn, chỉ hiện khi in) ===== -->
-  <!-- Phải đặt NGOÀI thẻ main, trước closing body -->
-  <div id="vk-print-area" style="display:none;"></div>
-
-  <!-- ===== JAVASCRIPT — thứ tự load quan trọng ===== -->
-
-  <!-- 1. Config — không cần API key nữa, dùng Worker proxy -->
+  <!-- ===== JAVASCRIPT ===== -->
   <script src="js/config.js"></script>
-
-  <!-- 2. Data files -->
-  <script src="js/data/can-chi.js"></script>
-  <script src="js/data/tiet-khi.js"></script>
-  <script src="js/data/sao-tu-vi.js"></script>
-  <script src="js/data/van-khan-data.js"></script>
-  <script src="js/data/thap-nhi-truc.js"></script>
-  <script src="js/data/tuc-ngu.js"></script>
-
-  <!-- 3. Engine files -->
-  <script src="js/engines/lunar-engine.js"></script>
-  <script src="js/engines/can-chi-engine.js"></script>
-  <script src="js/engines/tu-vi-engine.js"></script>
-  <script src="js/engines/bat-tu-engine.js"></script>
-
-  <!-- 4. AI Service (gọi qua Worker proxy) -->
-  <script src="js/ai-service.js"></script>
-
-  <!-- 5. AI Modules -->
-  <script src="js/ai/lich-am-ai.js"></script>
-  <script src="js/ai/tu-vi-ai.js"></script>
-  <script src="js/ai/tu-tru-ai.js"></script>
-  <script src="js/ai/phong-thuy-ai.js"></script>
-  <script src="js/ai/van-khan-ai.js"></script>
-
-  <!-- 6. UI Modules -->
-  <script src="js/ui/lich-am-ui.js"></script>
-  <script src="js/ui/tu-vi-ui.js"></script>
-  <script src="js/ui/tu-tru-ui.js"></script>
-  <script src="js/ui/phong-thuy-ui.js"></script>
-  <script src="js/ui/van-khan-ui.js"></script>
-
-  <!-- 7. App Router — PHẢI load SAU tất cả UI modules -->
-  <script src="js/app.js"></script>
+  <script>
+    /* Hiển thị ngày hôm nay ở header */
+    (function() {
+      function updateHeaderToday() {
+        var now  = new Date();
+        var days = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+        var thu  = days[now.getDay()];
+        var d    = now.getDate();
+        var m    = now.getMonth() + 1;
+        var y    = now.getFullYear();
+        var pad  = function(n) { return n < 10 ? '0' + n : String(n); };
+        var str  = thu + ', ' + pad(d) + '/' + pad(m) + '/' + y;
+        var el   = document.getElementById('today-solar');
+        if (el) el.textContent = str;
+      }
+      updateHeaderToday();
+      setInterval(updateHeaderToday, 60000);
+    })();
+  </script>
 
 </body>
 </html>
