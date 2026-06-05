@@ -1,8 +1,12 @@
 <section id="sect-tu-vi">
+
+  <!-- FORM + TỨ TRỤ -->
   <div class="grid-2" style="margin-bottom:20px">
+
     <!-- FORM NHẬP -->
     <div class="card">
       <div class="card-title">🔮 Lập Lá Số Tử Vi Đẩu Số</div>
+
       <div class="form-row">
         <div class="form-group" style="flex:2">
           <label>Họ và Tên</label>
@@ -16,28 +20,39 @@
           </div>
         </div>
       </div>
+
       <div class="form-row">
-        <div class="form-group"><label>Ngày sinh</label><input type="number" id="tv-day" min="1" max="31" placeholder="DD"></div>
-        <div class="form-group"><label>Tháng</label><input type="number" id="tv-month" min="1" max="12" placeholder="MM"></div>
-        <div class="form-group"><label>Năm</label><input type="number" id="tv-year" min="1900" max="2100" placeholder="YYYY"></div>
+        <div class="form-group">
+          <label>Ngày sinh</label>
+          <input type="number" id="tv-day" min="1" max="31" placeholder="DD">
+        </div>
+        <div class="form-group">
+          <label>Tháng</label>
+          <input type="number" id="tv-month" min="1" max="12" placeholder="MM">
+        </div>
+        <div class="form-group">
+          <label>Năm</label>
+          <input type="number" id="tv-year" min="1900" max="2100" placeholder="YYYY">
+        </div>
       </div>
+
       <div class="form-row">
         <div class="form-group" style="flex:2">
           <label>Giờ sinh (Địa Chi)</label>
           <select id="tv-gio">
-            <option value="-1">— Không biết giờ —</option>
-            <option value="0">Tý (23:00–01:00)</option>
-            <option value="1">Sửu (01:00–03:00)</option>
-            <option value="2">Dần (03:00–05:00)</option>
-            <option value="3">Mão (05:00–07:00)</option>
-            <option value="4">Thìn (07:00–09:00)</option>
-            <option value="5">Tỵ (09:00–11:00)</option>
-            <option value="6">Ngọ (11:00–13:00)</option>
-            <option value="7">Mùi (13:00–15:00)</option>
-            <option value="8">Thân (15:00–17:00)</option>
-            <option value="9">Dậu (17:00–19:00)</option>
-            <option value="10">Tuất (19:00–21:00)</option>
-            <option value="11">Hợi (21:00–23:00)</option>
+            <option value="">— Không biết giờ —</option>
+            <option value="Tý">Tý (23:00–01:00)</option>
+            <option value="Sửu">Sửu (01:00–03:00)</option>
+            <option value="Dần">Dần (03:00–05:00)</option>
+            <option value="Mão">Mão (05:00–07:00)</option>
+            <option value="Thìn">Thìn (07:00–09:00)</option>
+            <option value="Tỵ">Tỵ (09:00–11:00)</option>
+            <option value="Ngọ">Ngọ (11:00–13:00)</option>
+            <option value="Mùi">Mùi (13:00–15:00)</option>
+            <option value="Thân">Thân (15:00–17:00)</option>
+            <option value="Dậu">Dậu (17:00–19:00)</option>
+            <option value="Tuất">Tuất (19:00–21:00)</option>
+            <option value="Hợi">Hợi (21:00–23:00)</option>
           </select>
         </div>
         <div class="form-group" style="flex:1">
@@ -48,16 +63,18 @@
           </select>
         </div>
       </div>
+
       <button class="btn" onclick="tvLapLaSo()">🔮 Lập Lá Số</button>
     </div>
 
-    <!-- TỨ TRỤ + MỆNH -->
+    <!-- TỨ TRỤ + MỆNH INFO -->
     <div class="card" id="tv-summary" style="display:none">
       <div class="card-title">Tứ Trụ — <span id="tv-ten-display"></span></div>
       <div id="tv-tu-tru"></div>
       <hr class="divider">
       <div id="tv-menh-info"></div>
     </div>
+
   </div>
 
   <!-- TABS CHÍNH -->
@@ -88,11 +105,12 @@
     <div id="tv-tab-luan-giai" style="display:none">
       <div id="tv-luan-giai-content">
         <div style="padding:40px;text-align:center;color:var(--ink3)">
-          <p>Nhấn "Lập Lá Số" trước để xem luận giải.</p>
+          <p>Nhấn "Lập Lá Số" rồi chuyển sang tab này để xem luận giải.</p>
         </div>
       </div>
     </div>
   </div>
+
 </section>
 
 <!-- Popup chi tiết cung -->
@@ -102,352 +120,4 @@
     <h2 id="tv-popup-title">—</h2>
     <div id="tv-popup-content"></div>
   </div>
-</div>// ══════════════════════════════════════════════════════
-// RENDER LÁ SỐ 12 CUNG (GRID 4x4)
-// ══════════════════════════════════════════════════════
-
-function tvRenderLaSo(laSo) {
-  var wrap = document.getElementById('tv-la-so-grid');
-  if (!wrap || !laSo || !laSo.cung) return;
-
-  var CHI = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
-
-  // Vị trí 12 cung trong grid 4x4 (theo truyền thống)
-  // Grid positions: [row, col] — index trong grid
-  //   Tỵ(c0)   Ngọ(c1)   Mùi(c2)   Thân(c3)
-  //   Thìn(c4)  [center]  [center]  Dậu(c5)
-  //   Mão(c6)   [center]  [center]  Tuất(c7)
-  //   Dần(c8)   Sửu(c9)   Tý(c10)  Hợi(c11)
-
-  var gridOrder = [
-    { chi: 5, row: 0, col: 0 },  // Tỵ
-    { chi: 6, row: 0, col: 1 },  // Ngọ
-    { chi: 7, row: 0, col: 2 },  // Mùi
-    { chi: 8, row: 0, col: 3 },  // Thân
-    { chi: 4, row: 1, col: 0 },  // Thìn
-    { chi: 9, row: 1, col: 3 },  // Dậu
-    { chi: 3, row: 2, col: 0 },  // Mão
-    { chi: 10, row: 2, col: 3 }, // Tuất
-    { chi: 2, row: 3, col: 0 },  // Dần
-    { chi: 1, row: 3, col: 1 },  // Sửu
-    { chi: 0, row: 3, col: 2 },  // Tý
-    { chi: 11, row: 3, col: 3 }  // Hợi
-  ];
-
-  // Tìm cung theo Địa Chi
-  function timCungTheoChi(chiIdx) {
-    for (var i = 0; i < laSo.cung.length; i++) {
-      var c = laSo.cung[i];
-      var cChi = c.diaChi;
-      if (typeof cChi === 'string') cChi = CHI.indexOf(cChi);
-      if (cChi === chiIdx) return c;
-    }
-    return null;
-  }
-
-  // Tìm cung theo tên
-  function timCungTheoTen(ten) {
-    for (var i = 0; i < laSo.cung.length; i++) {
-      if (laSo.cung[i].ten === ten) return laSo.cung[i];
-    }
-    return null;
-  }
-
-  // Lấy tên cung Mệnh và Thân
-  var menhCungTen = '';
-  var thanCungTen = '';
-  for (var mi = 0; mi < laSo.cung.length; mi++) {
-    if (laSo.cung[mi].ten === 'Mệnh') {
-      var mChi = laSo.cung[mi].diaChi;
-      if (typeof mChi === 'string') mChi = CHI.indexOf(mChi);
-      menhCungTen = CHI[mChi] || '';
-    }
-    if (laSo.cung[mi].ten === 'Thân' || laSo.cung[mi].isThan) {
-      var tChi = laSo.cung[mi].diaChi;
-      if (typeof tChi === 'string') tChi = CHI.indexOf(tChi);
-      thanCungTen = CHI[tChi] || '';
-    }
-  }
-
-  // Build grid HTML
-  var html = '<div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:4px;max-width:720px;margin:0 auto">';
-
-  for (var row = 0; row < 4; row++) {
-    for (var col = 0; col < 4; col++) {
-      // Trung tâm (row 1-2, col 1-2)
-      if ((row === 1 || row === 2) && (col === 1 || col === 2)) {
-        if (row === 1 && col === 1) {
-          // Ô trung tâm (span 2x2)
-          html += tvRenderCenter(laSo);
-        }
-        continue;
-      }
-
-      // Tìm cung tương ứng vị trí
-      var cung = null;
-      for (var gi = 0; gi < gridOrder.length; gi++) {
-        if (gridOrder[gi].row === row && gridOrder[gi].col === col) {
-          cung = timCungTheoChi(gridOrder[gi].chi);
-          break;
-        }
-      }
-
-      if (cung) {
-        html += tvRenderCungCell(cung, laSo, menhCungTen, thanCungTen);
-      } else {
-        html += '<div style="min-height:120px;background:#FFFDF5;border:1px solid var(--border);border-radius:5px;padding:7px;font-size:11px"></div>';
-      }
-    }
-  }
-
-  html += '</div>';
-  wrap.innerHTML = html;
-}
-
-
-// ─── RENDER Ô TRUNG TÂM ─────────────────────────────
-
-function tvRenderCenter(laSo) {
-  var menh = laSo.menh || laSo.menhChu || '—';
-  var cuc = laSo.cuc || laSo.tenCuc || '—';
-  var ten = laSo.ten || '—';
-  var nguHanh = laSo.nguHanhMenh || laSo.hanhMenh || '';
-
-  var html = '<div style="grid-column:2/4;grid-row:2/4;background:linear-gradient(135deg,#FDF6E3,#F5E6C8);border:1px solid var(--cream3);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center">';
-  html += '<div style="font-family:Noto Serif,serif;font-size:20px;color:var(--red);font-weight:700;margin-bottom:6px">Lá Số Tử Vi</div>';
-  html += '<div style="font-size:13px;color:var(--ink2);margin-bottom:4px">' + ten + '</div>';
-  if (menh) html += '<div style="font-family:Noto Serif,serif;font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Mệnh: ' + menh + '</div>';
-  if (cuc) html += '<div style="font-size:12px;color:var(--ink3)">Cục: <strong style="color:var(--red)">' + cuc + '</strong></div>';
-  if (nguHanh) html += '<div style="font-size:12px;color:var(--ink3);margin-top:2px">Ngũ Hành: <strong>' + nguHanh + '</strong></div>';
-  html += '</div>';
-  return html;
-}
-
-
-// ─── RENDER 1 Ô CUNG ────────────────────────────────
-
-function tvRenderCungCell(cung, laSo, menhChi, thanChi) {
-  var CHI = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
-  var tenCung = cung.ten || '—';
-  var diaChi = cung.diaChi;
-  if (typeof diaChi === 'number') diaChi = CHI[diaChi] || '?';
-  var saoArr = cung.sao || [];
-
-  // Xác định class đặc biệt
-  var isMenh = (tenCung === 'Mệnh');
-  var isThan = (tenCung === 'Thân' || cung.isThan);
-  var borderStyle = isMenh ? 'border:2px solid var(--red);background:#FFF5F5' :
-                    isThan ? 'border:2px solid var(--gold);background:#FFFDF0' :
-                    'border:1px solid var(--border);background:#FFFDF5';
-
-  var cungIdx = cung.idx || 0;
-
-  var html = '<div style="' + borderStyle + ';border-radius:5px;padding:7px;font-size:11px;min-height:120px;position:relative;cursor:pointer;transition:all 0.15s;overflow:hidden" onclick="tvMoCungPopup(' + cungIdx + ')" onmouseover="this.style.borderColor=\'var(--red)\';this.style.background=\'#FFF8E0\'" onmouseout="this.style.borderColor=\'' + (isMenh ? 'var(--red)' : isThan ? 'var(--gold)' : 'var(--border)') + '\';this.style.background=\'' + (isMenh ? '#FFF5F5' : isThan ? '#FFFDF0' : '#FFFDF5') + '\'">';
-
-  // Tên cung + Địa Chi
-  html += '<div style="font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">' + tenCung + '</div>';
-  html += '<div style="font-family:Noto Serif,serif;font-size:12px;font-weight:700;color:var(--ink3)">' + diaChi + '</div>';
-
-  // Badge Mệnh/Thân
-  if (isMenh) {
-    html += '<span style="position:absolute;top:4px;right:4px;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--red);color:#FFD700;font-weight:700">MỆNH</span>';
-  }
-  if (isThan) {
-    html += '<span style="position:absolute;top:4px;right:4px;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--gold);color:#fff;font-weight:700">THÂN</span>';
-  }
-
-  // Danh sách sao
-  if (saoArr.length > 0) {
-    html += '<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:2px">';
-    for (var si = 0; si < saoArr.length; si++) {
-      var tenSao = saoArr[si];
-      var saoClass = tvSaoStyle(tenSao);
-      html += '<span style="font-size:10px;font-weight:600;padding:1px 4px;border-radius:3px;white-space:nowrap;' + saoClass + '">' + tenSao + '</span>';
-    }
-    html += '</div>';
-  }
-
-  html += '</div>';
-  return html;
-}
-
-
-// ─── STYLE CHO SAO ───────────────────────────────────
-
-function tvSaoStyle(tenSao) {
-  var CT = ['Tử Vi','Thiên Cơ','Thái Dương','Vũ Khúc','Thiên Đồng','Liêm Trinh',
-            'Thiên Phủ','Thái Âm','Tham Lang','Cự Môn','Thiên Tướng','Thiên Lương','Thất Sát','Phá Quân'];
-  var SAT = ['Kình Dương','Đà La','Hỏa Tinh','Linh Tinh','Địa Không','Địa Kiếp'];
-  var CAT = ['Tả Phụ','Hữu Bật','Văn Xương','Văn Khúc','Lộc Tồn','Thiên Mã'];
-  var HOA = ['Hóa Lộc','Hóa Quyền','Hóa Khoa','Hóa Kỵ'];
-
-  for (var i = 0; i < CT.length; i++) {
-    if (tenSao === CT[i]) return 'color:#7B0000;background:rgba(123,0,0,0.08);';
-  }
-  for (var j = 0; j < SAT.length; j++) {
-    if (tenSao === SAT[j]) return 'color:#800;background:rgba(128,0,0,0.06);border:1px dashed #a00;';
-  }
-  for (var k = 0; k < CAT.length; k++) {
-    if (tenSao === CAT[k]) return 'color:#1A5C00;background:rgba(26,92,0,0.08);';
-  }
-  for (var h = 0; h < HOA.length; h++) {
-    if (tenSao === HOA[h]) {
-      if (tenSao === 'Hóa Kỵ') return 'color:#800;background:rgba(128,0,0,0.08);border:1px solid #c00;';
-      return 'color:#8B6914;background:rgba(139,105,20,0.1);';
-    }
-  }
-  return 'color:#555;background:rgba(0,0,0,0.04);';
-}
-
-
-// ══════════════════════════════════════════════════════
-// RENDER ĐẠI VẬN
-// ══════════════════════════════════════════════════════
-
-function tvRenderDaiVan(laSo) {
-  var wrap = document.getElementById('tv-dai-van-list');
-  if (!wrap) return;
-
-  var daiVan = laSo.daiVan || [];
-  if (daiVan.length === 0) {
-    wrap.innerHTML = '<p style="color:var(--ink3)">Không có dữ liệu đại vận.</p>';
-    return;
-  }
-
-  var now = new Date();
-  var tuoiHienTai = now.getFullYear() - (laSo.ngaySinh ? laSo.ngaySinh.year : now.getFullYear());
-
-  var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px">';
-
-  for (var i = 0; i < daiVan.length; i++) {
-    var dv = daiVan[i];
-    var tuoiBD = dv.tuoiBatDau || dv.tuoi || (i * 10);
-    var tuoiKT = dv.tuoiKetThuc || (tuoiBD + 9);
-    var tenCung = dv.cung || dv.ten || '';
-    var canChi = dv.canChi || '';
-    var isCurrent = (tuoiHienTai >= tuoiBD && tuoiHienTai <= tuoiKT);
-
-    html += '<div style="border:1px solid ' + (isCurrent ? 'var(--gold2)' : 'var(--cream3)') + ';border-radius:5px;padding:10px 12px;background:' + (isCurrent ? 'linear-gradient(135deg,#FFF8E7,#FFF0C0)' : '#fff') + '">';
-    html += '<div style="font-size:11px;color:var(--ink3);margin-bottom:4px">' + tuoiBD + ' — ' + tuoiKT + ' tuổi</div>';
-    html += '<div style="font-family:Noto Serif,serif;font-size:13px;font-weight:700;color:' + (isCurrent ? 'var(--red)' : 'var(--ink)') + '">' + tenCung + '</div>';
-    if (canChi) html += '<div style="font-size:12px;color:var(--ink3)">' + canChi + '</div>';
-    if (isCurrent) html += '<div style="font-size:10px;color:var(--gold);font-weight:600;margin-top:4px">★ ĐANG ĐI</div>';
-    html += '</div>';
-  }
-
-  html += '</div>';
-  wrap.innerHTML = html;
-}
-
-
-// ══════════════════════════════════════════════════════
-// POPUP CHI TIẾT CUNG
-// ══════════════════════════════════════════════════════
-
-function tvMoCungPopup(cungIdx) {
-  if (!_laSo || !_laSo.cung || !_laSo.cung[cungIdx]) return;
-
-  var cung = _laSo.cung[cungIdx];
-  var CHI = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
-  var tenCung = cung.ten || '—';
-  var diaChi = cung.diaChi;
-  if (typeof diaChi === 'number') diaChi = CHI[diaChi] || '?';
-  var saoArr = cung.sao || [];
-
-  // Title
-  var titleEl = document.getElementById('tv-popup-title');
-  if (titleEl) titleEl.textContent = tenCung + ' (' + diaChi + ')';
-
-  // Content
-  var contentEl = document.getElementById('tv-popup-content');
-  if (!contentEl) return;
-
-  var html = '';
-
-  // Danh sách sao
-  html += '<div style="margin-bottom:16px">';
-  html += '<div style="font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;margin-bottom:8px">Các Sao Trong Cung</div>';
-  html += '<div style="display:flex;flex-wrap:wrap;gap:6px">';
-  for (var i = 0; i < saoArr.length; i++) {
-    html += '<span style="font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;' + tvSaoStyle(saoArr[i]) + '">' + saoArr[i] + '</span>';
-  }
-  if (saoArr.length === 0) html += '<span style="color:var(--ink3);font-style:italic">Không có sao</span>';
-  html += '</div></div>';
-
-  // Luận giải cung (dùng hàm từ tu-vi-luan-giai-ui.js)
-  if (typeof luanCungChiTiet === 'function') {
-    var lg = luanCungChiTiet(_laSo, tenCung);
-    if (lg) {
-      html += renderCungPanel(lg);
-    }
-  } else {
-    // Fallback: hiện thông tin cơ bản từng sao
-    for (var si = 0; si < saoArr.length; si++) {
-      var saoTen = saoArr[si];
-      var saoData = null;
-      if (typeof CHINH_TINH_DATA !== 'undefined') saoData = CHINH_TINH_DATA[saoTen];
-      if (!saoData && typeof PHU_TINH_DATA !== 'undefined') saoData = PHU_TINH_DATA[saoTen];
-      if (!saoData && typeof SAT_TINH_DATA !== 'undefined') saoData = SAT_TINH_DATA[saoTen];
-      if (!saoData && typeof TU_HOA_DATA !== 'undefined') saoData = TU_HOA_DATA[saoTen];
-
-      if (saoData) {
-        html += '<div style="background:#fff;border:1px solid var(--cream3);border-radius:6px;padding:10px;margin-bottom:8px">';
-        html += '<strong style="color:var(--red)">' + saoTen + '</strong>';
-        if (saoData.nguHanh) html += ' <span style="font-size:11px;color:var(--ink3)">(' + saoData.nguHanh + ')</span>';
-        html += '<p style="font-size:12px;color:var(--ink2);margin-top:4px;line-height:1.6">';
-        if (saoData.cung && saoData.cung[tenCung]) {
-          html += saoData.cung[tenCung];
-        } else if (saoData.hieuUng && saoData.hieuUng[tenCung]) {
-          html += saoData.hieuUng[tenCung];
-        } else if (saoData.dacTinh) {
-          html += saoData.dacTinh;
-        }
-        html += '</p></div>';
-      }
-    }
-  }
-
-  contentEl.innerHTML = html;
-
-  // Mở popup
-  var popup = document.getElementById('tv-cung-popup');
-  if (popup) popup.classList.add('open');
-}
-
-function tvDongPopup() {
-  var popup = document.getElementById('tv-cung-popup');
-  if (popup) popup.classList.remove('open');
-}
-
-// Click overlay đóng popup
-document.addEventListener('click', function(e) {
-  if (e.target && e.target.id === 'tv-cung-popup') {
-    tvDongPopup();
-  }
-});
-
-
-// ══════════════════════════════════════════════════════
-// CHUYỂN TAB
-// ══════════════════════════════════════════════════════
-
-function tvShowTab(name) {
-  var tabs = ['la-so', 'dai-van', 'luan-giai'];
-  for (var i = 0; i < tabs.length; i++) {
-    var el = document.getElementById('tv-tab-' + tabs[i]);
-    if (el) el.style.display = (tabs[i] === name) ? '' : 'none';
-  }
-
-  var btns = document.querySelectorAll('#tv-tabs .sub-tab');
-  for (var j = 0; j < btns.length; j++) {
-    btns[j].className = 'sub-tab' + (j === tabs.indexOf(name) ? ' active' : '');
-  }
-
-  // Render luận giải khi click tab
-  if (name === 'luan-giai' && _laSo) {
-    var lgWrap = document.getElementById('tv-luan-giai-content');
-    if (lgWrap && typeof renderLuanGiaiTuVi === 'function') {
-      lgWrap.innerHTML = renderLuanGiaiTuVi(_laSo);
-    }
-  }
-}
+</div>
