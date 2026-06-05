@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self' 'unsafe-inline' 'unsafe-eval';
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+               font-src 'self' https://fonts.gstatic.com;
+               connect-src 'self' https://tuvi888-api.miphan888.workers.dev;
+               img-src 'self' data:;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tra cứu lịch âm dương 2024-2025, xem ngày tốt xấu, can chi, tiết khí, giờ Hoàng Đạo chính xác. Lịch Việt Nam 888.">
+  <meta property="og:title" content="Lịch Âm Dương 2024-2025 | Tra Cứu Ngày Tốt Xấu | Lịch Việt Nam 888">
+  <meta property="og:description" content="Tra cứu lịch âm dương, xem ngày tốt xấu, can chi, tiết khí, giờ Hoàng Đạo chính xác từ 1900 đến 2100.">
+  <meta property="og:url" content="lich-am.html">
+  <title>Lịch Âm Dương 2024-2025 | Tra Cứu Ngày Tốt Xấu | Lịch Việt Nam 888</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/lich-am.css">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="brand-icon">☯</span>
+        <div class="brand-text">
+          <h1 class="brand-title">Lịch Việt Nam 888</h1>
+          <p class="brand-sub">Tra cứu lịch âm dương &amp; thuật số phương Đông</p>
+        </div>
+        <span class="brand-icon brand-icon-right">🌸</span>
+      </div>
+      <div class="header-today" id="header-today">
+        <span id="today-solar"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="main-nav" id="main-nav">
+    <div class="nav-inner">
+      <a class="nav-tab active" href="lich-am.html">
+        <span class="tab-icon">📅</span>
+        <span class="tab-label">Lịch Âm</span>
+      </a>
+      <a class="nav-tab" href="tu-vi.html">
+        <span class="tab-icon">⭐</span>
+        <span class="tab-label">Tử Vi</span>
+      </a>
+      <a class="nav-tab" href="tu-tru.html">
+        <span class="tab-icon">🔮</span>
+        <span class="tab-label">Tứ Trụ</span>
+      </a>
+      <a class="nav-tab" href="phong-thuy.html">
+        <span class="tab-icon">🧭</span>
+        <span class="tab-label">Phong Thủy</span>
+      </a>
+      <a class="nav-tab" href="van-khan.html">
+        <span class="tab-icon">🙏</span>
+        <span class="tab-label">Văn Khấn</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="app" class="app-container">
+
+    <!-- ===== HERO BANNER ===== -->
+    <div class="la-hero">
+      <h1 class="la-hero-title">📅 Lịch Âm Dương</h1>
+      <p class="la-hero-subtitle">Tra cứu ngày âm, can chi, tiết khí, giờ Hoàng Đạo — chính xác từ 1900 đến 2100</p>
+    </div>
+
+    <!-- ===== FORM TRA CỨU ===== -->
+    <div class="la-form-card">
+      <h3 class="la-form-title">🔍 Tra Cứu Ngày Dương Lịch</h3>
+      <div class="la-form-row">
+        <div class="la-form-group">
+          <label class="la-label" for="la-ngay">Ngày</label>
+          <input type="number" id="la-ngay" class="la-input" min="1" max="31" placeholder="Ngày">
+        </div>
+        <div class="la-form-group">
+          <label class="la-label" for="la-thang">Tháng</label>
+          <input type="number" id="la-thang" class="la-input" min="1" max="12" placeholder="Tháng">
+        </div>
+        <div class="la-form-group la-form-group--year">
+          <label class="la-label" for="la-nam">Năm</label>
+          <input type="number" id="la-nam" class="la-input" min="1900" max="2100" placeholder="Năm">
+        </div>
+        <div class="la-form-group la-form-btn-wrap">
+          <button class="btn btn-primary la-btn-tra" onclick="lichAmTraCuu()">Tra Cứu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== KẾT QUẢ ===== -->
+    <div id="la-ket-qua" class="la-result-card hidden">
+      <!-- Render bởi JS -->
+    </div>
+
+    <!-- ===== AI LUẬN GIẢI ===== -->
+    <div id="la-ai-section" class="hidden">
+      <div id="la-ai-container">
+        <!-- Render bởi LichAmAI.luanGiai() -->
+      </div>
+    </div>
+
+    <div class="ornament">❧ ✦ ❧</div>
+
+    <!-- ===== CALENDAR ===== -->
+    <div class="la-calendar-card">
+      <div class="la-cal-nav">
+        <button class="la-cal-nav-btn" onclick="lichAmPrevMonth()" title="Tháng trước">‹</button>
+        <div id="la-cal-title" class="la-cal-nav-title">Tháng ... / ...</div>
+        <button class="la-cal-nav-btn" onclick="lichAmNextMonth()" title="Tháng sau">›</button>
+      </div>
+      <div id="la-calendar">
+        <!-- Render bởi JS -->
+      </div>
+      <div class="la-cal-legend">
+        <span class="la-legend-dot la-legend-today"></span> Hôm nay &nbsp;
+        <span class="la-legend-dot la-legend-selected"></span> Đã chọn &nbsp;
+        <span class="la-legend-dot la-legend-other"></span> Tháng khác
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>🌸 Lịch Việt Nam 888 &copy; 2024 &nbsp;|&nbsp; Kết hợp truyền thống &amp; hiện đại</p>
+      <p class="footer-note">Thông tin mang tính tham khảo, không thay thế tư vấn chuyên gia.</p>
+    </div>
+  </footer>
+
+  <!-- ===== LOADING OVERLAY ===== -->
+  <div class="app-loading hidden" id="app-loading">
+    <div class="loading-spinner"></div>
+    <p>Đang tải...</p>
+  </div>
+
+  <!-- ===== JAVASCRIPT — thứ tự load quan trọng ===== -->
+  <script src="js/config.js"></script>
+  <script src="js/data/can-chi.js"></script>
+  <script src="js/data/tiet-khi.js"></script>
+  <script src="js/engines/lunar-engine.js"></script>
+  <script src="js/engines/can-chi-engine.js"></script>
+  <script src="js/ai-service.js"></script>
+  <script src="js/ai/lich-am-ai.js"></script>
+  <script src="js/ui/lich-am-ui.js"></script>
+
+  <script>
+    /* Hiển thị ngày hôm nay ở header */
+    (function() {
+      function updateHeaderToday() {
+        var now  = new Date();
+        var days = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+        var thu  = days[now.getDay()];
+        var d    = now.getDate();
+        var m    = now.getMonth() + 1;
+        var y    = now.getFullYear();
+        var pad  = function(n) { return n < 10 ? '0' + n : String(n); };
+        var str  = thu + ', ' + pad(d) + '/' + pad(m) + '/' + y;
+        var el   = document.getElementById('today-solar');
+        if (el) el.textContent = str;
+      }
+      updateHeaderToday();
+      setInterval(updateHeaderToday, 60000);
+    })();
+  </script>
+
+</body>
+</html>
