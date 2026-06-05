@@ -1,644 +1,221 @@
-/* ============================================================
-   tu-tru.css — Styles cho module Tứ Trụ Bát Tự
-   Lịch Việt Nam 888
-   Match CSS variables từ base.css
-   ============================================================ */
+/* ══════════════════════════════════════════════════════
+   TU-TRU.CSS — Style cho Tứ Trụ Bát Tự
+   ══════════════════════════════════════════════════════ */
 
-/* ===========================================================
-   FORM NHẬP THÔNG TIN
-   =========================================================== */
-.tt-form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp-md);
-}
-
-.tt-form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-xs);
-}
-
-.tt-form-group.span-2 {
-  grid-column: span 2;
-}
-
-.tt-form-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--ink2);
-}
-
-.tt-form-input,
-.tt-form-select {
-  padding: 9px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-md);
+/* ─── 4 TRỤ GRID ─── */
+#batu-4tru .tru-box {
   background: #fff;
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  color: var(--ink);
-  outline: none;
-  transition: border-color var(--trans-fast), box-shadow var(--trans-fast);
+  border: 1px solid var(--cream3);
+  border-radius: 6px;
+  padding: 14px;
+  text-align: center;
+  transition: border-color 0.2s;
 }
 
-.tt-form-input:focus,
-.tt-form-select:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(200,146,10,0.15);
+#batu-4tru .tru-box:hover {
+  border-color: var(--border);
 }
 
-/* Nhóm radio giới tính */
-.tt-radio-group {
-  display: flex;
-  gap: var(--sp-md);
-  align-items: center;
-  padding: 9px 12px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-md);
-  background: #fff;
+/* Nhật Chủ highlight */
+#batu-4tru .nhat-chu,
+#batu-4tru > div > div:nth-child(3) {
+  border-color: var(--red) !important;
+  border-width: 2px;
+  background: #FFF8F0;
 }
 
-.tt-radio-label {
+/* ─── NGŨ HÀNH BARS ─── */
+.hanh-bar-row {
   display: flex;
   align-items: center;
-  gap: var(--sp-xs);
-  font-size: 0.9rem;
-  color: var(--ink);
-  cursor: pointer;
-  user-select: none;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.tt-radio-label input[type="radio"] {
-  accent-color: var(--gold);
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-}
-
-/* Nút submit */
-.tt-submit-wrap {
-  margin-top: var(--sp-lg);
-  display: flex;
-  justify-content: center;
-}
-
-/* ===========================================================
-   TIÊU ĐỀ KẾT QUẢ
-   =========================================================== */
-.tt-result-title {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  color: var(--red);
-  text-align: center;
-  margin-bottom: var(--sp-md);
-  letter-spacing: 1px;
-}
-
-/* ===========================================================
-   4 Ô TỨ TRỤ
-   =========================================================== */
-.tt-bon-tru {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--sp-md);
-  margin-bottom: var(--sp-xl);
-}
-
-/* Mỗi ô trụ */
-.tt-tru-cell {
-  background: linear-gradient(180deg, var(--cream) 0%, var(--cream2) 100%);
-  border: 2px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: var(--sp-md) var(--sp-sm);
-  text-align: center;
-  transition: border-color var(--trans-normal), box-shadow var(--trans-normal);
-  position: relative;
-}
-
-.tt-tru-cell:hover {
-  border-color: var(--gold);
-  box-shadow: var(--shadow-md);
-}
-
-/* Ô Ngày — Nhật Chủ nổi bật hơn */
-.tt-tru-cell.tt-tru-nhat-chu {
-  background: linear-gradient(180deg, #FFF8E7 0%, var(--cream2) 100%);
-  border-color: var(--gold);
-  box-shadow: var(--shadow-sm);
-}
-
-.tt-tru-cell.tt-tru-nhat-chu::before {
-  content: '★';
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  font-size: 0.65rem;
-  color: var(--gold);
-}
-
-/* Nhãn trụ (Năm / Tháng / Ngày / Giờ) */
-.tt-tru-label {
-  font-size: 0.68rem;
+.hanh-bar-label {
+  width: 40px;
+  font-size: 12px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--ink3);
-  margin-bottom: var(--sp-xs);
-}
-
-/* Can — chữ to, serif, màu theo hành */
-.tt-tru-can {
-  font-family: var(--font-serif);
-  font-size: 1.7rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 2px;
-}
-
-/* Chi — chữ vừa, serif */
-.tt-tru-chi {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 600;
-  line-height: 1.1;
-  margin-bottom: var(--sp-xs);
-}
-
-/* Badge Ngũ Hành */
-.tt-nh-badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: var(--r-pill);
-  margin-bottom: 4px;
-}
-
-/* Màu badge theo hành */
-.tt-nh-Kim  { background: rgba(158,158,158,0.15); color: var(--kim-color);  border: 1px solid var(--kim-color); }
-.tt-nh-Moc  { background: rgba(56,142,60,0.12);   color: var(--moc-color);  border: 1px solid var(--moc-color); }
-.tt-nh-Thuy { background: rgba(21,101,192,0.12);  color: var(--thuy-color); border: 1px solid var(--thuy-color); }
-.tt-nh-Hoa  { background: rgba(211,47,47,0.12);   color: var(--hoa-color);  border: 1px solid var(--hoa-color); }
-.tt-nh-Tho  { background: rgba(245,127,23,0.12);  color: var(--tho-color);  border: 1px solid var(--tho-color); }
-
-/* Tên Thần (Thiên Tài, Chính Quan...) */
-.tt-tru-than {
-  font-size: 0.72rem;
-  color: var(--ink3);
-  margin-top: 2px;
-  font-style: italic;
-}
-
-/* ===========================================================
-   TABS
-   =========================================================== */
-.tt-tabs-wrap {
-  margin-top: var(--sp-lg);
-  background: var(--cream);
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-
-.tt-tabs-bar {
-  display: flex;
-  border-bottom: 2px solid var(--border);
-  background: linear-gradient(to bottom, var(--cream2), var(--cream));
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.tt-tabs-bar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Nút tab */
-.tt-tab-btn {
-  flex: 1;
-  min-width: 120px;
-  padding: var(--sp-sm) var(--sp-md);
-  border: none;
-  border-bottom: 3px solid transparent;
-  background: transparent;
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--ink3);
-  cursor: pointer;
-  transition: color var(--trans-fast), border-color var(--trans-fast), background var(--trans-fast);
-  white-space: nowrap;
-}
-
-.tt-tab-btn:hover {
-  color: var(--red2);
-  background: rgba(200,146,10,0.06);
-}
-
-.tt-tab-btn.active {
-  color: var(--red);
-  border-bottom-color: var(--gold);
-  background: rgba(200,146,10,0.08);
-}
-
-/* Nội dung panel */
-.tt-tab-panel {
-  padding: var(--sp-lg);
-}
-
-/* ===========================================================
-   TAB NGŨ HÀNH — BIỂU ĐỒ BAR NGANG
-   =========================================================== */
-.tt-ngu-hanh-wrap {
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-.tt-panel-title {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  color: var(--red);
-  margin-bottom: var(--sp-md);
-  text-align: center;
-}
-
-/* Mỗi dòng bar */
-.tt-bar-row {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  margin-bottom: var(--sp-sm);
-}
-
-/* Nhãn tên hành (Kim / Mộc...) */
-.tt-bar-label {
-  width: 38px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--ink2);
-  flex-shrink: 0;
   text-align: right;
+  flex-shrink: 0;
 }
 
-/* Track thanh bar */
-.tt-bar-track {
+.hanh-bar-track {
   flex: 1;
   height: 14px;
-  background: rgba(196,151,90,0.15);
-  border-radius: var(--r-pill);
+  background: #f0e8d8;
+  border-radius: 7px;
   overflow: hidden;
-  position: relative;
 }
 
-/* Thanh fill */
-.tt-bar-fill {
+.hanh-bar-fill {
   height: 100%;
-  border-radius: var(--r-pill);
+  border-radius: 7px;
   transition: width 0.6s ease;
-  display: flex;
-  align-items: center;
-  padding-left: 6px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.9);
-  min-width: 4px;
+  min-width: 2px;
 }
 
-/* Màu fill theo hành */
-.tt-bar-fill.tt-nh-Kim  { background: var(--kim-color); }
-.tt-bar-fill.tt-nh-Moc  { background: var(--moc-color); }
-.tt-bar-fill.tt-nh-Thuy { background: var(--thuy-color); }
-.tt-bar-fill.tt-nh-Hoa  { background: var(--hoa-color); }
-.tt-bar-fill.tt-nh-Tho  { background: var(--tho-color); }
-
-/* Số đếm bên phải */
-.tt-bar-count {
-  width: 24px;
+.hanh-bar-count {
+  width: 80px;
+  font-size: 11px;
+  color: var(--ink3);
   text-align: right;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--ink2);
   flex-shrink: 0;
 }
 
-/* Chú thích tương sinh tương khắc */
-.tt-nh-info {
-  margin-top: var(--sp-lg);
-  padding: var(--sp-sm) var(--sp-md);
-  background: rgba(200,146,10,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  font-size: 0.82rem;
+/* ─── NGŨ HÀNH COLORS ─── */
+.ngu-hanh-moc { color: #2D6A00; }
+.ngu-hanh-hoa { color: #B80000; }
+.ngu-hanh-tho { color: #7A5500; }
+.ngu-hanh-kim { color: #555; }
+.ngu-hanh-thuy { color: #004080; }
+
+/* ─── THẬP THẦN ─── */
+#batu-thap-than {
+  margin-top: 4px;
 }
 
-.tt-nh-info-row {
-  display: flex;
-  gap: var(--sp-sm);
-  margin-bottom: 4px;
-}
-
-.tt-nh-info-row:last-child {
-  margin-bottom: 0;
-}
-
-.tt-nh-info-label {
-  font-weight: 700;
-  color: var(--ink2);
-  flex-shrink: 0;
-  width: 100px;
-}
-
-.tt-nh-info-val {
-  color: var(--ink3);
-}
-
-/* ===========================================================
-   TAB THÂN VƯỢNG / NHƯỢC
-   =========================================================== */
-
-/* Card kết luận vượng/nhược */
-.tt-vn-card {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-md);
-  padding: var(--sp-md) var(--sp-lg);
-  border-radius: var(--r-lg);
-  margin-bottom: var(--sp-md);
-  border: 2px solid transparent;
-}
-
-.tt-vn-card.tt-vn-vuong {
-  background: var(--green-light);
-  border-color: var(--green-good);
-}
-
-.tt-vn-card.tt-vn-nhuoc {
-  background: var(--amber-light);
-  border-color: var(--amber);
-}
-
-.tt-vn-icon {
-  font-size: 2rem;
-  line-height: 1;
-  flex-shrink: 0;
-}
-
-.tt-vn-ket {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.tt-vn-can {
-  font-size: 0.88rem;
-  color: var(--ink3);
-  margin-top: 2px;
-}
-
-/* Bảng chi tiết điểm */
-.tt-vn-detail {
-  background: #fff;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: var(--sp-md);
-}
-
-.tt-vn-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--sp-xs) 0;
-  border-bottom: 1px solid rgba(196,151,90,0.2);
-  font-size: 0.88rem;
-  color: var(--ink2);
-}
-
-.tt-vn-row:last-of-type {
-  border-bottom: none;
-}
-
-.tt-vn-row strong {
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.tt-vn-total {
-  font-weight: 700;
-  color: var(--ink);
-  font-size: 0.95rem;
-}
-
-.tt-vn-note {
-  font-size: 0.78rem;
-  color: var(--ink3);
-  margin-top: var(--sp-sm);
-  font-style: italic;
-}
-
-/* ===========================================================
-   TAB DỤNG THẦN
-   =========================================================== */
-.tt-dt-grid {
+/* ─── RESULT GRID ─── */
+#batu-tabs .result-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp-md);
-  margin-bottom: var(--sp-md);
+  gap: 14px;
+  margin-top: 0;
 }
 
-/* Card dụng / hỷ / kỵ */
-.tt-dt-card {
-  text-align: center;
-  padding: var(--sp-md);
-  border-radius: var(--r-lg);
-  border: 2px solid var(--border);
-  background: var(--cream);
-  transition: box-shadow var(--trans-normal);
+#batu-tabs .result-box {
+  background: #fff;
+  border: 1px solid var(--cream3);
+  border-radius: 6px;
+  padding: 14px 16px;
 }
 
-.tt-dt-card:hover {
-  box-shadow: var(--shadow-md);
-}
-
-.tt-dt-card.tt-dt-dung {
-  border-color: var(--gold);
-  background: linear-gradient(180deg, #FFF8E7 0%, var(--cream) 100%);
-}
-
-.tt-dt-card.tt-dt-hy {
-  border-color: var(--green-good);
-  background: var(--green-light);
-}
-
-.tt-dt-card.tt-dt-ky {
-  border-color: var(--red-bad);
-  background: var(--red-light);
-}
-
-.tt-dt-icon {
-  font-size: 1.5rem;
-  margin-bottom: var(--sp-xs);
-}
-
-.tt-dt-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1px;
+#batu-tabs .result-box .rb-label {
+  font-size: 11px;
+  color: var(--ink3);
   text-transform: uppercase;
-  color: var(--ink3);
-  margin-bottom: var(--sp-xs);
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  margin-bottom: 6px;
 }
 
-.tt-dt-value {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
+#batu-tabs .result-box .rb-value {
+  font-family: 'Noto Serif', serif;
+  font-size: 20px;
   font-weight: 700;
   color: var(--ink);
 }
 
-/* Lý giải dụng thần */
-.tt-dt-ly-giai {
-  background: rgba(200,146,10,0.06);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: var(--sp-md);
-  font-size: 0.88rem;
-  color: var(--ink2);
-  line-height: 1.7;
-}
-
-/* ===========================================================
-   TAB AI LUẬN ĐOÁN
-   =========================================================== */
-.tt-ai-wrap {
-  max-width: 680px;
-  margin: 0 auto;
-}
-
-.tt-ai-btn-wrap {
-  text-align: center;
-  margin-bottom: var(--sp-lg);
-}
-
-/* Hộp kết quả AI */
-.tt-ai-box {
-  border: 2px solid var(--gold);
-  border-radius: var(--r-xl);
-  background: linear-gradient(135deg, #FFFBF0 0%, var(--cream) 100%);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-
-/* Header AI box */
-.tt-ai-header {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  padding: var(--sp-sm) var(--sp-md);
-  background: linear-gradient(to right, var(--gold), var(--gold2));
-  color: var(--ink);
-  font-size: 0.9rem;
-}
-
-.tt-ai-header span {
-  font-size: 1.1rem;
-}
-
-.tt-ai-header strong {
-  font-weight: 700;
-  color: var(--ink);
-}
-
-/* Nội dung AI */
-.tt-ai-content {
-  padding: var(--sp-lg);
-  font-size: 0.92rem;
-  line-height: 1.85;
-  color: var(--ink2);
-}
-
-.tt-ai-content p {
-  margin-bottom: var(--sp-sm);
-}
-
-.tt-ai-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* Trạng thái loading */
-.tt-ai-box.tt-ai-loading {
-  border-color: var(--border);
-  background: var(--cream);
-  padding: var(--sp-xl);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--sp-md);
-  font-size: 0.9rem;
+#batu-tabs .result-box .rb-sub {
+  font-size: 12px;
   color: var(--ink3);
+  margin-top: 3px;
 }
 
-/* Trạng thái lỗi */
-.tt-ai-box.tt-ai-error {
-  border-color: var(--red-bad);
-  background: var(--red-light);
-  padding: var(--sp-lg);
-  font-size: 0.88rem;
-  color: var(--red-bad);
+#batu-tabs .result-box.highlight {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFF0D0 100%);
+  border-color: var(--gold2);
 }
 
-/* ===========================================================
-   RESPONSIVE — Mobile
-   =========================================================== */
-@media (max-width: 768px) {
-  /* Form: 2 cột */
-  .tt-form-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* ─── SK GRID (Lời khuyên) ─── */
+.sk-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.sk-box {
+  background: #fff;
+  border: 1px solid var(--cream3);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.sk-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink3);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sk-item {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+/* ─── TABS ─── */
+#batu-tabs .sub-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  border-bottom: 2px solid var(--cream3);
+  padding-bottom: 0;
+}
+
+#batu-tabs .sub-tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+#batu-tabs .sub-tab:hover {
+  color: var(--red);
+}
+
+#batu-tabs .sub-tab.active {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
+
+/* ─── AI RESULT ─── */
+#batu-ai-result .luan-giai-box {
+  background: linear-gradient(135deg, #FFF8E7 0%, #FFF5F0 100%);
+  border: 1px solid var(--cream3);
+  border-radius: 6px;
+  padding: 16px 20px;
+}
+
+#batu-ai-result .luan-giai-box h3 {
+  font-family: 'Noto Serif', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+#batu-ai-result .luan-giai-box p {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.75;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 640px) {
+  #batu-4tru > div {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 
-  .tt-form-group.span-2 {
-    grid-column: span 2;
-  }
-
-  /* 4 Trụ: 2 cột */
-  .tt-bon-tru {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Dụng thần: 1 cột */
-  .tt-dt-grid {
+  .sk-grid {
     grid-template-columns: 1fr;
   }
 
-  /* Tabs: scroll ngang */
-  .tt-tabs-bar {
-    overflow-x: auto;
+  #batu-tabs .result-grid {
+    grid-template-columns: 1fr !important;
   }
 
-  .tt-tab-btn {
-    min-width: 100px;
-    font-size: 0.8rem;
-    padding: var(--sp-sm);
-  }
-}
-
-@media (max-width: 480px) {
-  /* Form: 1 cột */
-  .tt-form-grid {
-    grid-template-columns: 1fr;
+  #batu-tabs .sub-tabs {
+    flex-wrap: wrap;
   }
 
-  .tt-form-group.span-2 {
-    grid-column: span 1;
-  }
-
-  /* Can Chi: giảm size */
-  .tt-tru-can {
-    font-size: 1.3rem;
-  }
-
-  .tt-tru-chi {
-    font-size: 1.05rem;
+  #batu-tabs .sub-tab {
+    padding: 6px 10px;
+    font-size: 12px;
   }
 }

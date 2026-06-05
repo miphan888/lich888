@@ -1,267 +1,143 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self';
-               script-src 'self' 'unsafe-inline' 'unsafe-eval';
-               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-               font-src 'self' https://fonts.gstatic.com;
-               connect-src 'self' https://tuvi888-api.miphan888.workers.dev;
-               img-src 'self' data:;">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Xem tử vi trọn đời, lập lá số tử vi đẩu số miễn phí, luận giải 12 cung, đại vận, tiểu vận. Lịch Việt Nam 888.">
-  <meta property="og:title" content="Xem Tử Vi Trọn Đời | Lập Lá Số Tử Vi Đẩu Số | Lịch Việt Nam 888">
-  <meta property="og:description" content="Lập lá số tử vi đẩu số miễn phí, xem 12 cung, đại vận tiểu vận, AI luận giải vận mệnh trọn đời.">
-  <meta property="og:url" content="tu-vi.html">
-  <title>Xem Tử Vi Trọn Đời | Lập Lá Số Tử Vi Đẩu Số | Lịch Việt Nam 888</title>
+<!-- pages/tu-vi.html — Trang Lập Lá Số Tử Vi -->
+<link rel="stylesheet" href="css/tu-vi.css">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<div class="app-container">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/tu-vi.css">
-</head>
-<body>
+  <!-- ===== TIÊU ĐỀ ===== -->
+  <h1 class="section-title">⭐ Lập Lá Số Tử Vi</h1>
+  <p class="section-subtitle">Nhập thông tin sinh nhật để lập lá số và luận giải vận mệnh</p>
 
-  <!-- ===== HEADER ===== -->
-  <header class="site-header" id="site-header">
-    <div class="header-inner">
-      <div class="header-brand">
-        <span class="brand-icon">☯</span>
-        <div class="brand-text">
-          <h1 class="brand-title">Lịch Việt Nam 888</h1>
-          <p class="brand-sub">Tra cứu lịch âm dương &amp; thuật số phương Đông</p>
-        </div>
-        <span class="brand-icon brand-icon-right">🌸</span>
+  <!-- ===== FORM NHẬP THÔNG TIN ===== -->
+  <div class="form-section mb-lg">
+    <div class="tv-form-grid">
+
+      <!-- Họ tên -->
+      <div class="tv-form-group span-2">
+        <label class="tv-form-label" for="tv-ho-ten">Họ và tên</label>
+        <input type="text" id="tv-ho-ten" class="tv-form-input" placeholder="VD: Nguyễn Văn An">
       </div>
-      <div class="header-today" id="header-today">
-        <span id="today-solar"></span>
+
+      <!-- Giới tính -->
+      <div class="tv-form-group">
+        <label class="tv-form-label" for="tv-gioi-tinh">Giới tính</label>
+        <select id="tv-gioi-tinh" class="tv-form-select">
+          <option value="nam">Nam</option>
+          <option value="nu">Nữ</option>
+        </select>
       </div>
+
+      <!-- Ngày sinh -->
+      <div class="tv-form-group">
+        <label class="tv-form-label" for="tv-ngay">Ngày sinh</label>
+        <input type="number" id="tv-ngay" class="tv-form-input" min="1" max="31" placeholder="1-31">
+      </div>
+
+      <!-- Tháng sinh -->
+      <div class="tv-form-group">
+        <label class="tv-form-label" for="tv-thang">Tháng sinh</label>
+        <input type="number" id="tv-thang" class="tv-form-input" min="1" max="12" placeholder="1-12">
+      </div>
+
+      <!-- Năm sinh -->
+      <div class="tv-form-group">
+        <label class="tv-form-label" for="tv-nam">Năm sinh</label>
+        <input type="number" id="tv-nam" class="tv-form-input" min="1900" max="2100" placeholder="VD: 1990">
+      </div>
+
+      <!-- Giờ sinh -->
+      <div class="tv-form-group">
+        <label class="tv-form-label" for="tv-gio">Giờ sinh (Địa Chi)</label>
+        <select id="tv-gio" class="tv-form-select">
+          <option value="">-- Không rõ --</option>
+          <option value="Tý">Tý (23:00 – 01:00)</option>
+          <option value="Sửu">Sửu (01:00 – 03:00)</option>
+          <option value="Dần">Dần (03:00 – 05:00)</option>
+          <option value="Mão">Mão (05:00 – 07:00)</option>
+          <option value="Thìn">Thìn (07:00 – 09:00)</option>
+          <option value="Tỵ">Tỵ (09:00 – 11:00)</option>
+          <option value="Ngọ">Ngọ (11:00 – 13:00)</option>
+          <option value="Mùi">Mùi (13:00 – 15:00)</option>
+          <option value="Thân">Thân (15:00 – 17:00)</option>
+          <option value="Dậu">Dậu (17:00 – 19:00)</option>
+          <option value="Tuất">Tuất (19:00 – 21:00)</option>
+          <option value="Hợi">Hợi (21:00 – 23:00)</option>
+        </select>
+      </div>
+
+      <!-- Múi giờ -->
+      <div class="tv-form-group">
+        <label class="tv-form-label" for="tv-mui-gio">Múi giờ</label>
+        <select id="tv-mui-gio" class="tv-form-select">
+          <option value="7" selected>UTC+7 (Việt Nam)</option>
+          <option value="8">UTC+8</option>
+          <option value="0">UTC+0</option>
+        </select>
+      </div>
+
+    </div><!-- /.tv-form-grid -->
+
+    <div class="tv-submit-wrap">
+      <button class="btn btn-primary" id="tv-btn-lap" onclick="tvLapLaSo()">
+        ⭐ Lập Lá Số Tử Vi
+      </button>
     </div>
-  </header>
+  </div><!-- /.form-section -->
 
-  <!-- ===== NAVIGATION ===== -->
-  <nav class="main-nav" id="main-nav">
-    <div class="nav-inner">
-      <a class="nav-tab" href="lich-am.html">
-        <span class="tab-icon">📅</span>
-        <span class="tab-label">Lịch Âm</span>
-      </a>
-      <a class="nav-tab active" href="tu-vi.html">
-        <span class="tab-icon">⭐</span>
-        <span class="tab-label">Tử Vi</span>
-      </a>
-      <a class="nav-tab" href="tu-tru.html">
-        <span class="tab-icon">🔮</span>
-        <span class="tab-label">Tứ Trụ</span>
-      </a>
-      <a class="nav-tab" href="phong-thuy.html">
-        <span class="tab-icon">🧭</span>
-        <span class="tab-label">Phong Thủy</span>
-      </a>
-      <a class="nav-tab" href="van-khan.html">
-        <span class="tab-icon">🙏</span>
-        <span class="tab-label">Văn Khấn</span>
-      </a>
+  <!-- ===== KẾT QUẢ (ẩn ban đầu) ===== -->
+  <div id="tv-result" class="hidden">
+
+    <!-- Tứ Trụ -->
+    <h3 class="section-title" style="font-size:1.2rem;margin-bottom:var(--sp-md);">Tứ Trụ Sinh</h3>
+    <div class="tv-tu-tru" id="tv-tu-tru"><!-- Render bởi JS --></div>
+
+    <!-- Mệnh - Cục - Chủ Mệnh - Thân -->
+    <div class="tv-menh-grid" id="tv-menh-grid"><!-- Render bởi JS --></div>
+
+    <!-- Lá số 12 cung -->
+    <div class="tv-la-so-wrap">
+      <div class="tv-la-so-title">🌟 Lá Số Tử Vi — 12 Cung</div>
+      <div class="tv-la-so-grid" id="tv-la-so-grid"><!-- Render bởi JS --></div>
     </div>
-  </nav>
 
-  <!-- ===== MAIN CONTENT ===== -->
-  <main id="app" class="app-container">
-
-    <!-- ===== TIÊU ĐỀ ===== -->
-    <h1 class="section-title">⭐ Lập Lá Số Tử Vi</h1>
-    <p class="section-subtitle">Nhập thông tin sinh nhật để lập lá số và luận giải vận mệnh</p>
-
-    <!-- ===== FORM NHẬP THÔNG TIN ===== -->
-    <div class="form-section mb-lg">
-      <div class="tv-form-grid">
-
-        <!-- Họ tên -->
-        <div class="tv-form-group span-2">
-          <label class="tv-form-label" for="tv-ho-ten">Họ và tên</label>
-          <input type="text" id="tv-ho-ten" class="tv-form-input" placeholder="VD: Nguyễn Văn An">
-        </div>
-
-        <!-- Giới tính -->
-        <div class="tv-form-group">
-          <label class="tv-form-label" for="tv-gioi-tinh">Giới tính</label>
-          <select id="tv-gioi-tinh" class="tv-form-select">
-            <option value="nam">Nam</option>
-            <option value="nu">Nữ</option>
-          </select>
-        </div>
-
-        <!-- Ngày sinh -->
-        <div class="tv-form-group">
-          <label class="tv-form-label" for="tv-ngay">Ngày sinh</label>
-          <input type="number" id="tv-ngay" class="tv-form-input" min="1" max="31" placeholder="1-31">
-        </div>
-
-        <!-- Tháng sinh -->
-        <div class="tv-form-group">
-          <label class="tv-form-label" for="tv-thang">Tháng sinh</label>
-          <input type="number" id="tv-thang" class="tv-form-input" min="1" max="12" placeholder="1-12">
-        </div>
-
-        <!-- Năm sinh -->
-        <div class="tv-form-group">
-          <label class="tv-form-label" for="tv-nam">Năm sinh</label>
-          <input type="number" id="tv-nam" class="tv-form-input" min="1900" max="2100" placeholder="VD: 1990">
-        </div>
-
-        <!-- Giờ sinh -->
-        <div class="tv-form-group">
-          <label class="tv-form-label" for="tv-gio">Giờ sinh (Địa Chi)</label>
-          <select id="tv-gio" class="tv-form-select">
-            <option value="">-- Không rõ --</option>
-            <option value="Tý">Tý (23:00 – 01:00)</option>
-            <option value="Sửu">Sửu (01:00 – 03:00)</option>
-            <option value="Dần">Dần (03:00 – 05:00)</option>
-            <option value="Mão">Mão (05:00 – 07:00)</option>
-            <option value="Thìn">Thìn (07:00 – 09:00)</option>
-            <option value="Tỵ">Tỵ (09:00 – 11:00)</option>
-            <option value="Ngọ">Ngọ (11:00 – 13:00)</option>
-            <option value="Mùi">Mùi (13:00 – 15:00)</option>
-            <option value="Thân">Thân (15:00 – 17:00)</option>
-            <option value="Dậu">Dậu (17:00 – 19:00)</option>
-            <option value="Tuất">Tuất (19:00 – 21:00)</option>
-            <option value="Hợi">Hợi (21:00 – 23:00)</option>
-          </select>
-        </div>
-
-        <!-- Múi giờ -->
-        <div class="tv-form-group">
-          <label class="tv-form-label" for="tv-mui-gio">Múi giờ</label>
-          <select id="tv-mui-gio" class="tv-form-select">
-            <option value="7" selected>UTC+7 (Việt Nam)</option>
-            <option value="8">UTC+8</option>
-            <option value="0">UTC+0</option>
-          </select>
-        </div>
-
-      </div><!-- /.tv-form-grid -->
-
-      <div class="tv-submit-wrap">
-        <button class="btn btn-primary" id="tv-btn-lap" onclick="tvLapLaSo()">
-          ⭐ Lập Lá Số Tử Vi
-        </button>
-      </div>
-    </div><!-- /.form-section -->
-
-    <!-- ===== KẾT QUẢ (ẩn ban đầu) ===== -->
-    <div id="tv-result" class="hidden">
-
-      <!-- Tứ Trụ -->
-      <h3 class="section-title" style="font-size:1.2rem;margin-bottom:var(--sp-md);">Tứ Trụ Sinh</h3>
-      <div class="tv-tu-tru" id="tv-tu-tru"><!-- Render bởi JS --></div>
-
-      <!-- Mệnh - Cục - Chủ Mệnh - Thân -->
-      <div class="tv-menh-grid" id="tv-menh-grid"><!-- Render bởi JS --></div>
-
-      <!-- Lá số 12 cung -->
-      <div class="tv-la-so-wrap">
-        <div class="tv-la-so-title">🌟 Lá Số Tử Vi — 12 Cung</div>
-        <div class="tv-la-so-grid" id="tv-la-so-grid"><!-- Render bởi JS --></div>
+    <!-- Tabs: Đại Vận / AI Luận Giải -->
+    <div class="tv-tabs-wrap">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tv-tab-dai-van">📅 Đại Vận &amp; Tiểu Vận</button>
+        <button class="tab-btn" data-tab="tv-tab-ai">🤖 AI Luận Giải</button>
       </div>
 
-      <!-- Tabs: Đại Vận / AI Luận Giải -->
-      <div class="tv-tabs-wrap">
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="tv-tab-dai-van">📅 Đại Vận &amp; Tiểu Vận</button>
-          <button class="tab-btn" data-tab="tv-tab-ai">🤖 AI Luận Giải</button>
-        </div>
+      <!-- Tab Đại Vận -->
+      <div class="tab-content active" id="tv-tab-dai-van">
+        <div class="tv-dai-van-grid" id="tv-dai-van-grid"><!-- Render bởi JS --></div>
+        <div class="tv-tieu-van-title">Tiểu Vận trong đại vận hiện tại</div>
+        <div class="tv-tieu-van-grid" id="tv-tieu-van-grid"><!-- Render bởi JS --></div>
+      </div>
 
-        <!-- Tab Đại Vận -->
-        <div class="tab-content active" id="tv-tab-dai-van">
-          <div class="tv-dai-van-grid" id="tv-dai-van-grid"><!-- Render bởi JS --></div>
-          <div class="tv-tieu-van-title">Tiểu Vận trong đại vận hiện tại</div>
-          <div class="tv-tieu-van-grid" id="tv-tieu-van-grid"><!-- Render bởi JS --></div>
-        </div>
-
-        <!-- Tab AI Luận Giải -->
-        <div class="tab-content" id="tv-tab-ai">
-          <div class="tv-ai-wrap">
-            <div class="tv-ai-btn-wrap">
-              <button class="btn btn-primary" id="tv-btn-ai" onclick="tvLuanGiai()">
-                ✨ Luận Giải Lá Số bằng AI
-              </button>
-            </div>
-            <div id="tv-ai-result-box"></div>
+      <!-- Tab AI Luận Giải -->
+      <div class="tab-content" id="tv-tab-ai">
+        <div class="tv-ai-wrap">
+          <div class="tv-ai-btn-wrap">
+            <button class="btn btn-primary" id="tv-btn-ai" onclick="tvLuanGiai()">
+              ✨ Luận Giải Lá Số bằng AI
+            </button>
           </div>
+          <div id="tv-ai-result-box"></div>
         </div>
-
-      </div><!-- /.tv-tabs-wrap -->
-
-    </div><!-- /#tv-result -->
-
-  </main>
-
-  <!-- ===== TOAST NOTIFICATION ===== -->
-  <div id="toast-container" class="toast-container"></div>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p>🌸 Lịch Việt Nam 888 &copy; 2024 &nbsp;|&nbsp; Kết hợp truyền thống &amp; hiện đại</p>
-      <p class="footer-note">Thông tin mang tính tham khảo, không thay thế tư vấn chuyên gia.</p>
-    </div>
-  </footer>
-
-  <!-- ===== LOADING OVERLAY ===== -->
-  <div class="app-loading hidden" id="app-loading">
-    <div class="loading-spinner"></div>
-    <p>Đang tải...</p>
-  </div>
-
-  <!-- ===== POPUP CHI TIẾT CUNG ===== -->
-  <div class="popup-overlay hidden" id="tv-popup-overlay">
-    <div class="popup tv-cung-popup" id="tv-popup">
-      <div class="popup-header">
-        <h3 class="popup-title" id="tv-popup-title">Chi tiết cung</h3>
-        <button class="popup-close" id="tv-popup-close">✕</button>
       </div>
-      <div id="tv-popup-body"><!-- Render bởi JS --></div>
+
+    </div><!-- /.tv-tabs-wrap -->
+
+  </div><!-- /#tv-result -->
+
+</div><!-- /.app-container -->
+
+<!-- ===== POPUP CHI TIẾT CUNG ===== -->
+<div class="popup-overlay hidden" id="tv-popup-overlay">
+  <div class="popup tv-cung-popup" id="tv-popup">
+    <div class="popup-header">
+      <h3 class="popup-title" id="tv-popup-title">Chi tiết cung</h3>
+      <button class="popup-close" id="tv-popup-close">✕</button>
     </div>
+    <div id="tv-popup-body"><!-- Render bởi JS --></div>
   </div>
-
-  <!-- ===== JAVASCRIPT — thứ tự load quan trọng ===== -->
-  <script src="js/config.js"></script>
-  <script src="js/data/can-chi.js"></script>
-  <script src="js/data/tiet-khi.js"></script>
-  <script src="js/data/sao-tu-vi.js"></script>
-  <script src="js/engines/lunar-engine.js"></script>
-  <script src="js/engines/can-chi-engine.js"></script>
-  <script src="js/engines/tu-vi-engine.js"></script>
-  <script src="js/ai-service.js"></script>
-  <script src="js/ai/tu-vi-ai.js"></script>
-  <script src="js/ui/tu-vi-ui.js"></script>
-
-  <script>
-    /* Hiển thị ngày hôm nay ở header */
-    (function() {
-      function updateHeaderToday() {
-        var now  = new Date();
-        var days = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-        var thu  = days[now.getDay()];
-        var d    = now.getDate();
-        var m    = now.getMonth() + 1;
-        var y    = now.getFullYear();
-        var pad  = function(n) { return n < 10 ? '0' + n : String(n); };
-        var str  = thu + ', ' + pad(d) + '/' + pad(m) + '/' + y;
-        var el   = document.getElementById('today-solar');
-        if (el) el.textContent = str;
-      }
-      updateHeaderToday();
-      setInterval(updateHeaderToday, 60000);
-    })();
-  </script>
-
-</body>
-</html>
+</div>

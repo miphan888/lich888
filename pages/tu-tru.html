@@ -1,161 +1,117 @@
-<!-- pages/tu-tru.html — Trang Tứ Trụ Bát Tự -->
-<link rel="stylesheet" href="css/tu-tru.css">
-
-<div class="app-container">
-
-  <!-- ===== TIÊU ĐỀ ===== -->
-  <h1 class="section-title">🔮 Tứ Trụ Bát Tự</h1>
-  <p class="section-subtitle">Nhập thông tin sinh nhật để lập tứ trụ và phân tích ngũ hành, dụng thần</p>
-
-  <!-- ===== FORM NHẬP THÔNG TIN ===== -->
-  <div class="form-section mb-lg">
-    <div class="tt-form-grid">
-
-      <!-- Họ tên -->
-      <div class="tt-form-group span-2">
-        <label class="tt-form-label" for="tt-ho-ten">Họ và tên</label>
-        <input type="text" id="tt-ho-ten" class="tt-form-input" placeholder="VD: Nguyễn Văn An">
-      </div>
-
-      <!-- Giới tính -->
-      <div class="tt-form-group">
-        <label class="tt-form-label">Giới tính</label>
-        <div class="tt-radio-group">
-          <label class="tt-radio-label">
-            <input type="radio" name="tt-gioi-tinh" id="tt-gioi-tinh" value="nam" checked>
-            <span>Nam</span>
-          </label>
-          <label class="tt-radio-label">
-            <input type="radio" name="tt-gioi-tinh" value="nu">
-            <span>Nữ</span>
-          </label>
+<section id="sect-tu-tru">
+  <div class="grid-2" style="margin-bottom:20px">
+    <!-- FORM NHẬP -->
+    <div class="card">
+      <div class="card-title">🏮 Phân Tích Tứ Trụ Bát Tự</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Họ Tên</label>
+          <input type="text" id="batu-ten" placeholder="Nhập họ tên...">
+        </div>
+        <div class="form-group" style="flex:0.5">
+          <label>Giới Tính</label>
+          <div class="radio-group">
+            <label><input type="radio" name="batu-gt" value="nam" checked> Nam</label>
+            <label><input type="radio" name="batu-gt" value="nu"> Nữ</label>
+          </div>
         </div>
       </div>
-
-      <!-- Ngày sinh -->
-      <div class="tt-form-group">
-        <label class="tt-form-label" for="tt-ngay">Ngày sinh (DL)</label>
-        <input type="number" id="tt-ngay" class="tt-form-input" min="1" max="31" placeholder="1–31">
+      <div class="form-row">
+        <div class="form-group"><label>Ngày</label><input type="number" id="batu-day" min="1" max="31" placeholder="DD"></div>
+        <div class="form-group"><label>Tháng</label><input type="number" id="batu-month" min="1" max="12" placeholder="MM"></div>
+        <div class="form-group"><label>Năm</label><input type="number" id="batu-year" min="1900" max="2100" placeholder="YYYY"></div>
       </div>
-
-      <!-- Tháng sinh -->
-      <div class="tt-form-group">
-        <label class="tt-form-label" for="tt-thang">Tháng sinh (DL)</label>
-        <input type="number" id="tt-thang" class="tt-form-input" min="1" max="12" placeholder="1–12">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Giờ Sinh</label>
+          <select id="batu-gio">
+            <option value="-1">— Không biết —</option>
+            <option value="0">Tý (23:00-01:00)</option>
+            <option value="1">Sửu (01:00-03:00)</option>
+            <option value="2">Dần (03:00-05:00)</option>
+            <option value="3">Mão (05:00-07:00)</option>
+            <option value="4">Thìn (07:00-09:00)</option>
+            <option value="5">Tỵ (09:00-11:00)</option>
+            <option value="6">Ngọ (11:00-13:00)</option>
+            <option value="7">Mùi (13:00-15:00)</option>
+            <option value="8">Thân (15:00-17:00)</option>
+            <option value="9">Dậu (17:00-19:00)</option>
+            <option value="10">Tuất (19:00-21:00)</option>
+            <option value="11">Hợi (21:00-23:00)</option>
+          </select>
+        </div>
+        <div class="form-group" style="flex:0.5">
+          <label>Múi Giờ</label>
+          <select id="batu-tz">
+            <option value="7" selected>UTC+7</option>
+            <option value="8">UTC+8</option>
+          </select>
+        </div>
       </div>
-
-      <!-- Năm sinh -->
-      <div class="tt-form-group">
-        <label class="tt-form-label" for="tt-nam">Năm sinh (DL)</label>
-        <input type="number" id="tt-nam" class="tt-form-input" min="1900" max="2100" placeholder="VD: 1990">
-      </div>
-
-      <!-- Giờ sinh (12 Địa Chi) -->
-      <div class="tt-form-group">
-        <label class="tt-form-label" for="tt-gio">Giờ sinh (Địa Chi)</label>
-        <select id="tt-gio" class="tt-form-select">
-          <option value="0">Tý (23:00 – 01:00)</option>
-          <option value="1">Sửu (01:00 – 03:00)</option>
-          <option value="2">Dần (03:00 – 05:00)</option>
-          <option value="3">Mão (05:00 – 07:00)</option>
-          <option value="4">Thìn (07:00 – 09:00)</option>
-          <option value="5">Tỵ (09:00 – 11:00)</option>
-          <option value="6" selected>Ngọ (11:00 – 13:00)</option>
-          <option value="7">Mùi (13:00 – 15:00)</option>
-          <option value="8">Thân (15:00 – 17:00)</option>
-          <option value="9">Dậu (17:00 – 19:00)</option>
-          <option value="10">Tuất (19:00 – 21:00)</option>
-          <option value="11">Hợi (21:00 – 23:00)</option>
-        </select>
-      </div>
-
-      <!-- Múi giờ -->
-      <div class="tt-form-group">
-        <label class="tt-form-label" for="tt-mui-gio">Múi giờ</label>
-        <select id="tt-mui-gio" class="tt-form-select">
-          <option value="7" selected>UTC+7 (Việt Nam)</option>
-          <option value="8">UTC+8</option>
-          <option value="0">UTC+0</option>
-        </select>
-      </div>
-
-    </div><!-- /.tt-form-grid -->
-
-    <div class="tt-submit-wrap">
-      <button class="btn btn-primary" id="tt-btn-phan-tich" onclick="tuTruPhanTich()">
-        🔮 Phân Tích Tứ Trụ Bát Tự
-      </button>
-    </div>
-  </div><!-- /.form-section -->
-
-  <!-- ===== KẾT QUẢ (ẩn ban đầu) ===== -->
-  <div id="tt-result-section" class="hidden">
-
-    <!-- ===== 4 Ô Trụ ===== -->
-    <h3 class="tt-result-title">Tứ Trụ (Can Chi)</h3>
-    <div class="tt-bon-tru" id="tt-bon-tru">
-      <!-- Render bởi _ttHienThiTuTru() -->
+      <button class="btn" onclick="tuTruPhanTich()">🏮 Phân Tích Tứ Trụ</button>
     </div>
 
-    <!-- ===== TABS ===== -->
-    <div class="tt-tabs-wrap">
-      <div class="tt-tabs-bar">
-        <button class="tt-tab-btn active" data-tab="tu-tru">⚖ Ngũ Hành</button>
-        <button class="tt-tab-btn" data-tab="vuong-nhuoc">💪 Thân Vượng/Nhược</button>
-        <button class="tt-tab-btn" data-tab="dung-than">✦ Dụng Thần</button>
-        <button class="tt-tab-btn" data-tab="ai">🤖 AI Luận Đoán</button>
-      </div>
+    <!-- KẾT QUẢ 4 TRỤ -->
+    <div class="card" id="batu-result" style="display:none">
+      <div class="card-title">Bát Tự — <span id="batu-ho-ten"></span></div>
+      <div id="batu-4tru"></div>
+      <hr class="divider">
+      <div id="batu-thap-than"></div>
+    </div>
+  </div>
 
-      <!-- ===== Tab Ngũ Hành ===== -->
-      <div class="tt-tab-panel" data-panel="tu-tru">
-        <div class="tt-ngu-hanh-wrap">
-          <h4 class="tt-panel-title">Phân Bố Ngũ Hành</h4>
-          <!-- Biểu đồ bar ngang -->
-          <div class="tt-chart-box" id="tt-ngu-hanh-chart">
-            <!-- Render bởi _ttHienThiNguHanh() -->
-          </div>
-          <!-- Tương sinh tương khắc chú thích -->
-          <div class="tt-nh-info">
-            <div class="tt-nh-info-row">
-              <span class="tt-nh-info-label">Tương sinh:</span>
-              <span class="tt-nh-info-val">Mộc → Hỏa → Thổ → Kim → Thủy → Mộc</span>
-            </div>
-            <div class="tt-nh-info-row">
-              <span class="tt-nh-info-label">Tương khắc:</span>
-              <span class="tt-nh-info-val">Mộc ✗ Thổ ✗ Thủy ✗ Hỏa ✗ Kim ✗ Mộc</span>
-            </div>
-          </div>
+  <!-- TABS PHÂN TÍCH -->
+  <div id="batu-tabs" style="display:none">
+    <div class="sub-tabs">
+      <div class="sub-tab active" onclick="tuTruTab('nguhanh')">Ngũ Hành</div>
+      <div class="sub-tab" onclick="tuTruTab('thanvuong')">Thân Vượng/Nhược</div>
+      <div class="sub-tab" onclick="tuTruTab('dungthan')">Dụng Thần</div>
+      <div class="sub-tab" onclick="tuTruTab('ailuan')">🤖 AI Luận Đoán</div>
+    </div>
+
+    <div id="tab-nguhanh">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Phân Bố Ngũ Hành</div>
+          <div id="batu-hanh-bars"></div>
+          <div id="batu-hanh-nhanxet" style="margin-top:12px"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Tương Sinh · Tương Khắc</div>
+          <div id="batu-sinh-khac"></div>
         </div>
       </div>
+    </div>
 
-      <!-- ===== Tab Thân Vượng/Nhược ===== -->
-      <div class="tt-tab-panel hidden" data-panel="vuong-nhuoc">
-        <div id="tt-vuong-nhuoc-content">
-          <!-- Render bởi _ttHienThiVuongNhuoc() -->
-        </div>
+    <div id="tab-thanvuong" style="display:none">
+      <div class="card">
+        <div class="card-title">Phân Tích Nhật Chủ</div>
+        <div id="batu-than-vuong"></div>
       </div>
+    </div>
 
-      <!-- ===== Tab Dụng Thần ===== -->
-      <div class="tt-tab-panel hidden" data-panel="dung-than">
-        <div id="tt-dung-than-content">
-          <!-- Render bởi _ttHienThiDungThan() -->
-        </div>
+    <div id="tab-dungthan" style="display:none">
+      <div class="card">
+        <div class="card-title">Dụng Thần · Hỷ Thần · Kỵ Thần</div>
+        <div id="batu-dung-than"></div>
       </div>
-
-      <!-- ===== Tab AI Luận Đoán ===== -->
-      <div class="tt-tab-panel hidden" data-panel="ai">
-        <div class="tt-ai-wrap">
-          <div class="tt-ai-btn-wrap">
-            <button class="btn btn-primary" onclick="tuTruLuanDoanLai()">
-              ✨ Luận Đoán bằng AI
-            </button>
-          </div>
-          <div id="tt-ai-container"></div>
-        </div>
+      <div class="card mt-4">
+        <div class="card-title">💡 Lời Khuyên Phong Thủy</div>
+        <div id="batu-loi-khuyen"></div>
       </div>
+    </div>
 
-    </div><!-- /.tt-tabs-wrap -->
-
-  </div><!-- /#tt-result-section -->
-
-</div><!-- /.app-container -->
+    <div id="tab-ailuan" style="display:none">
+      <div class="card">
+        <div class="card-title">🤖 AI Luận Đoán Chuyên Sâu</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:14px">Bổ sung cho kết quả phân tích cục bộ phía trên</p>
+        <button class="btn" onclick="tuTruGoiAI()">🤖 Gọi AI Luận Đoán</button>
+        <div id="batu-ai-loading" style="display:none;padding:20px;text-align:center">
+          <div class="loading-spinner" style="width:36px;height:36px;margin:0 auto 12px"></div>
+          <p style="color:var(--gold)">AI đang phân tích...</p>
+        </div>
+        <div id="batu-ai-result" style="display:none;margin-top:16px"></div>
+      </div>
+    </div>
+  </div>
+</section>

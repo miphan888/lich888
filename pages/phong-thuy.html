@@ -1,103 +1,100 @@
-<!-- pages/phong-thuy.html — Trang Phong Thủy -->
-<link rel="stylesheet" href="css/phong-thuy.css">
-
-<div class="app-container">
-
-  <!-- ===== HERO ===== -->
-  <div class="pt-hero">
-    <h1 class="pt-hero-title">🧭 Phong Thủy</h1>
-    <p class="pt-hero-sub">Giờ Hoàng Đạo, Hướng Xuất Hành, Thập Nhị Trực, Ngũ Hành</p>
-  </div>
-
-  <!-- ===== TỤC NGỮ NGẪU NHIÊN ===== -->
-  <div class="pt-tucngu-box">
-    <div class="pt-tucngu-icon">📜</div>
-    <div class="pt-tucngu-text" id="pt-tucngu-text">Đang tải...</div>
-    <button class="btn btn-secondary btn-sm pt-tucngu-btn" onclick="ptRandomTucNgu()">↻ Câu khác</button>
-  </div>
-
-  <!-- ===== FORM TRA CỨU NGÀY ===== -->
-  <div class="pt-form-card">
-    <h3 class="pt-form-title">🔍 Tra Cứu Ngày</h3>
-    <div class="pt-form-row">
-      <div class="pt-form-group">
-        <label class="pt-label" for="pt-ngay">Ngày</label>
-        <input type="number" id="pt-ngay" class="pt-input" min="1" max="31" placeholder="Ngày">
+<section id="sect-phong-thuy">
+  <div class="grid-2">
+    <!-- CỘT TRÁI -->
+    <div>
+      <!-- Giờ Hoàng Đạo -->
+      <div class="card">
+        <div class="card-title">🌟 Giờ Hoàng Đạo / Hắc Đạo</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:14px">Nhập ngày để xem giờ tốt/xấu</p>
+        <div class="form-row">
+          <div class="form-group"><label>Ngày</label><input type="number" id="pt-day" placeholder="DD" min="1" max="31"></div>
+          <div class="form-group"><label>Tháng</label><input type="number" id="pt-month" placeholder="MM" min="1" max="12"></div>
+          <div class="form-group"><label>Năm</label><input type="number" id="pt-year" placeholder="YYYY" min="1900" max="2100"></div>
+        </div>
+        <button class="btn" onclick="ptXemGio()">🌟 Xem Giờ Hoàng Đạo</button>
+        <div id="pt-gio-result" style="display:none">
+          <hr class="divider">
+          <p style="font-size:12px;color:var(--ink3);margin-bottom:10px">
+            Can ngày: <strong id="pt-can-ngay" style="color:var(--red)"></strong> —
+            Thập Nhị Trực: <strong id="pt-truc-ngay" style="color:var(--red)"></strong>
+          </p>
+          <div id="pt-gio-grid" class="gio-grid"></div>
+        </div>
       </div>
-      <div class="pt-form-group">
-        <label class="pt-label" for="pt-thang">Tháng</label>
-        <input type="number" id="pt-thang" class="pt-input" min="1" max="12" placeholder="Tháng">
+
+      <!-- Thông Tin Ngày -->
+      <div class="card mt-4" id="pt-ngay-info" style="display:none">
+        <div class="card-title">📅 Thông Tin Ngày</div>
+        <div id="pt-ngay-detail"></div>
       </div>
-      <div class="pt-form-group">
-        <label class="pt-label" for="pt-nam">Năm</label>
-        <input type="number" id="pt-nam" class="pt-input" min="1900" max="2100" placeholder="Năm">
+
+      <!-- Bảng Thập Nhị Trực -->
+      <div class="card mt-4">
+        <div class="card-title">📜 Thập Nhị Trực</div>
+        <table class="truc-table">
+          <thead><tr><th>Trực</th><th>Tốt cho</th><th>Xấu / Kiêng</th></tr></thead>
+          <tbody id="pt-truc-tbody"></tbody>
+        </table>
       </div>
-      <div class="pt-form-group" style="flex: none;">
-        <label class="pt-label">&nbsp;</label>
-        <button class="btn btn-primary" onclick="ptTraCuu()">Tra Cứu</button>
+    </div>
+
+    <!-- CỘT PHẢI -->
+    <div>
+      <!-- Hướng Xuất Hành -->
+      <div class="card">
+        <div class="card-title">🧭 Hướng Tốt Xuất Hành</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:14px">Dựa trên ngày đã nhập ở mục Giờ Hoàng Đạo</p>
+        <div id="pt-huong-grid" class="result-grid" style="grid-template-columns:repeat(2,1fr)"></div>
+      </div>
+
+      <!-- Đổi Ngày -->
+      <div class="card mt-4">
+        <div class="card-title">🔄 Đổi Ngày Dương → Âm</div>
+        <div class="form-row">
+          <div class="form-group"><label>Ngày</label><input type="number" id="pt-dc-d" placeholder="DD" min="1" max="31"></div>
+          <div class="form-group"><label>Tháng</label><input type="number" id="pt-dc-m" placeholder="MM" min="1" max="12"></div>
+          <div class="form-group"><label>Năm</label><input type="number" id="pt-dc-y" placeholder="YYYY" min="1900" max="2100"></div>
+        </div>
+        <button class="btn btn-outline" onclick="ptDoiNgay()">⇄ Đổi Nhanh</button>
+        <div id="pt-doi-ngay-result" class="luan-giai-box mt-4" style="display:none"></div>
+      </div>
+
+      <!-- Bảng Ngũ Hành -->
+      <div class="card mt-4">
+        <div class="card-title">☯ Ngũ Hành Tương Sinh · Tương Khắc</div>
+        <div id="pt-ngu-hanh-info"></div>
+        <table class="truc-table" style="margin-top:12px">
+          <thead><tr><th>Hành</th><th>Màu</th><th>Hướng</th><th>Mùa</th><th>Số</th></tr></thead>
+          <tbody>
+            <tr><td class="truc-name" style="color:#2D6A00">Mộc</td><td>Xanh lá</td><td>Đông</td><td>Xuân</td><td>3, 8</td></tr>
+            <tr class="truc-highlight"><td class="truc-name" style="color:#B80000">Hỏa</td><td>Đỏ, tím</td><td>Nam</td><td>Hạ</td><td>2, 7</td></tr>
+            <tr><td class="truc-name" style="color:#7A5500">Thổ</td><td>Vàng, nâu</td><td>Trung tâm</td><td>Cuối mùa</td><td>5, 10</td></tr>
+            <tr class="truc-highlight"><td class="truc-name" style="color:#555">Kim</td><td>Trắng, bạc</td><td>Tây</td><td>Thu</td><td>4, 9</td></tr>
+            <tr><td class="truc-name" style="color:#004080">Thủy</td><td>Đen, xanh đậm</td><td>Bắc</td><td>Đông</td><td>1, 6</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tục Ngữ -->
+      <div class="card mt-4">
+        <div class="card-title">📖 Tục Ngữ Dân Gian</div>
+        <p id="pt-tuc-ngu" style="font-size:14px;color:var(--ink2);font-style:italic;line-height:1.8"></p>
+      </div>
+
+      <!-- AI Tư Vấn -->
+      <div class="card mt-4">
+        <div class="card-title">🤖 AI Tư Vấn Phong Thủy</div>
+        <p style="font-size:13px;color:var(--ink3);margin-bottom:14px">Nhập câu hỏi về phong thủy, hướng nhà, màu sắc hợp mệnh...</p>
+        <textarea id="pt-ai-question" rows="3" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:14px;resize:vertical" placeholder="VD: Tôi tuổi Tý, mệnh Kim, hướng nhà nào tốt?"></textarea>
+        <div style="margin-top:10px">
+          <button class="btn" onclick="ptGoiAI()">🤖 AI Tư Vấn</button>
+        </div>
+        <div id="pt-ai-loading" style="display:none;padding:20px;text-align:center">
+          <div class="loading-spinner" style="width:36px;height:36px;margin:0 auto 12px"></div>
+          <p style="color:var(--gold)">AI đang phân tích...</p>
+        </div>
+        <div id="pt-ai-result" style="display:none;margin-top:16px"></div>
       </div>
     </div>
   </div>
-
-  <!-- ===== KẾT QUẢ ĐỔI NGÀY ===== -->
-  <div class="pt-section" id="pt-ngay-section" style="display:none;">
-    <h3 class="pt-section-title">📅 Thông Tin Ngày</h3>
-    <div class="pt-ngay-result" id="pt-ngay-result"></div>
-  </div>
-
-  <!-- ===== GIỜ HOÀNG ĐẠO / HẮC ĐẠO ===== -->
-  <div class="pt-section" id="pt-gio-section" style="display:none;">
-    <h3 class="pt-section-title">⏰ 12 Giờ Hoàng Đạo / Hắc Đạo</h3>
-    <div class="pt-gio-grid" id="pt-gio-grid"></div>
-  </div>
-
-  <!-- ===== HƯỚNG TỐT XUẤT HÀNH ===== -->
-  <div class="pt-section" id="pt-huong-section" style="display:none;">
-    <h3 class="pt-section-title">🧭 Hướng Tốt Xuất Hành</h3>
-    <div class="pt-huong-grid" id="pt-huong-grid"></div>
-  </div>
-
-  <!-- ===== BẢNG THẬP NHỊ TRỰC ===== -->
-  <div class="pt-section">
-    <h3 class="pt-section-title">🔄 Bảng Thập Nhị Trực</h3>
-    <div style="overflow-x:auto;">
-      <table class="pt-truc-table" id="pt-truc-table">
-        <thead>
-          <tr>
-            <th>Trực</th>
-            <th>Ý nghĩa</th>
-            <th>Việc tốt</th>
-            <th>Việc tránh</th>
-          </tr>
-        </thead>
-        <tbody id="pt-truc-tbody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ===== NGŨ HÀNH ===== -->
-  <div class="pt-section">
-    <h3 class="pt-section-title">☯ Ngũ Hành</h3>
-    <div class="pt-ngu-hanh-grid" id="pt-ngu-hanh-grid"></div>
-    <div class="pt-ngu-hanh-rel">
-      <div class="pt-rel-card tuong-sinh">
-        <div class="pt-rel-title">🔄 Tương Sinh (sinh ra nhau)</div>
-        <div class="pt-rel-text">Kim → Thủy → Mộc → Hỏa → Thổ → Kim</div>
-      </div>
-      <div class="pt-rel-card tuong-khac">
-        <div class="pt-rel-title">⚔ Tương Khắc (khắc chế nhau)</div>
-        <div class="pt-rel-text">Kim → Mộc → Thổ → Thủy → Hỏa → Kim</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== AI TƯ VẤN ===== -->
-  <div class="pt-ai-box">
-    <div class="pt-ai-title">✨ AI Tư Vấn Phong Thủy</div>
-    <textarea class="pt-ai-textarea" id="pt-ai-question"
-      placeholder="Nhập câu hỏi phong thủy... VD: Nhà tôi hướng Tây Nam, sinh năm Canh Ngọ, có hợp không? Nên bố trí bàn thờ ở đâu?"></textarea>
-    <button class="btn btn-primary" id="pt-ai-btn" onclick="ptAskAI()">✨ AI Tư Vấn</button>
-    <div id="pt-ai-result-box" style="display:none;"></div>
-  </div>
-
-</div>
+</section>

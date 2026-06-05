@@ -1,58 +1,42 @@
-/* ============================================================
-   tuc-ngu.js — Tục ngữ, ca dao về ngày tốt xấu, thời tiết, mùa vụ
-   Lịch Việt Nam 888
-   ============================================================ */
+// ══════════════════════════════════════════════════════
+// TUC-NGU.JS — Tục ngữ ca dao Việt Nam về ngày, thời tiết
+// ══════════════════════════════════════════════════════
 
 var TUC_NGU_DATA = [
-  /* --- Ngày tốt xấu, thời vận --- */
-  'Tháng Giêng là tháng ăn chơi,\nTháng Hai cờ bạc, tháng Ba hội hè.',
-  'Tháng Chạp là tháng trồng khoai,\nTháng Giêng trồng đậu, tháng Hai trồng cà.',
-  'Ngày lành tháng tốt làm nên sự nghiệp,\nNgày xấu tháng dữ khó tránh tai ương.',
-  'Cưới vợ chọn ngày, làm nhà chọn hướng.',
-  'Nhà hướng Nam, đàn bà ba họ ấm no.',
+  'Đêm tháng năm chưa nằm đã sáng, ngày tháng mười chưa cười đã tối.',
+  'Mau sao thì nắng, vắng sao thì mưa.',
+  'Chuồn chuồn bay thấp thì mưa, bay cao thì nắng, bay vừa thì râm.',
+  'Ráng mỡ gà, ai có nhà phải chống.',
+  'Tháng giêng là tháng ăn chơi, tháng hai trồng đậu, tháng ba trồng cà.',
   'Lấy vợ xem tông, lấy chồng xem giống.',
-  'Đói cho sạch, rách cho thơm.',
-  'Mồng Một tháng Giêng, mồng Bảy tháng Chạp.',
-  'Ngày Rằm tháng Bảy, ma về như hội.',
-  'Tháng Tư đong đậu nấu chè,\nĂn Tết Đoan Ngọ kể về tháng Năm.',
-
-  /* --- Thời tiết --- */
-  'Chuồn chuồn bay thấp thì mưa,\nBay cao thì nắng, bay vừa thì râm.',
-  'Tháng Ba bà già chết rét.',
-  'Mưa tháng Mười như người chết đuối tìm phao.',
-  'Nắng tốt dưa, mưa tốt lúa.',
-  'Mây kéo về đồng rét, mây kéo về núi mưa.',
-  'Kiến tha lên đồi là dấu hiệu trời mưa.',
-  'Trời có bốn phương, đất có tứ tung.',
-  'Sấm tháng Ba, gà mái gáy sáng.',
-  'Ếch kêu uôm uôm, ao chuôm đầy nước.',
-  'Gió Đông là chồng gió Bắc,\nGió Nam là cô chú của gió Đông.',
-
-  /* --- Mùa vụ, trồng trọt --- */
-  'Nhất nước, nhì phân, tam cần, tứ giống.',
-  'Người sống vì gạo, cá bạo vì nước.',
-  'Cày sâu bừa kỹ, đất tốt mùa màng.',
-  'Tháng Năm chặt lấy mà ăn,\nTháng Mười chặt lấy mà cân cho người.',
-  'Con trâu là đầu cơ nghiệp.',
-  'Trồng khoai đất cát, trồng lạc đất sâu.',
-  'Lúa chiêm tháng Ba, lúa mùa tháng Mười.',
-  'Được mùa mất giá, được giá mất mùa.',
-  'Ruộng không phân như người không ăn.',
-
-  /* --- Phong thủy, hướng nhà --- */
-  'Lấy vợ hiền hòa, làm nhà hướng Nam.',
+  'Mồng một lông gà, mồng hai lông vịt, mồng ba lông heo.',
+  'Chớ đi ngày bảy, chớ về ngày ba.',
+  'Đầu năm mua muối, cuối năm mua vôi.',
+  'Trời nào phụ kẻ có công, ở hiền thì lại gặp lành về sau.',
+  'Kiến cánh vỡ tổ bay ra, bão táp mưa sa gần tới.',
+  'Mây kéo xuống biển thì nắng chang chang, mây kéo lên ngàn thì mưa như trút.',
+  'Tháng bảy nước nhảy lên bờ.',
+  'Lụt thì lút cả làng, ai cũng khổ chẳng riêng mình ta.',
+  'Trăng quầng thì hạn, trăng tán thì mưa.',
+  'Gió heo may, chẳng mưa dầm thì bão.',
+  'Tháng tám giỗ cha, tháng ba giỗ mẹ.',
+  'Đói thì ăn rau, đau thì uống thuốc.',
+  'Có thờ có thiêng, có kiêng có lành.',
+  'Mùng một tết cha, mùng hai tết mẹ, mùng ba tết thầy.',
+  'Cơm cha áo mẹ chữ thầy, làm sao cho bõ những ngày ước ao.',
   'Đất lành chim đậu.',
-  'Nhà cao cửa rộng, phúc lộc đầy vơi.',
-  'Thần tài gõ cửa, vàng bạc đầy nhà.',
-  'Phước bất trùng lai, họa vô đơn chí.',
-  'Gieo nhân nào gặt quả nấy.',
-
-  /* --- Sức khỏe, sinh hoạt --- */
-  'Ăn chậm nhai kỹ no lâu, làm chậm tốt lâu.',
-  'Cơm ăn mấy bát cũng no,\nTuổi thọ trời cho, chẳng sống được hơn.',
-  'Ăn tươi nuốt sống bệnh lây,\nNấu chín ăn đúng an lành thân ta.',
-  'Mồ hôi thánh thót như mưa ruộng cày,\nAi ơi bưng bát cơm đầy, dẻo thơm một hạt đắng cay muôn phần.',
-  'Bầu ơi thương lấy bí cùng,\nTuy rằng khác giống nhưng chung một giàn.',
-  'Chị ngã em nâng.',
-  'Uống nước nhớ nguồn.'
+  'Người ta là hoa đất.',
+  'Ăn quả nhớ kẻ trồng cây.',
+  'Uống nước nhớ nguồn.',
+  'Tốt gỗ hơn tốt nước sơn.',
+  'Nhất nước, nhì phân, tam cần, tứ giống.',
+  'Trời sinh voi, trời sinh cỏ.',
+  'Sông có khúc, người có lúc.',
+  'Còn da lông mọc, còn chồi nảy cây.',
+  'Hòn đất mà biết nói năng, thì thầy địa lý hàm răng chẳng còn.',
+  'Tiền trảm hậu tấu, phúc đức tại mẫu.',
+  'Đức năng thắng số.',
+  'Nhất mệnh, nhì vận, tam phong thủy, tứ âm phúc, ngũ tri thức.',
+  'Nhà sạch thì mát, bát sạch ngon cơm.',
+  'Cá không ăn muối cá ươn, con cãi cha mẹ trăm đường con hư.'
 ];

@@ -1,91 +1,78 @@
-/* ============================================================
-   thap-nhi-truc.js — Dữ liệu 12 Trực (Thập Nhị Trực)
-   Lịch Việt Nam 888
-   ============================================================ */
+// ══════════════════════════════════════════════════════
+// THAP-NHI-TRUC.JS — Dữ liệu 12 Trực
+// ══════════════════════════════════════════════════════
 
-var THAP_NHI_TRUC_DATA = [
+var THAP_NHI_TRUC = [
   {
     ten: 'Kiến',
-    icon: '🏗',
-    moTa: 'Ngày Kiến — ngày dựng xây, khởi công. Là ngày khởi đầu trong chu kỳ 12 trực.',
-    viecTot: ['Khởi công xây dựng', 'Khai trương', 'Xuất hành', 'Cưới hỏi', 'Ký kết hợp đồng', 'Trồng cây', 'Mua bất động sản'],
-    viecXau: ['An táng', 'Sửa chữa mồ mả']
+    moTa: 'Ngày khởi đầu, lập nên cái mới',
+    tot: ['Khởi công', 'Xuất hành', 'Cầu tài', 'Khai trương', 'Nhậm chức'],
+    xau: ['Động thổ', 'Mở kho', 'Phá dỡ']
   },
   {
     ten: 'Trừ',
-    icon: '🧹',
-    moTa: 'Ngày Trừ — ngày trừ bỏ cái cũ, dọn dẹp. Tốt cho việc giải tỏa, kết thúc.',
-    viecTot: ['Dọn dẹp nhà cửa', 'Giải hạn', 'Chữa bệnh', 'Cắt tóc', 'Tắm gội', 'Phá vỡ điều cũ'],
-    viecXau: ['Khởi công', 'Khai trương', 'Cưới hỏi', 'Xuất hành xa']
+    moTa: 'Ngày trừ bỏ, thanh toán, dọn dẹp',
+    tot: ['Chữa bệnh', 'Dọn dẹp', 'Trừ tà', 'Tắm gội', 'Cắt may'],
+    xau: ['Cưới hỏi', 'Khai trương', 'Xuất hành xa']
   },
   {
     ten: 'Mãn',
-    icon: '🌕',
-    moTa: 'Ngày Mãn — ngày đầy đủ, sung mãn. Tốt cho tích lũy và thu hoạch.',
-    viecTot: ['Khai kho', 'Nhập hàng', 'Thu tiền', 'Tích lũy tài sản', 'Mở cửa hàng'],
-    viecXau: ['Xuất hành', 'Tống táng', 'Khởi tạo mới']
+    moTa: 'Ngày viên mãn, đầy đủ, sung túc',
+    tot: ['Cưới hỏi', 'Khai trương', 'Thu hoạch', 'Cầu phúc', 'Nhập trạch'],
+    xau: ['Kiện tụng', 'Phá dỡ', 'Chôn cất']
   },
   {
     ten: 'Bình',
-    icon: '⚖️',
-    moTa: 'Ngày Bình — ngày bình hòa, cân bằng. Thích hợp cho các việc thường ngày.',
-    viecTot: ['Giao dịch thông thường', 'Hòa giải', 'Thăm bệnh', 'Đi đường xa', 'Dạy học'],
-    viecXau: ['Kiện tụng', 'Tranh chấp']
+    moTa: 'Ngày bình ổn, yên bình, thuận lợi',
+    tot: ['Sửa đường', 'Xây dựng', 'Gieo trồng', 'Hòa giải', 'Kết bạn'],
+    xau: ['Cầu tài', 'Đào giếng', 'Mở kho']
   },
   {
     ten: 'Định',
-    icon: '⚓',
-    moTa: 'Ngày Định — ngày định hình, vững chắc. Tốt cho các việc cần sự ổn định.',
-    viecTot: ['Cưới hỏi', 'Mua nhà đất', 'Ký hợp đồng dài hạn', 'Nhập học', 'Lập công ty'],
-    viecXau: ['Xuất hành có tranh chấp', 'Kiện tụng']
+    moTa: 'Ngày ổn định, an cư, vững chắc',
+    tot: ['Cưới hỏi', 'Ký hợp đồng', 'Nhậm chức', 'An táng', 'Cầu phúc'],
+    xau: ['Xuất hành', 'Kiện tụng', 'Di chuyển']
   },
   {
     ten: 'Chấp',
-    icon: '🤝',
-    moTa: 'Ngày Chấp — ngày chấp hành, thu hoạch. Tốt cho việc thực thi và thu nạp.',
-    viecTot: ['Thu nợ', 'Nhận hàng', 'Hội họp', 'Xây tường rào', 'Bắt đầu công việc mới'],
-    viecXau: ['Xuất hành', 'Cưới hỏi', 'Tống táng']
+    moTa: 'Ngày nắm giữ, bảo thủ, cố định',
+    tot: ['Xây dựng', 'Sửa chữa', 'Trồng cây', 'Chăn nuôi', 'Thu hoạch'],
+    xau: ['Khai trương', 'Xuất hành', 'Di dời', 'Cưới hỏi']
   },
   {
     ten: 'Phá',
-    icon: '⚡',
-    moTa: 'Ngày Phá — ngày phá vỡ, bất lợi. Nên tránh các việc trọng đại.',
-    viecTot: ['Phá dỡ công trình cũ', 'Kiện tụng (tranh chấp quyết liệt)'],
-    viecXau: ['Khai trương', 'Cưới hỏi', 'Xuất hành', 'Xây dựng', 'Ký hợp đồng', 'Mọi việc trọng đại']
+    moTa: 'Ngày phá bỏ, kết thúc, giải trừ',
+    tot: ['Phá dỡ', 'Trị bệnh', 'Bắt trộm', 'Phá án', 'Dọn dẹp'],
+    xau: ['Cưới hỏi', 'Khai trương', 'Ký kết', 'Xuất hành', 'Nhập trạch']
   },
   {
     ten: 'Nguy',
-    icon: '⚠️',
-    moTa: 'Ngày Nguy — ngày nguy hiểm, cần thận trọng. Tránh các việc mạo hiểm.',
-    viecTot: ['Leo cao, sửa mái nhà (thận trọng)', 'Phơi phóng đồ đạc'],
-    viecXau: ['Xuất hành xa', 'Phẫu thuật', 'Đầu tư mạo hiểm', 'Cưới hỏi']
+    moTa: 'Ngày nguy hiểm, cần thận trọng',
+    tot: ['Cúng tế', 'Cầu an', 'Đánh cá', 'Săn bắn'],
+    xau: ['Khởi công', 'Leo cao', 'Đi thuyền', 'Xuất hành xa', 'Mọi việc lớn']
   },
   {
     ten: 'Thành',
-    icon: '🏆',
-    moTa: 'Ngày Thành — ngày thành tựu, hoàn thành. Một trong những ngày tốt nhất.',
-    viecTot: ['Khai trương', 'Cưới hỏi', 'Xuất hành', 'Khởi công', 'Ký hợp đồng', 'Nhập học', 'Mọi việc trọng đại'],
-    viecXau: ['An táng']
+    moTa: 'Ngày thành tựu, kết quả tốt đẹp',
+    tot: ['Cưới hỏi', 'Khai trương', 'Nhập học', 'Xuất hành', 'Ký kết', 'Nhậm chức'],
+    xau: ['Kiện tụng', 'Phá dỡ']
   },
   {
     ten: 'Thu',
-    icon: '🌾',
-    moTa: 'Ngày Thu — ngày thu hoạch, tập hợp. Tốt cho việc thu nạp và tổng kết.',
-    viecTot: ['Thu hoạch', 'Nhận tiền', 'Hội họp', 'Hòa giải tranh chấp', 'Kết thúc dự án'],
-    viecXau: ['Khởi công', 'Xuất hành', 'Chôn cất']
+    moTa: 'Ngày thu gom, cất giữ, tiết kiệm',
+    tot: ['Thu hoạch', 'Nhập kho', 'Mua sắm', 'Cất nóc', 'Chôn cất'],
+    xau: ['Khai trương', 'Xuất hành', 'Khởi công', 'Cưới hỏi']
   },
   {
     ten: 'Khai',
-    icon: '🔓',
-    moTa: 'Ngày Khai — ngày khai mở, khởi đầu thuận lợi. Tốt cho mọi việc mới.',
-    viecTot: ['Khai trương', 'Khởi công', 'Cưới hỏi', 'Xuất hành', 'Ký hợp đồng', 'Trồng trọt', 'Đào giếng'],
-    viecXau: ['An táng', 'Tống táng']
+    moTa: 'Ngày khai mở, khởi đầu thuận lợi',
+    tot: ['Khai trương', 'Nhập học', 'Xuất hành', 'Cưới hỏi', 'Khởi công', 'Nhập trạch'],
+    xau: ['Chôn cất', 'An táng']
   },
   {
     ten: 'Bế',
-    icon: '🔒',
-    moTa: 'Ngày Bế — ngày đóng lại, kết thúc. Hợp với việc lưu trữ và cất giữ.',
-    viecTot: ['Cất giữ tài sản', 'Đóng kho', 'Lưu trữ hồ sơ', 'An táng', 'Tống táng'],
-    viecXau: ['Khai trương', 'Cưới hỏi', 'Xuất hành', 'Khởi công', 'Mọi việc khai mở mới']
+    moTa: 'Ngày đóng lại, kết thúc, hạn chế',
+    tot: ['Đắp đê', 'Xây tường', 'Chôn cất', 'Bế quan'],
+    xau: ['Khai trương', 'Xuất hành', 'Cưới hỏi', 'Khởi công', 'Nhập trạch', 'Mọi việc mới']
   }
 ];

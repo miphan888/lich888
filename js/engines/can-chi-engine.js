@@ -1,8 +1,8 @@
 /* ============================================================
    can-chi-engine.js — Engine tính Can Chi, Tiết Khí, Thập Nhị Trực,
-   Giờ Hoàng Đạo / Hắc Đạo
+   Giờ Hoàng Đạo / Hắc Đạo, Nạp Âm, Hướng xuất hành
    Lịch Việt Nam 888
-   Phụ thuộc: can-chi.js, tiet-khi.js, lunar-engine.js
+   Phụ thuộc: can-chi.js (global), tiet-khi.js (global), lunar-engine.js
    ============================================================ */
 
 var CanChiEngine = (function() {
@@ -12,23 +12,18 @@ var CanChiEngine = (function() {
      CAN CHI NĂM
      ============================================================ */
 
-  /* ---- Tính Can của năm dương lịch ---- */
   function getCanNam(nam) {
-    /* Giáp Tý = 1984, Can lặp 10 năm */
     var idx = (nam - 4) % 10;
     if (idx < 0) idx += 10;
     return THIEN_CAN[idx];
   }
 
-  /* ---- Tính Chi của năm dương lịch ---- */
   function getChiNam(nam) {
-    /* Giáp Tý = 1984, Chi lặp 12 năm */
     var idx = (nam - 4) % 12;
     if (idx < 0) idx += 12;
     return DIA_CHI[idx];
   }
 
-  /* ---- Tính Can Chi năm đầy đủ ---- */
   function getCanChiNam(nam) {
     return { can: getCanNam(nam), chi: getChiNam(nam) };
   }
@@ -39,42 +34,27 @@ var CanChiEngine = (function() {
      ============================================================ */
 
   /* Bảng Can đầu tháng Giêng theo Can năm */
-  /* Năm Can Giáp/Kỷ → tháng Giêng là Bính Dần */
-  /* Năm Can Ất/Canh → tháng Giêng là Mậu Dần  */
-  /* Năm Can Bính/Tân → tháng Giêng là Canh Dần */
-  /* Năm Can Đinh/Nhâm → tháng Giêng là Nhâm Dần */
-  /* Năm Can Mậu/Quý → tháng Giêng là Giáp Dần  */
   var CAN_THANG_GIENG = {
-    'Giáp': 2, /* Bính = index 2 */
-    'Kỷ':   2,
-    'Ất':   4, /* Mậu = index 4 */
-    'Canh': 4,
-    'Bính': 6, /* Canh = index 6 */
-    'Tân':  6,
-    'Đinh': 8, /* Nhâm = index 8 */
-    'Nhâm': 8,
-    'Mậu':  0, /* Giáp = index 0 */
-    'Quý':  0
+    'Giáp': 2, 'Kỷ':   2,
+    'Ất':   4, 'Canh': 4,
+    'Bính': 6, 'Tân':  6,
+    'Đinh': 8, 'Nhâm': 8,
+    'Mậu':  0, 'Quý':  0
   };
 
-  /* ---- Tính Can tháng âm lịch (tháng 1-12) theo can năm ---- */
   function getCanThang(thangAm, canNam) {
-    /* canNam: tên can như "Giáp", "Ất", ... */
     var startIdx = CAN_THANG_GIENG[canNam];
     if (startIdx === undefined) startIdx = 0;
-    /* thangAm bắt đầu từ 1, tháng Giêng = index startIdx */
     var idx = (startIdx + thangAm - 1) % 10;
     return THIEN_CAN[idx];
   }
 
-  /* ---- Chi tháng: tháng 1 = Dần (index 2), tháng 2 = Mão, ... ---- */
+  /* Tháng 1 âm lịch = Dần (index 2), tháng 2 = Mão (index 3), ... */
   function getChiThang(thangAm) {
-    /* Tháng 1 âm lịch = Dần (index 2 trong DIA_CHI) */
     var idx = (thangAm + 1) % 12;
     return DIA_CHI[idx];
   }
 
-  /* ---- Can Chi tháng đầy đủ ---- */
   function getCanChiThang(thangAm, canNam) {
     return {
       can: getCanThang(thangAm, canNam),
@@ -84,29 +64,10 @@ var CanChiEngine = (function() {
 
   /* ============================================================
      CAN CHI NGÀY
-     Công thức tính dựa trên số Julian
      ============================================================ */
 
-  /* ---- Tính Can ngày từ số Julian ---- */
-  function getCanNgayFromJD(jd) {
-    /* JD ngày Giáp Tý (1/1/1900) = 2415021 → Canh Tý */
-    /* Số ngày từ một mốc Giáp Tý cố định */
-    /* 2415021 mod 10 = 1 → can index = (jd - 1) % 10 */
-    var idx = (jd + 9) % 10;
-    if (idx < 0) idx += 10;
-    return THIEN_CAN[idx];
-  }
-
-  /* ---- Tính Chi ngày từ số Julian ---- */
-  function getChiNgayFromJD(jd) {
-    var idx = (jd + 1) % 12;
-    if (idx < 0) idx += 12;
-    return DIA_CHI[idx];
-  }
-
-  /* ---- Can Chi ngày từ ngày dương lịch ---- */
-  function getCanChiNgay(dd, mm, yyyy) {
-    /* Tính số Julian */
+  /* ---- Tính số Julian từ ngày dương lịch ---- */
+  function _jdFromDate(dd, mm, yyyy) {
     var a  = Math.floor((14 - mm) / 12);
     var y  = yyyy + 4800 - a;
     var m  = mm + 12 * a - 3;
@@ -117,6 +78,23 @@ var CanChiEngine = (function() {
       jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y
          + Math.floor(y / 4) - 32083;
     }
+    return jd;
+  }
+
+  function getCanNgayFromJD(jd) {
+    var idx = (jd + 9) % 10;
+    if (idx < 0) idx += 10;
+    return THIEN_CAN[idx];
+  }
+
+  function getChiNgayFromJD(jd) {
+    var idx = (jd + 1) % 12;
+    if (idx < 0) idx += 12;
+    return DIA_CHI[idx];
+  }
+
+  function getCanChiNgay(dd, mm, yyyy) {
+    var jd = _jdFromDate(dd, mm, yyyy);
     return {
       can: getCanNgayFromJD(jd),
       chi: getChiNgayFromJD(jd),
@@ -128,32 +106,19 @@ var CanChiEngine = (function() {
      CAN CHI GIỜ
      ============================================================ */
 
-  /* ---- Giờ Tý = 23h-1h, Sửu = 1h-3h, ... ---- */
-  /* Chi giờ tính theo giờ thực */
   function getChiGio(hour) {
-    /* Giờ Tý: 23-1, Sửu: 1-3, ... */
     var adjusted = (hour + 1) % 24;
     var idx = Math.floor(adjusted / 2);
     return DIA_CHI[idx];
   }
 
-  /* ---- Can giờ tính theo Can ngày ---- */
-  /* Quy tắc: Can ngày Giáp/Kỷ → giờ Tý = Giáp */
-  /*          Can ngày Ất/Canh  → giờ Tý = Bính */
-  /*          Can ngày Bính/Tân → giờ Tý = Mậu  */
-  /*          Can ngày Đinh/Nhâm → giờ Tý = Canh */
-  /*          Can ngày Mậu/Quý  → giờ Tý = Nhâm */
+  /* Quy tắc Can giờ Tý theo Can ngày */
   var CAN_GIO_TY = {
-    'Giáp': 0, /* Giáp = index 0 */
-    'Kỷ':   0,
-    'Ất':   2, /* Bính = index 2 */
-    'Canh': 2,
-    'Bính': 4, /* Mậu = index 4 */
-    'Tân':  4,
-    'Đinh': 6, /* Canh = index 6 */
-    'Nhâm': 6,
-    'Mậu':  8, /* Nhâm = index 8 */
-    'Quý':  8
+    'Giáp': 0, 'Kỷ':   0,
+    'Ất':   2, 'Canh': 2,
+    'Bính': 4, 'Tân':  4,
+    'Đinh': 6, 'Nhâm': 6,
+    'Mậu':  8, 'Quý':  8
   };
 
   function getCanGio(chiGio, canNgay) {
@@ -172,24 +137,11 @@ var CanChiEngine = (function() {
   }
 
   /* ============================================================
-     TIẾT KHÍ
-     Tính Solar Longitude bằng thuật toán gần đúng
+     TIẾT KHÍ — tính Solar Longitude bằng thuật toán gần đúng
      ============================================================ */
 
-  /* ---- Tính Solar Longitude cho ngày dd/mm/yyyy (độ) ---- */
   function getSolarLongitude(dd, mm, yyyy) {
-    /* Tính JD */
-    var a  = Math.floor((14 - mm) / 12);
-    var y  = yyyy + 4800 - a;
-    var m  = mm + 12 * a - 3;
-    var jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y
-           + Math.floor(y / 4) - Math.floor(y / 100)
-           + Math.floor(y / 400) - 32045;
-    if (jd < 2299161) {
-      jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y
-         + Math.floor(y / 4) - 32083;
-    }
-
+    var jd  = _jdFromDate(dd, mm, yyyy);
     var T   = (jd - 2451545.0) / 36525;
     var T2  = T * T;
     var dr  = Math.PI / 180;
@@ -206,7 +158,6 @@ var CanChiEngine = (function() {
     return L;
   }
 
-  /* ---- Lấy thông tin Tiết Khí của ngày dd/mm/yyyy ---- */
   function getTietKhiNgay(dd, mm, yyyy) {
     var lng = getSolarLongitude(dd, mm, yyyy);
     return getTietKhiByLng(lng);
@@ -214,18 +165,14 @@ var CanChiEngine = (function() {
 
   /* ============================================================
      THẬP NHỊ TRỰC
-     Tính dựa trên Chi tháng + Chi ngày
      ============================================================ */
 
-  /* 12 trực theo thứ tự */
   var THAP_NHI_TRUC = [
     'Kiến', 'Trừ', 'Mãn', 'Bình',
     'Định', 'Chấp', 'Phá', 'Nguy',
     'Thành', 'Thu', 'Khai', 'Bế'
   ];
 
-  /* ---- Tính Trực của ngày ---- */
-  /* Công thức: (index Chi ngày - index Chi tháng + 12) % 12 */
   function getThapNhiTruc(chiNgay, chiThang) {
     var iNgay  = DIA_CHI.indexOf(chiNgay);
     var iThang = DIA_CHI.indexOf(chiThang);
@@ -234,54 +181,104 @@ var CanChiEngine = (function() {
     return THAP_NHI_TRUC[idx];
   }
 
+  /* ---- Lấy thông tin chi tiết trực (từ THAP_NHI_TRUC_DATA trong thap-nhi-truc.js) ---- */
+  function getThucData(tenTruc) {
+    if (typeof THAP_NHI_TRUC_DATA !== 'undefined') {
+      for (var i = 0; i < THAP_NHI_TRUC_DATA.length; i++) {
+        if (THAP_NHI_TRUC_DATA[i].ten === tenTruc) return THAP_NHI_TRUC_DATA[i];
+      }
+    }
+    return null;
+  }
+
   /* ============================================================
      GIỜ HOÀNG ĐẠO / HẮC ĐẠO
-     Tính 12 giờ tốt/xấu theo Can ngày
+     6 sao Hoàng Đạo cố định: Thanh Long, Minh Đường, Kim Quỹ,
+     Bảo Quang, Ngọc Đường, Tư Mệnh
+     Thứ tự 12 sao theo vòng 12 Chi bắt đầu từ Can ngày
      ============================================================ */
 
   /*
-   * Quy tắc truyền thống:
-   * - Can ngày Giáp/Kỷ: Hoàng Đạo ở giờ Tý, Sửu, Mão, Ngọ, Thân, Dậu
-   * - Can ngày Ất/Canh: Hoàng Đạo ở giờ Dần, Sửu, Tỵ, Ngọ, Thân, Hợi
-   * - Can ngày Bính/Tân: Hoàng Đạo ở giờ Tý, Dần, Mão, Tỵ, Dậu, Hợi
-   * - Can ngày Đinh/Nhâm: Hoàng Đạo ở giờ Tý, Mão, Thìn, Ngọ, Dậu, Tuất
-   * - Can ngày Mậu/Quý: Hoàng Đạo ở giờ Sửu, Dần, Thìn, Tỵ, Tuất, Hợi
+   * Quy tắc: 12 sao xoay theo vòng Địa Chi tính từ giờ Tý của ngày.
+   * Sao bắt đầu giờ Tý phụ thuộc Can ngày:
+   * Giáp/Kỷ → Tý = Thanh Long (index 0)
+   * Ất/Canh → Tý = Minh Đường (index 1)  — tức +1
+   * Bính/Tân → Tý = Kim Quỹ (index 4)
+   * Đinh/Nhâm → Tý = Ngọc Đường (index 7)
+   * Mậu/Quý → Tý = Tư Mệnh (index 11)
+   *
+   * 12 sao theo thứ tự:
+   * Thanh Long(H), Minh Đường(H), Thiên Hình(X), Chu Tước(X),
+   * Kim Quỹ(H), Bảo Quang(H), Bạch Hổ(X), Ngọc Đường(H),
+   * Thiên Lao(X), Huyền Vũ(X), Tư Mệnh(H), Câu Trận(X)
+   * H=Hoàng Đạo, X=Hắc Đạo
    */
-  var HOANG_DAO_THEO_CAN = {
-    'Giáp': ['Tý', 'Sửu', 'Mão', 'Ngọ', 'Thân', 'Dậu'],
-    'Kỷ':   ['Tý', 'Sửu', 'Mão', 'Ngọ', 'Thân', 'Dậu'],
-    'Ất':   ['Dần', 'Sửu', 'Tỵ', 'Ngọ', 'Thân', 'Hợi'],
-    'Canh': ['Dần', 'Sửu', 'Tỵ', 'Ngọ', 'Thân', 'Hợi'],
-    'Bính': ['Tý', 'Dần', 'Mão', 'Tỵ', 'Dậu', 'Hợi'],
-    'Tân':  ['Tý', 'Dần', 'Mão', 'Tỵ', 'Dậu', 'Hợi'],
-    'Đinh': ['Tý', 'Mão', 'Thìn', 'Ngọ', 'Dậu', 'Tuất'],
-    'Nhâm': ['Tý', 'Mão', 'Thìn', 'Ngọ', 'Dậu', 'Tuất'],
-    'Mậu':  ['Sửu', 'Dần', 'Thìn', 'Tỵ', 'Tuất', 'Hợi'],
-    'Quý':  ['Sửu', 'Dần', 'Thìn', 'Tỵ', 'Tuất', 'Hợi']
-  };
+  var MUOI_HAI_SAO = [
+    { ten: 'Thanh Long', hoangDao: true  },
+    { ten: 'Minh Đường', hoangDao: true  },
+    { ten: 'Thiên Hình', hoangDao: false },
+    { ten: 'Chu Tước',   hoangDao: false },
+    { ten: 'Kim Quỹ',    hoangDao: true  },
+    { ten: 'Bảo Quang',  hoangDao: true  },
+    { ten: 'Bạch Hổ',   hoangDao: false },
+    { ten: 'Ngọc Đường', hoangDao: true  },
+    { ten: 'Thiên Lao',  hoangDao: false },
+    { ten: 'Huyền Vũ',   hoangDao: false },
+    { ten: 'Tư Mệnh',    hoangDao: true  },
+    { ten: 'Câu Trận',   hoangDao: false }
+  ];
 
-  /* ---- Kiểm tra giờ có là Hoàng Đạo không ---- */
-  function isHoangDao(chiGio, canNgay) {
-    var list = HOANG_DAO_THEO_CAN[canNgay] || [];
-    return list.indexOf(chiGio) !== -1;
-  }
+  /* Sao khởi đầu giờ Tý (index 0 = Thanh Long) theo Can ngày */
+  var SAO_BAT_DAU_TY = {
+    'Giáp': 0,  'Kỷ':   0,
+    'Ất':   2,  'Canh': 2,
+    'Bính': 4,  'Tân':  4,
+    'Đinh': 6,  'Nhâm': 6,
+    'Mậu':  8,  'Quý':  8
+  };
 
   /* ---- Lấy danh sách 12 giờ với trạng thái Hoàng Đạo / Hắc Đạo ---- */
   function getDanhSachGio(canNgay) {
+    var startSao = SAO_BAT_DAU_TY[canNgay];
+    if (startSao === undefined) startSao = 0;
+
     var result = [];
     for (var i = 0; i < DIA_CHI.length; i++) {
-      var chi    = DIA_CHI[i];
-      var good   = isHoangDao(chi, canNgay);
-      var gioInfo = GIO_DIA_CHI[i];
+      var chi      = DIA_CHI[i];
+      var saoIdx   = (startSao + i) % 12;
+      var sao      = MUOI_HAI_SAO[saoIdx];
+      var gioInfo  = GIO_DIA_CHI[i];
       result.push({
-        chi:    chi,
-        loai:   good ? 'Hoàng Đạo' : 'Hắc Đạo',
-        good:   good,
-        from:   gioInfo ? gioInfo.from : (i * 2 - 1),
-        to:     gioInfo ? gioInfo.to   : (i * 2 + 1)
+        chi:      chi,
+        sao:      sao.ten,
+        loai:     sao.hoangDao ? 'Hoàng Đạo' : 'Hắc Đạo',
+        good:     sao.hoangDao,
+        from:     gioInfo ? gioInfo.from : (i * 2 - 1),
+        to:       gioInfo ? gioInfo.to   : (i * 2 + 1)
       });
     }
     return result;
+  }
+
+  /* ============================================================
+     HƯỚNG XUẤT HÀNH
+     ============================================================ */
+
+  function getHuongXuatHanh(canNgay) {
+    return {
+      hyThan:   HUONG_HY_THAN[canNgay]   || '—',
+      taiThan:  HUONG_TAI_THAN[canNgay]  || '—',
+      quyNhan:  HUONG_QUY_NHAN[canNgay]  || '—',
+      hacThan:  HUONG_HAC_THAN[canNgay]  || '—'
+    };
+  }
+
+  /* ============================================================
+     NẠP ÂM
+     ============================================================ */
+
+  function getNapAmCanChi(can, chi) {
+    return getNapAm(can, chi);
   }
 
   /* ============================================================
@@ -292,7 +289,7 @@ var CanChiEngine = (function() {
     tz = (tz !== undefined) ? tz : 7;
 
     /* Chuyển sang âm lịch */
-    var am   = LunarEngine.convertSolar2Lunar(dd, mm, yyyy, tz);
+    var am = LunarEngine.convertSolar2Lunar(dd, mm, yyyy, tz);
 
     /* Can Chi ngày */
     var ccNgay  = getCanChiNgay(dd, mm, yyyy);
@@ -304,29 +301,43 @@ var CanChiEngine = (function() {
     /* Can Chi năm âm lịch */
     var ccNam   = getCanChiNam(am.year);
 
+    /* Nạp Âm */
+    var napAmNgay  = getNapAm(ccNgay.can,  ccNgay.chi);
+    var napAmThang = getNapAm(ccThang.can, ccThang.chi);
+    var napAmNam   = getNapAm(ccNam.can,   ccNam.chi);
+
     /* Tiết Khí */
     var tietKhi = getTietKhiNgay(dd, mm, yyyy);
 
     /* Thập Nhị Trực */
-    var truc    = getThapNhiTruc(ccNgay.chi, ccThang.chi);
+    var tenTruc  = getThapNhiTruc(ccNgay.chi, ccThang.chi);
+    var trucData = getThucData(tenTruc);
 
-    /* Danh sách 12 giờ */
+    /* Danh sách 12 giờ với sao cai quản */
     var danhSachGio = getDanhSachGio(ccNgay.can);
+
+    /* Hướng xuất hành */
+    var huong = getHuongXuatHanh(ccNgay.can);
 
     /* Thứ trong tuần */
     var thuMap = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
     var dow    = new Date(yyyy, mm - 1, dd).getDay();
 
     return {
-      duong:  { dd: dd, mm: mm, yyyy: yyyy },
-      am:     am,
-      thu:    thuMap[dow],
-      ccNgay:  ccNgay,
-      ccThang: ccThang,
-      ccNam:   ccNam,
-      tietKhi: tietKhi,
-      truc:    truc,
-      danhSachGio: danhSachGio
+      duong:       { dd: dd, mm: mm, yyyy: yyyy },
+      am:          am,
+      thu:         thuMap[dow],
+      ccNgay:      ccNgay,
+      ccThang:     ccThang,
+      ccNam:       ccNam,
+      napAmNgay:   napAmNgay,
+      napAmThang:  napAmThang,
+      napAmNam:    napAmNam,
+      tietKhi:     tietKhi,
+      truc:        tenTruc,
+      trucData:    trucData,
+      danhSachGio: danhSachGio,
+      huong:       huong
     };
   }
 
@@ -334,22 +345,24 @@ var CanChiEngine = (function() {
      Public API
      ============================================================ */
   return {
-    getCanNam:        getCanNam,
-    getChiNam:        getChiNam,
-    getCanChiNam:     getCanChiNam,
-    getCanThang:      getCanThang,
-    getChiThang:      getChiThang,
-    getCanChiThang:   getCanChiThang,
-    getCanChiNgay:    getCanChiNgay,
-    getCanChiGio:     getCanChiGio,
-    getChiGio:        getChiGio,
-    getSolarLongitude: getSolarLongitude,
-    getTietKhiNgay:   getTietKhiNgay,
-    getThapNhiTruc:   getThapNhiTruc,
-    isHoangDao:       isHoangDao,
-    getDanhSachGio:   getDanhSachGio,
-    phanTichNgay:     phanTichNgay,
-    THAP_NHI_TRUC:    THAP_NHI_TRUC,
-    HOANG_DAO_THEO_CAN: HOANG_DAO_THEO_CAN
+    getCanNam:          getCanNam,
+    getChiNam:          getChiNam,
+    getCanChiNam:       getCanChiNam,
+    getCanThang:        getCanThang,
+    getChiThang:        getChiThang,
+    getCanChiThang:     getCanChiThang,
+    getCanChiNgay:      getCanChiNgay,
+    getCanGio:          getCanGio,
+    getCanChiGio:       getCanChiGio,
+    getChiGio:          getChiGio,
+    getSolarLongitude:  getSolarLongitude,
+    getTietKhiNgay:     getTietKhiNgay,
+    getThapNhiTruc:     getThapNhiTruc,
+    getDanhSachGio:     getDanhSachGio,
+    getHuongXuatHanh:   getHuongXuatHanh,
+    getNapAmCanChi:     getNapAmCanChi,
+    phanTichNgay:       phanTichNgay,
+    THAP_NHI_TRUC:      THAP_NHI_TRUC,
+    MUOI_HAI_SAO:       MUOI_HAI_SAO
   };
 })();
