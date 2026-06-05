@@ -92,31 +92,161 @@ function tuTruPhanTich() {
     return;
   }
 
-  try {
-    // Gọi engine — hỗ trợ nhiều format
+    try {
     var data = null;
 
+    // Gọi BatTuEngine
     if (typeof BatTuEngine !== 'undefined') {
+      // Liệt kê tất cả methods có trong engine
+      var methods = Object.keys(BatTuEngine);
+      console.log('[TuTru] BatTuEngine methods:', methods);
+
       if (typeof BatTuEngine.phanTich === 'function') {
         data = BatTuEngine.phanTich(day, month, year, gio, tz, gioiTinh);
+      } else if (typeof BatTuEngine.phanTichBatTu === 'function') {
+        data = BatTuEngine.phanTichBatTu(day, month, year, gio, tz, gioiTinh);
       } else if (typeof BatTuEngine.tinhBatTu === 'function') {
         data = BatTuEngine.tinhBatTu(day, month, year, gio, tz);
+      } else if (typeof BatTuEngine.calculate === 'function') {
+        data = BatTuEngine.calculate(day, month, year, gio, tz);
+      } else {
+        // Thử gọi method đầu tiên tìm thấy
+        for (var k = 0; k < methods.length; k++) {
+          if (typeof BatTuEngine[methods[k]] === 'function') {
+            console.log('[TuTru] Trying method:', methods[k]);
+            try {
+              data = BatTuEngine[methods[k]](day, month, year, gio, tz, gioiTinh);
+              if (data) break;
+            } catch(ee) { console.log('[TuTru] Method failed:', methods[k], ee); }
+          }
+        }
       }
     }
 
-    if (!data && typeof tinhTuTru === 'function') {
-      data = tinhTuTru(day, month, year, gio, tz);
-    }
+    // Thử hàm global
+    if (!data && typeof phanTichBatTu === 'function') data = phanTichBatTu(day, month, year, gio, tz);
+    if (!data && typeof tinhBatTu === 'function') data = tinhBatTu(day, month, year, gio, tz);
+    if (!data && typeof tinhTuTru === 'function') data = tinhTuTru(day, month, year, gio, tz);
 
+    // Fallback: tự tính từ can-chi-engine
     if (!data) {
-      // Fallback: tự tính từ can-chi-engine nếu có
+      console.log('[TuTru] Engine không trả dữ liệu, dùng fallback tự tính');
       data = tuTruTuTinh(day, month, year, gio, tz);
     }
 
     if (!data) {
-      alert('Không thể phân tích. Kiểm tra bat-tu-engine.js');
+      alert('Không thể phân tích. Kiểm tra Console (F12) để xem chi tiết.');
       return;
     }
+
+    // ═══ CHUẨN HÓA DỮ LIỆU ═══
+    // Engine có thể trả format khác nhau, chuẩn hóa về format chung
+
+    var CAN = (typeof CAN_DATA !== 'undefined') ? CAN_DATA :
+              ['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+    var CHI = (typeof CHI_DATA !== 'undefined') ? CHI_DATA :
+              ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+    var NGU_HANH_CAN = ['Mộc','Mộc','Hỏa','Hỏa','Thổ','Thổ','Kim','Kim','Thủy','Thủy'];
+    var NGU_HANH_CHI = ['Thủy','Thổ','Mộc','Mộc','Thổ','Hỏa','Hỏa','Thổ','Kim','Kim','Thổ','Thủy'];
+
+    // Nếu data chưa có tuTru, build từ các field riêng lẻ
+    if (!data.tuTru) {
+      var cNam = 0, cThang = 0, cNgay = 0, cGio = 0;
+      var zNam = 0, zThang = 0, zNgay = 0, zGio = 0;
+
+      // Thử nhiều format field name
+      if (data.canNam !== undefined) {
+        cNam = data.canNam; zNam = data.chiNam;
+        cThang = data.canThang; zThang = data.chiThang;
+        cNgay = data.canNgay; zNgay = data.chiNgay;
+        cGio = data.canGio || 0; zGio = data.chiGio || 0;
+      } else if (data.nam && typeof data.nam === 'object') {
+        cNam = data.nam.can || 0; zNam = data.nam.chi || 0;
+        cThang = data.thang ? data.thang.can || 0 : 0; zThang = data.thang ? data.thang.chi || 0 : 0;
+        cNgay = data.ngay ? data.ngay.can || 0 : 0; zNgay = data.ngay ? data.ngay.chi || 0 : 0;
+        cGio = data.gio ? data.gio.can || 0 : 0; zGio = data.gio ? data.gio.chi || 0 : 0;
+      } else if (data.yearPillar || data.year) {
+        var yp = data.yearPillar || data.year || {};
+        var mp = data.monthPillar || data.month || {};
+        var dp = data.dayPillar || data.day || {};
+        var hp = data.hourPillar || data.hour || {};
+        cNam = yp.can || yp.stem || 0; zNam = yp.chi || yp.branch || 0;
+        cThang = mp.can || mp.stem || 0; zThang = mp.chi || mp.branch || 0;
+        cNgay = dp.can || dp.stem || 0; zNgay = dp.chi || dp.branch || 0;
+        cGio = hp.can || hp.stem || 0; zGio = hp.chi || hp.branch || 0;
+      }
+
+      // Nếu giá trị là string, chuyển về index
+      if (typeof cNam === 'string') cNam = CAN.indexOf(cNam);
+      if (typeof zNam === 'string') zNam = CHI.indexOf(zNam);
+      if (typeof cThang === 'string') cThang = CAN.indexOf(cThang);
+      if (typeof zThang === 'string') zThang = CHI.indexOf(zThang);
+      if (typeof cNgay === 'string') cNgay = CAN.indexOf(cNgay);
+      if (typeof zNgay === 'string') zNgay = CHI.indexOf(zNgay);
+      if (typeof cGio === 'string') cGio = CAN.indexOf(cGio);
+      if (typeof zGio === 'string') zGio = CHI.indexOf(zGio);
+
+      // Đảm bảo index hợp lệ
+      cNam = ((cNam || 0) + 10) % 10;
+      zNam = ((zNam || 0) + 12) % 12;
+      cThang = ((cThang || 0) + 10) % 10;
+      zThang = ((zThang || 0) + 12) % 12;
+      cNgay = ((cNgay || 0) + 10) % 10;
+      zNgay = ((zNgay || 0) + 12) % 12;
+      cGio = ((cGio || 0) + 10) % 10;
+      zGio = ((zGio || 0) + 12) % 12;
+
+      // Nạp Âm
+      var naNam = '', naThang = '', naNgay = '', naGio = '';
+      if (typeof getNapAmCanChi === 'function') {
+        naNam = getNapAmCanChi(cNam, zNam) || '';
+        naThang = getNapAmCanChi(cThang, zThang) || '';
+        naNgay = getNapAmCanChi(cNgay, zNgay) || '';
+        naGio = getNapAmCanChi(cGio, zGio) || '';
+      }
+
+      data.tuTru = {
+        nam:   { can: cNam, chi: zNam, canStr: CAN[cNam], chiStr: CHI[zNam], hanh: NGU_HANH_CAN[cNam], napAm: naNam },
+        thang: { can: cThang, chi: zThang, canStr: CAN[cThang], chiStr: CHI[zThang], hanh: NGU_HANH_CAN[cThang], napAm: naThang },
+        ngay:  { can: cNgay, chi: zNgay, canStr: CAN[cNgay], chiStr: CHI[zNgay], hanh: NGU_HANH_CAN[cNgay], napAm: naNgay },
+        gio:   { can: cGio, chi: zGio, canStr: CAN[cGio], chiStr: CHI[zGio], hanh: NGU_HANH_CAN[cGio], napAm: naGio }
+      };
+    } else {
+      // tuTru đã có nhưng có thể thiếu canStr/chiStr
+      var keys4 = ['nam', 'thang', 'ngay', 'gio'];
+      for (var ki = 0; ki < keys4.length; ki++) {
+        var tr = data.tuTru[keys4[ki]];
+        if (!tr) continue;
+        if (!tr.canStr && typeof tr.can === 'number') tr.canStr = CAN[tr.can];
+        if (!tr.chiStr && typeof tr.chi === 'number') tr.chiStr = CHI[tr.chi];
+        if (!tr.hanh && typeof tr.can === 'number') tr.hanh = NGU_HANH_CAN[tr.can];
+        if (!tr.napAm && typeof tr.can === 'number' && typeof getNapAmCanChi === 'function') {
+          tr.napAm = getNapAmCanChi(tr.can, tr.chi) || '';
+        }
+      }
+    }
+
+    // Đảm bảo có nhatChu
+    if (!data.nhatChu) {
+      data.nhatChu = data.tuTru.ngay;
+    }
+
+    // Đảm bảo có nguHanh
+    if (!data.nguHanh) {
+      var dem = { 'Kim': 0, 'Mộc': 0, 'Thủy': 0, 'Hỏa': 0, 'Thổ': 0 };
+      var k4 = ['nam', 'thang', 'ngay', 'gio'];
+      for (var di = 0; di < k4.length; di++) {
+        var tru = data.tuTru[k4[di]];
+        if (!tru) continue;
+        var hCan = (typeof tru.can === 'number') ? NGU_HANH_CAN[tru.can] : tru.hanh;
+        var hChi = (typeof tru.chi === 'number') ? NGU_HANH_CHI[tru.chi] : '';
+        if (hCan && dem[hCan] !== undefined) dem[hCan]++;
+        if (hChi && dem[hChi] !== undefined) dem[hChi]++;
+      }
+      data.nguHanh = dem;
+    }
+
+    console.log('[TuTru] Data chuẩn hóa:', data);
 
     data.ten = ten;
     data.gioiTinh = gioiTinh;
@@ -139,10 +269,9 @@ function tuTruPhanTich() {
     tuTruTab('nguhanh');
 
   } catch (e) {
-    console.error('[TuTru]', e);
-    alert('Lỗi phân tích: ' + e.message);
+    console.error('[TuTru] Lỗi:', e);
+    alert('Lỗi phân tích: ' + e.message + '\nXem F12 Console để biết chi tiết.');
   }
-}
 
 // ─── FALLBACK: TỰ TÍNH TỪ CAN-CHI-ENGINE ────────────
 function tuTruTuTinh(dd, mm, yy, gio, tz) {
@@ -242,18 +371,30 @@ function renderTuTru() {
   for (var i = 0; i < 4; i++) {
     var t = tru[keys[i]];
     if (!t) continue;
-    var canStr = t.canStr || '?';
-    var chiStr = t.chiStr || '?';
-    var hanh = t.hanh || '';
-    var napAm = t.napAm || '';
+
+    // Engine trả về can/chi là STRING (tên), không phải index
+    var canStr = t.can || '?';
+    var chiStr = t.chi || '?';
+    var hanh = t.nguHanh || '';
     var isNC = (i === 2);
     var hc = HANH_COLORS[hanh] || { color: '#333', bg: '#f5f5f5' };
+
+    // Nạp Âm
+    var napAm = '';
+    if (typeof getNapAmCanChi === 'function') {
+      // getNapAmCanChi nhận index, cần tìm index từ tên
+      var canIdx = ptTimIndex(canStr, ['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý']);
+      var chiIdx = ptTimIndex(chiStr, ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi']);
+      if (canIdx >= 0 && chiIdx >= 0) {
+        napAm = getNapAmCanChi(canIdx, chiIdx) || '';
+      }
+    }
 
     html += '<div style="background:#fff;border:' + (isNC ? '2px solid var(--red)' : '1px solid var(--cream3)') + ';border-radius:6px;padding:14px;text-align:center">';
     html += '<div style="font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:10px">' + labels[i] + (isNC ? ' ★' : '') + '</div>';
     html += '<div style="font-family:Noto Serif,serif;font-size:20px;font-weight:700;color:var(--red);line-height:1.2">' + canStr + '</div>';
     html += '<div style="font-family:Noto Serif,serif;font-size:20px;font-weight:700;color:var(--red);line-height:1.2">' + chiStr + '</div>';
-    html += '<div style="font-size:12px;color:' + hc.color + ';margin-top:6px;font-weight:600">' + hanh + '</div>';
+    if (hanh) html += '<div style="font-size:12px;color:' + hc.color + ';margin-top:6px;font-weight:600">' + hanh + '</div>';
     if (napAm) html += '<div style="font-size:11px;color:var(--ink3);margin-top:4px">' + napAm + '</div>';
     html += '</div>';
   }
@@ -261,30 +402,37 @@ function renderTuTru() {
   wrap.innerHTML = html;
 }
 
+// Helper: tìm index trong mảng
+function ptTimIndex(str, arr) {
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] === str) return i;
+  }
+  return -1;
+}
+
 // ─── RENDER THẬP THẦN ────────────────────────────────
 function renderThapThan() {
   var wrap = document.getElementById('batu-thap-than');
-  if (!wrap || !_tuTru || !_tuTru.tuTru) return;
+  if (!wrap || !_tuTru) return;
 
+  // Dùng cacThan từ engine nếu có
+  var cacThan = _tuTru.cacThan;
   var tru = _tuTru.tuTru;
-  var nhatChu = _tuTru.nhatChu || tru.ngay;
-  if (!nhatChu) return;
+  if (!tru) return;
 
-  var ncCan = (typeof nhatChu.can === 'number') ? nhatChu.can : 0;
   var labels = ['Năm', 'Tháng', 'Ngày', 'Giờ'];
-  var keys = ['nam', 'thang', 'ngay', 'gio'];
-
   var html = '<div style="font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:8px">Thập Thần</div>';
   html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">';
 
-  for (var i = 0; i < 4; i++) {
-    var t = tru[keys[i]];
-    if (!t) continue;
-    var tCan = (typeof t.can === 'number') ? t.can : 0;
-    var ttIdx = (tCan - ncCan + 10) % 10;
-    var ttName = THAP_THAN_TEN[ttIdx] || '—';
-    if (i === 2) ttName = 'Nhật Chủ';
+  var thanValues = ['', '', 'Nhật Chủ', ''];
+  if (cacThan) {
+    thanValues[0] = cacThan.canNam || '';
+    thanValues[1] = cacThan.canThang || '';
+    thanValues[3] = cacThan.canGio || '';
+  }
 
+  for (var i = 0; i < 4; i++) {
+    var ttName = thanValues[i] || '—';
     html += '<div style="text-align:center;font-size:12px;padding:6px;background:#fff;border:1px solid var(--cream3);border-radius:4px">';
     html += '<div style="color:var(--ink3)">' + labels[i] + '</div>';
     html += '<div style="color:var(--red);font-weight:600">' + ttName + '</div>';
@@ -300,12 +448,23 @@ function renderNguHanh() {
   var nxWrap = document.getElementById('batu-hanh-nhanxet');
   if (!wrap || !_tuTru) return;
 
-  var nh = _tuTru.nguHanh;
+  // Engine trả về nguHanh hoặc nguHanhRaw
+  var nh = _tuTru.nguHanh || _tuTru.nguHanhRaw;
   if (!nh) { wrap.innerHTML = ''; return; }
+
+  // Engine dùng key không dấu: Kim, Moc, Thuy, Hoa, Tho
+  // Cần map lại
+  var mapped = {
+    'Kim':  nh.Kim  || nh['Kim']  || 0,
+    'Mộc':  nh.Moc  || nh['Mộc']  || 0,
+    'Thủy': nh.Thuy || nh['Thủy'] || 0,
+    'Hỏa':  nh.Hoa  || nh['Hỏa']  || 0,
+    'Thổ':  nh.Tho  || nh['Thổ']  || 0
+  };
 
   var total = 0;
   var hanhs = ['Kim', 'Mộc', 'Thủy', 'Hỏa', 'Thổ'];
-  for (var i = 0; i < hanhs.length; i++) total += (nh[hanhs[i]] || 0);
+  for (var i = 0; i < hanhs.length; i++) total += mapped[hanhs[i]];
   if (total === 0) total = 1;
 
   var vuong = '', thieu = '';
@@ -314,7 +473,7 @@ function renderNguHanh() {
   var html = '';
   for (var j = 0; j < hanhs.length; j++) {
     var h = hanhs[j];
-    var val = nh[h] || 0;
+    var val = mapped[h];
     var pct = Math.round(val / total * 100);
     var hc = HANH_COLORS[h] || { color: '#333', bg: '#eee' };
 
@@ -330,10 +489,10 @@ function renderNguHanh() {
   wrap.innerHTML = html;
 
   if (nxWrap) {
-    var nxHtml = '<div class="luan-giai-box"><h3>📊 Nhận Xét Ngũ Hành</h3><p>';
+    var nxHtml = '<div class="luan-giai-box"><h3>📊 Nhận Xét</h3><p>';
     nxHtml += '<strong style="color:' + (HANH_COLORS[vuong] || {}).color + '">' + vuong + '</strong> vượng nhất (' + maxVal + '/8). ';
     if (minVal === 0) {
-      nxHtml += '<strong style="color:' + (HANH_COLORS[thieu] || {}).color + '">' + thieu + '</strong> hoàn toàn thiếu — cần bổ sung.';
+      nxHtml += '<strong style="color:' + (HANH_COLORS[thieu] || {}).color + '">' + thieu + '</strong> hoàn toàn thiếu.';
     } else {
       nxHtml += '<strong style="color:' + (HANH_COLORS[thieu] || {}).color + '">' + thieu + '</strong> yếu nhất (' + minVal + '/8).';
     }
@@ -389,54 +548,30 @@ function renderThanVuong() {
   var wrap = document.getElementById('batu-than-vuong');
   if (!wrap || !_tuTru) return;
 
-  var tru = _tuTru.tuTru;
-  var nc = _tuTru.nhatChu || tru.ngay;
-  if (!nc) return;
+  var vn = _tuTru.vuongNhuoc;
+  if (!vn) {
+    wrap.innerHTML = '<p>Không đủ dữ liệu phân tích.</p>';
+    return;
+  }
 
-  var ncHanh = nc.hanh || '';
-  var nh = _tuTru.nguHanh || {};
-
-  // Hành sinh Nhật Chủ
-  var sinhNC = '';
-  for (var k in TUONG_SINH) { if (TUONG_SINH[k] === ncHanh) { sinhNC = k; break; } }
-
-  // Đếm hỗ trợ vs khắc chế
-  var hoTro = (nh[ncHanh] || 0) + (nh[sinhNC] || 0);
-  var khacChe = 0;
-  for (var h in nh) { if (h !== ncHanh && h !== sinhNC) khacChe += nh[h]; }
-
-  var isVuong = hoTro >= khacChe;
-  var ketLuan = isVuong ? 'THÂN VƯỢNG' : 'THÂN NHƯỢC';
-
+  var ncHanh = vn.nhNgay || '';
+  var isVuong = vn.vuong;
   _tuTru.thanVuong = isVuong;
 
   var html = '<div class="result-grid" style="grid-template-columns:1fr 1fr;margin-top:0">';
-
-  // Ô Nhật Chủ
-  html += '<div class="result-box highlight">';
-  html += '<div class="rb-label">Nhật Chủ</div>';
-  html += '<div class="rb-value" style="color:' + (HANH_COLORS[ncHanh] || {}).color + '">' + (nc.canStr || '') + ' ' + ncHanh + '</div>';
+  html += '<div class="result-box highlight"><div class="rb-label">Nhật Chủ</div>';
+  html += '<div class="rb-value" style="color:' + (HANH_COLORS[ncHanh] || {}).color + '">' + vn.canNgay + ' ' + ncHanh + '</div></div>';
+  html += '<div class="result-box highlight"><div class="rb-label">Kết Luận</div>';
+  html += '<div class="rb-value" style="color:' + (isVuong ? '#1A5C00' : '#B80000') + '">' + vn.ketLuan + '</div></div>';
   html += '</div>';
 
-  // Ô Kết Luận
-  html += '<div class="result-box highlight">';
-  html += '<div class="rb-label">Kết Luận</div>';
-  html += '<div class="rb-value" style="color:' + (isVuong ? '#1A5C00' : '#B80000') + '">' + ketLuan + '</div>';
-  html += '</div>';
-  html += '</div>';
-
-  // Giải thích
   html += '<div class="luan-giai-box" style="margin-top:14px"><h3>📋 Giải Thích</h3><p>';
-  html += 'Nhật Chủ <strong>' + (nc.canStr || '') + '</strong> thuộc hành <strong style="color:' + (HANH_COLORS[ncHanh] || {}).color + '">' + ncHanh + '</strong>. ';
-  html += 'Lực hỗ trợ (cùng hành + hành sinh): <strong>' + hoTro + '</strong>/8. ';
-  html += 'Lực khắc chế: <strong>' + khacChe + '</strong>/8. ';
-  if (isVuong) {
-    html += 'Nhật Chủ được hỗ trợ nhiều hơn → <strong style="color:#1A5C00">Thân Vượng</strong>. ';
-    html += 'Cần hành khắc/tiết chế để cân bằng.';
-  } else {
-    html += 'Nhật Chủ bị khắc chế nhiều hơn → <strong style="color:#B80000">Thân Nhược</strong>. ';
-    html += 'Cần hành sinh/hỗ trợ để bổ sung.';
-  }
+  html += 'Nhật Chủ <strong>' + vn.canNgay + '</strong> thuộc hành <strong style="color:' + (HANH_COLORS[ncHanh] || {}).color + '">' + ncHanh + '</strong>. ';
+  html += 'Điểm tháng: <strong>' + vn.diemThang + '</strong>/4. ';
+  html += 'Điểm hỗ trợ: <strong>' + vn.diemHoTro + '</strong>. ';
+  html += 'Tổng: <strong>' + vn.tongDiem + '</strong>. ';
+  html += vn.vuong ? 'Thân được hỗ trợ nhiều → <strong style="color:#1A5C00">Thân Vượng</strong>.'
+                   : 'Thân bị khắc chế nhiều → <strong style="color:#B80000">Thân Nhược</strong>.';
   html += '</p></div>';
   wrap.innerHTML = html;
 }
@@ -446,69 +581,169 @@ function renderDungThan() {
   var wrap = document.getElementById('batu-dung-than');
   if (!wrap || !_tuTru) return;
 
-  var nc = _tuTru.nhatChu || (_tuTru.tuTru ? _tuTru.tuTru.ngay : null);
-  if (!nc) return;
-
-  var ncHanh = nc.hanh || '';
-  var isVuong = _tuTru.thanVuong;
-
-  var dungThan = '', hyThan = '', kyThan = '';
-
-  if (isVuong) {
-    dungThan = TUONG_KHAC[ncHanh] || '';
-    hyThan = TUONG_SINH[ncHanh] ? TUONG_KHAC[TUONG_SINH[ncHanh]] || '' : '';
-    for (var k in TUONG_SINH) { if (TUONG_SINH[k] === ncHanh) { kyThan = k; break; } }
-  } else {
-    for (var k2 in TUONG_SINH) { if (TUONG_SINH[k2] === ncHanh) { dungThan = k2; break; } }
-    hyThan = ncHanh;
-    kyThan = TUONG_KHAC[ncHanh] || '';
+  var dt = _tuTru.dungThan || _tuTru.dungThanRaw;
+  if (!dt) {
+    wrap.innerHTML = '<p>Không đủ dữ liệu.</p>';
+    return;
   }
 
-  _tuTru.dungThan = dungThan;
-  _tuTru.hyThan = hyThan;
-  _tuTru.kyThan = kyThan;
+  _tuTru.dungThanStr = dt.dungThan;
 
   var html = '<div class="result-grid" style="grid-template-columns:repeat(3,1fr);margin-top:0">';
-
   html += '<div class="result-box highlight"><div class="rb-label">Dụng Thần</div>';
-  html += '<div class="rb-value" style="color:' + (HANH_COLORS[dungThan] || {}).color + '">' + dungThan + '</div>';
+  html += '<div class="rb-value" style="color:' + (HANH_COLORS[dt.dungThan] || {}).color + '">' + dt.dungThan + '</div>';
   html += '<div class="rb-sub">Hành cần bổ sung</div></div>';
 
   html += '<div class="result-box"><div class="rb-label">Hỷ Thần</div>';
-  html += '<div class="rb-value" style="color:' + (HANH_COLORS[hyThan] || {}).color + '">' + hyThan + '</div>';
+  html += '<div class="rb-value" style="color:' + (HANH_COLORS[dt.hyThan] || {}).color + '">' + dt.hyThan + '</div>';
   html += '<div class="rb-sub">Hành hỗ trợ</div></div>';
 
   html += '<div class="result-box"><div class="rb-label">Kỵ Thần</div>';
-  html += '<div class="rb-value" style="color:' + (HANH_COLORS[kyThan] || {}).color + '">' + kyThan + '</div>';
+  html += '<div class="rb-value" style="color:' + (HANH_COLORS[dt.kyThan] || {}).color + '">' + dt.kyThan + '</div>';
   html += '<div class="rb-sub">Hành cần tránh</div></div>';
-
   html += '</div>';
+
+  if (dt.lyGiai) {
+    html += '<div class="luan-giai-box" style="margin-top:14px"><p>' + dt.lyGiai + '</p></div>';
+  }
+
   wrap.innerHTML = html;
 }
 
 // ─── RENDER LỜI KHUYÊN ──────────────────────────────
+// ─── RENDER LỜI KHUYÊN ──────────────────────────────
 function renderLoiKhuyen() {
   var wrap = document.getElementById('batu-loi-khuyen');
-  if (!wrap || !_tuTru || !_tuTru.dungThan) return;
+  if (!wrap || !_tuTru) return;
 
-  var dt = _tuTru.dungThan;
-  var hc = HANH_COLORS[dt] || { color: '#333' };
+  var dungThan = _tuTru.dungThan || '';
+  var hyThan = _tuTru.hyThan || '';
+  var kyThan = _tuTru.kyThan || '';
+  var ncHanh = (_tuTru.nhatChu && _tuTru.nhatChu.hanh) ? _tuTru.nhatChu.hanh : '';
 
-  var html = '<div class="sk-grid">';
+  if (!dungThan) {
+    wrap.innerHTML = '<p style="color:var(--ink3)">Vui lòng phân tích trước để xem lời khuyên.</p>';
+    return;
+  }
 
-  html += '<div class="sk-box"><div class="sk-title">🎨 Màu Sắc Hợp</div>';
-  html += '<div class="sk-item" style="color:' + hc.color + ';font-weight:600">' + (HANH_MAU[dt] || '') + '</div></div>';
+  // Bảng dữ liệu
+  var MAU_SAC = {
+    'Mộc': 'Xanh lá, xanh lục, xanh ngọc',
+    'Hỏa': 'Đỏ, hồng, cam, tím, magenta',
+    'Thổ': 'Vàng, nâu, be, nâu đất, kem',
+    'Kim': 'Trắng, bạc, xám, ánh kim',
+    'Thủy': 'Đen, xanh đậm, xanh dương, tím than'
+  };
 
-  html += '<div class="sk-box"><div class="sk-title">🧭 Hướng Hợp</div>';
-  html += '<div class="sk-item" style="color:' + hc.color + ';font-weight:600">' + (HANH_HUONG[dt] || '') + '</div></div>';
+  var HUONG = {
+    'Mộc': 'Đông, Đông Nam',
+    'Hỏa': 'Nam',
+    'Thổ': 'Trung tâm, Đông Bắc, Tây Nam',
+    'Kim': 'Tây, Tây Bắc',
+    'Thủy': 'Bắc'
+  };
 
-  html += '<div class="sk-box"><div class="sk-title">💼 Nghề Nghiệp Hợp</div>';
-  html += '<div class="sk-item">' + (HANH_NGHE[dt] || '') + '</div></div>';
+  var NGHE = {
+    'Mộc': 'Giáo dục, sách báo, xuất bản, thời trang, thiết kế, nông nghiệp, gỗ nội thất, hoa cây cảnh, dệt may, giấy',
+    'Hỏa': 'Năng lượng, điện tử, nhà hàng, ẩm thực, giải trí, truyền thông, quảng cáo, nhiếp ảnh, mỹ thuật, chiếu sáng',
+    'Thổ': 'Bất động sản, xây dựng, vật liệu, nông sản, gốm sứ, khoáng sản, kho bãi, trung gian, tư vấn',
+    'Kim': 'Cơ khí, ngân hàng, tài chính, chứng khoán, kim loại, ô tô, xe máy, công nghệ, luật, quân đội',
+    'Thủy': 'Vận tải, du lịch, thủy sản, nước giải khát, logistics, hàng hải, xuất nhập khẩu, truyền thông, ngoại giao'
+  };
 
-  html += '<div class="sk-box"><div class="sk-title">🔢 Số Hợp</div>';
-  html += '<div class="sk-item" style="color:' + hc.color + ';font-weight:600">' + (HANH_SO[dt] || '') + '</div></div>';
+  var SO = {
+    'Mộc': '3, 8, 33, 38, 83, 88',
+    'Hỏa': '2, 7, 27, 72, 77',
+    'Thổ': '0, 5, 10, 50, 55',
+    'Kim': '4, 9, 49, 94, 99',
+    'Thủy': '1, 6, 16, 61, 66'
+  };
 
+  var MUA = {
+    'Mộc': 'Xuân (tháng 1-3 âm lịch)',
+    'Hỏa': 'Hạ (tháng 4-6 âm lịch)',
+    'Thổ': 'Cuối mỗi mùa (tháng 3, 6, 9, 12 âm lịch)',
+    'Kim': 'Thu (tháng 7-9 âm lịch)',
+    'Thủy': 'Đông (tháng 10-12 âm lịch)'
+  };
+
+  var VAT_PHAM = {
+    'Mộc': 'Cây xanh, đồ gỗ, sách, tranh phong cảnh, tượng rồng gỗ',
+    'Hỏa': 'Đèn pha lê, nến, tranh mặt trời, đồ đỏ, đá ruby',
+    'Thổ': 'Đá phong thủy, gốm sứ, tượng Phật, hũ tài lộc, thạch anh vàng',
+    'Kim': 'Chuông gió kim loại, đồng hồ, tượng kim loại, đá thạch anh trắng',
+    'Thủy': 'Bể cá, thác nước mini, tranh biển, đá obsidian, gương'
+  };
+
+  var hcDT = HANH_COLORS[dungThan] || { color: '#333', bg: '#f5f5f5' };
+  var hcHT = HANH_COLORS[hyThan] || { color: '#333', bg: '#f5f5f5' };
+  var hcKT = HANH_COLORS[kyThan] || { color: '#333', bg: '#f5f5f5' };
+
+  var html = '';
+
+  // Tổng quan
+  html += '<div class="luan-giai-box" style="margin-bottom:16px">';
+  html += '<h3>📋 Tổng Quan Mệnh</h3>';
+  html += '<p>Nhật Chủ thuộc hành <strong style="color:' + (HANH_COLORS[ncHanh] || {}).color + '">' + ncHanh + '</strong>. ';
+  html += 'Thân <strong>' + (_tuTru.thanVuong ? 'Vượng' : 'Nhược') + '</strong>. ';
+  html += 'Dụng Thần là <strong style="color:' + hcDT.color + '">' + dungThan + '</strong> — ';
+  if (_tuTru.thanVuong) {
+    html += 'cần hành khắc chế/tiết chế Nhật Chủ để cân bằng.';
+  } else {
+    html += 'cần hành sinh trợ Nhật Chủ để bổ sung sức mạnh.';
+  }
+  html += '</p></div>';
+
+  // Grid lời khuyên
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">';
+
+  // Màu sắc hợp
+  html += '<div class="sk-box">';
+  html += '<div class="sk-title">🎨 Màu Sắc Nên Dùng</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcDT.color + '">Dụng (' + dungThan + '):</strong> ' + (MAU_SAC[dungThan] || '') + '</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcHT.color + '">Hỷ (' + hyThan + '):</strong> ' + (MAU_SAC[hyThan] || '') + '</div>';
+  html += '<div class="sk-item" style="color:#c00"><strong>Tránh (' + kyThan + '):</strong> ' + (MAU_SAC[kyThan] || '') + '</div>';
   html += '</div>';
+
+  // Hướng hợp
+  html += '<div class="sk-box">';
+  html += '<div class="sk-title">🧭 Hướng Nhà / Bàn Làm Việc</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcDT.color + '">Tốt nhất:</strong> ' + (HUONG[dungThan] || '') + '</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcHT.color + '">Tốt:</strong> ' + (HUONG[hyThan] || '') + '</div>';
+  html += '<div class="sk-item" style="color:#c00"><strong>Tránh:</strong> ' + (HUONG[kyThan] || '') + '</div>';
+  html += '</div>';
+
+  // Nghề nghiệp
+  html += '<div class="sk-box">';
+  html += '<div class="sk-title">💼 Nghề Nghiệp Hợp</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcDT.color + '">' + dungThan + ':</strong> ' + (NGHE[dungThan] || '') + '</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcHT.color + '">' + hyThan + ':</strong> ' + (NGHE[hyThan] || '') + '</div>';
+  html += '</div>';
+
+  // Số hợp
+  html += '<div class="sk-box">';
+  html += '<div class="sk-title">🔢 Số Hợp (Điện Thoại, Biển Số)</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcDT.color + '">Tốt nhất (' + dungThan + '):</strong> ' + (SO[dungThan] || '') + '</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcHT.color + '">Tốt (' + hyThan + '):</strong> ' + (SO[hyThan] || '') + '</div>';
+  html += '<div class="sk-item" style="color:#c00"><strong>Tránh (' + kyThan + '):</strong> ' + (SO[kyThan] || '') + '</div>';
+  html += '</div>';
+
+  // Mùa vượng
+  html += '<div class="sk-box">';
+  html += '<div class="sk-title">🌸 Mùa Vượng Nhất</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcDT.color + '">' + dungThan + ':</strong> ' + (MUA[dungThan] || '') + '</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcHT.color + '">' + hyThan + ':</strong> ' + (MUA[hyThan] || '') + '</div>';
+  html += '</div>';
+
+  // Vật phẩm phong thủy
+  html += '<div class="sk-box">';
+  html += '<div class="sk-title">🏺 Vật Phẩm Phong Thủy</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcDT.color + '">' + dungThan + ':</strong> ' + (VAT_PHAM[dungThan] || '') + '</div>';
+  html += '<div class="sk-item"><strong style="color:' + hcHT.color + '">' + hyThan + ':</strong> ' + (VAT_PHAM[hyThan] || '') + '</div>';
+  html += '</div>';
+
+  html += '</div>'; // đóng grid
+
   wrap.innerHTML = html;
 }
 
