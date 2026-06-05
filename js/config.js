@@ -1,14 +1,13 @@
 /* ============================================================
-   config.js — Cấu hình ứng dụng (KHÔNG chứa API key)
+   config.js — Cấu hình ứng dụng
    Lịch Việt Nam 888
-   API key được load từ js/api-key.js (nằm trong .gitignore)
+   KHÔNG chứa API key — AI gọi qua Cloudflare Worker proxy
    ============================================================ */
 
 var APP_CONFIG = {
-  /* ---- Gemini API — key được lấy từ js/api-key.js ---- */
-  GEMINI_API_KEY: (typeof GEMINI_KEY !== 'undefined') ? GEMINI_KEY : '',
+  /* ---- AI Proxy — Cloudflare Worker (API key ẩn trên Worker) ---- */
+  AI_PROXY_URL: 'https://tuvi888-api.miphan888.workers.dev',
   GEMINI_MODEL: 'gemini-2.0-flash',
-  GEMINI_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/',
 
   /* ---- Cài đặt chung ---- */
   TIMEZONE: 7,         // UTC+7 (Việt Nam)
@@ -19,8 +18,8 @@ var APP_CONFIG = {
   AI_MAX_TOKENS: 1024,
   AI_TEMPERATURE: 0.7,
   AI_CACHE_TTL: 3600000,   // 1 giờ (ms)
-  AI_RETRY_COUNT: 2,
-  AI_RETRY_DELAY: 1000,    // 1 giây
+  AI_RETRY_COUNT: 1,       // Retry 1 lần nếu lỗi 429
+  AI_RETRY_DELAY: 2000,    // Đợi 2 giây trước khi retry
 
   /* ---- UI Settings ---- */
   TOAST_DURATION: 3000,    // 3 giây

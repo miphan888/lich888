@@ -6,47 +6,56 @@
 
 @media print {
 
-  /* ---- Trang in: A4, margin đủ ---- */
+  /* ---- Trang in: A4, margin chuẩn ---- */
   @page {
     size: A4 portrait;
     margin: 15mm 18mm;
   }
 
-  /* ---- Ẩn TOÀN BỘ body, chỉ hiện #vk-print-area ---- */
-  /* Kỹ thuật: ẩn tất cả con trực tiếp của body, ngoại trừ vùng in */
+  /* ---- Ẩn TOÀN BỘ ngoại trừ #vk-print-area ---- */
   body > *:not(#vk-print-area) {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
   }
 
-  /* ---- Reset body về nền trắng thuần ---- */
+  /* ---- Reset html/body về trắng hoàn toàn ---- */
   html,
   body {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
-    background-image: none !important;
     background-color: #fff !important;
+    background-image: none !important;
     color: #000 !important;
     font-family: 'Noto Serif', 'Times New Roman', serif !important;
     font-size: 12pt !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
-  /* ---- Xóa pseudo-elements trang trí ---- */
-  html::before, html::after,
-  body::before, body::after {
-    display: none !important;
+  /* ---- Xóa mọi pseudo-elements trang trí ---- */
+  *::before,
+  *::after {
+    background: transparent !important;
+    background-image: none !important;
     content: none !important;
+    display: none !important;
   }
 
   /* ---- Vùng in chính ---- */
   #vk-print-area {
     display: block !important;
+    visibility: visible !important;
     position: static !important;
     left: auto !important;
     top: auto !important;
     width: 100% !important;
     max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #fff !important;
@@ -60,18 +69,15 @@
     page-break-inside: avoid;
     box-shadow: none !important;
     border: none !important;
-    overflow: visible !important;
   }
 
   /* ---- Xóa mọi trang trí bên trong vùng in ---- */
-  #vk-print-area *,
-  #vk-print-area *::before,
-  #vk-print-area *::after {
+  #vk-print-area * {
     background: transparent !important;
     background-image: none !important;
     box-shadow: none !important;
     text-shadow: none !important;
-    border-color: transparent !important;
+    border: none !important;
     color: #000 !important;
   }
 
@@ -79,30 +85,25 @@
   #vk-print-area .vkprint-title {
     display: block !important;
     text-align: center !important;
-    font-weight: bold !important;
-    font-size: calc(var(--vk-print-fs, 12pt) + 4pt) !important;
-    margin-bottom: 0.8em !important;
+    font-weight: 700 !important;
+    font-size: calc(var(--vk-print-fs, 12pt) + 5pt) !important;
+    margin-bottom: 14pt !important;
     letter-spacing: 2px !important;
     border: none !important;
     background: none !important;
+    white-space: normal !important;
   }
 
   /* ---- Nội dung đã điền (in đậm) ---- */
   #vk-print-area strong,
   #vk-print-area .filled {
-    font-weight: bold !important;
+    font-weight: 700 !important;
     color: #000 !important;
   }
 
-  /* ---- Link: không màu xanh ---- */
+  /* ---- Link: không màu xanh khi in ---- */
   #vk-print-area a {
     color: #000 !important;
     text-decoration: none !important;
-  }
-
-  /* ---- Ảnh không vỡ trang ---- */
-  #vk-print-area img {
-    max-width: 100% !important;
-    page-break-inside: avoid !important;
   }
 }

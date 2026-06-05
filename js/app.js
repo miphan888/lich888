@@ -1,8 +1,6 @@
 /* ============================================================
    app.js — Router, Load Section, Init Chung
    Lịch Việt Nam 888
-   FILE SỬA LẠI: đổi DEFAULT_SECTION, thêm inline fallback HTML,
-   sửa path fetch, sửa header-today
    ============================================================ */
 
 /* ---- Cache HTML sections đã load ---- */
@@ -10,31 +8,6 @@ var _sectionCache = {};
 
 /* ---- Section đang hiển thị ---- */
 var _currentSection = null;
-
-/* ---- HTML inline fallback cho section chưa có file pages/ ---- */
-var SECTION_INLINE_HTML = {
-  'lich-am': [
-    '<div class="app-container" style="text-align:center;padding:var(--sp-xl);">',
-    '  <h2 style="font-size:2rem;margin-bottom:var(--sp-md);">📅 Lịch Âm Dương</h2>',
-    '  <p style="color:var(--ink3);font-size:1.1rem;">Chức năng đang được phát triển.</p>',
-    '  <p style="color:var(--ink3);margin-top:var(--sp-sm);">Vui lòng quay lại sau!</p>',
-    '</div>'
-  ].join(''),
-  'tu-tru': [
-    '<div class="app-container" style="text-align:center;padding:var(--sp-xl);">',
-    '  <h2 style="font-size:2rem;margin-bottom:var(--sp-md);">🔮 Tứ Trụ</h2>',
-    '  <p style="color:var(--ink3);font-size:1.1rem;">Chức năng đang được phát triển.</p>',
-    '  <p style="color:var(--ink3);margin-top:var(--sp-sm);">Vui lòng quay lại sau!</p>',
-    '</div>'
-  ].join(''),
-  'phong-thuy': [
-    '<div class="app-container" style="text-align:center;padding:var(--sp-xl);">',
-    '  <h2 style="font-size:2rem;margin-bottom:var(--sp-md);">🧭 Phong Thủy</h2>',
-    '  <p style="color:var(--ink3);font-size:1.1rem;">Chức năng đang được phát triển.</p>',
-    '  <p style="color:var(--ink3);margin-top:var(--sp-sm);">Vui lòng quay lại sau!</p>',
-    '</div>'
-  ].join('')
-};
 
 /* ---- Map section → hàm init tương ứng ---- */
 var SECTION_INIT_MAP = {
@@ -69,14 +42,6 @@ function loadSection(name) {
   /* Hiện loading */
   appEl.innerHTML = '<div class="app-loading"><div class="loading-spinner"></div><p>Đang tải...</p></div>';
 
-  /* Nếu có inline HTML fallback và đã biết không có file → dùng ngay */
-  if (SECTION_INLINE_HTML[name] && !_sectionHasFile(name)) {
-    setTimeout(function() {
-      _injectSection(appEl, name, SECTION_INLINE_HTML[name]);
-    }, 100);
-    return;
-  }
-
   /* Kiểm tra cache */
   if (_sectionCache[name]) {
     _injectSection(appEl, name, _sectionCache[name]);
@@ -92,39 +57,27 @@ function loadSection(name) {
       return response.text();
     })
     .then(function(html) {
-      /* Cache lại */
+      /* Cache lại để lần sau không fetch nữa */
       _sectionCache[name] = html;
       _injectSection(appEl, name, html);
     })
     .catch(function(err) {
       console.warn('[App] Không fetch được pages/' + name + '.html:', err.message);
-      /* Thử dùng inline fallback */
-      if (SECTION_INLINE_HTML[name]) {
-        _injectSection(appEl, name, SECTION_INLINE_HTML[name]);
-      } else {
-        /* Fallback thân thiện */
-        appEl.innerHTML =
-          '<div class="app-container" style="text-align:center;padding:var(--sp-xl);">' +
-            '<p style="font-size:2rem;margin-bottom:var(--sp-md);">⚠️</p>' +
-            '<p style="color:var(--ink2);font-size:1rem;margin-bottom:var(--sp-md);">' +
-              'Không thể tải nội dung. Vui lòng dùng Live Server (VS Code) hoặc server local.' +
-            '</p>' +
-            '<button class="btn btn-secondary btn-sm" onclick="_currentSection=null;loadSection(\'' + name + '\')">↻ Thử lại</button>' +
-          '</div>';
-      }
+      /* Hiện thông báo lỗi thân thiện — nhắc dùng live server */
+      appEl.innerHTML =
+        '<div class="app-container" style="text-align:center;padding:var(--sp-xl);">' +
+          '<p style="font-size:2.5rem;margin-bottom:var(--sp-md);">⚠️</p>' +
+          '<p style="color:var(--ink2);font-size:1.1rem;font-weight:600;margin-bottom:var(--sp-sm);">' +
+            'Không thể tải nội dung mục này.' +
+          '</p>' +
+          '<p style="color:var(--ink3);font-size:0.95rem;margin-bottom:var(--sp-md);">' +
+            'Vui lòng mở ứng dụng qua <strong>Live Server</strong> (VS Code) ' +
+            'hoặc server local — không mở trực tiếp từ file://.' +
+          '</p>' +
+          '<button class="btn btn-secondary btn-sm" ' +
+            'onclick="_currentSection=null;loadSection(\'' + name + '\')">↻ Thử lại</button>' +
+        '</div>';
     });
-}
-
-/* ---- Đánh dấu section nào có file pages/ (đã fetch thành công trước đó) ---- */
-var _confirmedFiles = {
-  'van-khan':   true,
-  'tu-vi':      true,
-  'tu-tru':     true,
-  'lich-am':    true,
-  'phong-thuy': true
-};
-function _sectionHasFile(name) {
-  return !!_confirmedFiles[name];
 }
 
 /* ---- Inject HTML vào app container và gọi init ---- */
@@ -143,6 +96,7 @@ function _injectSection(appEl, name, html) {
         initFn();
       } catch(e) {
         console.error('[App] Lỗi init section', name, e);
+        showToast('Lỗi khởi tạo ' + name + ': ' + e.message, 'error');
       }
     }
   }, 50);
@@ -228,12 +182,13 @@ function setHtml(id, html) {
   if (el) el.innerHTML = html || '';
 }
 
-/* Hiện/ẩn element */
+/* Hiện element (xóa class hidden) */
 function showEl(id) {
   var el = document.getElementById(id);
   if (el) el.classList.remove('hidden');
 }
 
+/* Ẩn element (thêm class hidden) */
 function hideEl(id) {
   var el = document.getElementById(id);
   if (el) el.classList.add('hidden');
@@ -255,6 +210,6 @@ function el(tag, cls, text) {
   _updateHeaderToday();
   setInterval(_updateHeaderToday, 60000);
 
-  /* Load section mặc định: van-khan (luôn có file) */
-  loadSection('van-khan');
+  /* Load section mặc định: lich-am */
+  loadSection('lich-am');
 })();

@@ -7,7 +7,7 @@
                script-src 'self' 'unsafe-inline' 'unsafe-eval';
                style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
                font-src 'self' https://fonts.gstatic.com;
-               connect-src 'self' https://generativelanguage.googleapis.com;
+               connect-src 'self' https://tuvi888-api.miphan888.workers.dev;
                img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Lịch Việt Nam 888 - Tra cứu lịch âm, tử vi, tứ trụ, phong thủy và văn khấn truyền thống Việt Nam">
@@ -98,17 +98,15 @@
   </footer>
 
   <!-- ===== VÙNG IN VĂN KHẤN (ẩn, chỉ hiện khi in) ===== -->
+  <!-- Phải đặt NGOÀI thẻ main, trước closing body -->
   <div id="vk-print-area" style="display:none;"></div>
 
-  <!-- ===== JAVASCRIPT ===== -->
+  <!-- ===== JAVASCRIPT — thứ tự load quan trọng ===== -->
 
-  <!-- 1. API Key — PHẢI load trước config.js. File này nằm trong .gitignore -->
-  <script src="js/api-key.js" onerror="console.log('[App] api-key.js not found — AI features disabled')"></script>
-
-  <!-- 2. Config — lấy key từ GEMINI_KEY đã load ở trên -->
+  <!-- 1. Config — không cần API key nữa, dùng Worker proxy -->
   <script src="js/config.js"></script>
 
-  <!-- 3. Data files -->
+  <!-- 2. Data files -->
   <script src="js/data/can-chi.js"></script>
   <script src="js/data/tiet-khi.js"></script>
   <script src="js/data/sao-tu-vi.js"></script>
@@ -116,30 +114,30 @@
   <script src="js/data/thap-nhi-truc.js"></script>
   <script src="js/data/tuc-ngu.js"></script>
 
-  <!-- 4. Engine files -->
+  <!-- 3. Engine files -->
   <script src="js/engines/lunar-engine.js"></script>
   <script src="js/engines/can-chi-engine.js"></script>
   <script src="js/engines/tu-vi-engine.js"></script>
   <script src="js/engines/bat-tu-engine.js"></script>
 
-  <!-- 5. AI Service -->
+  <!-- 4. AI Service (gọi qua Worker proxy) -->
   <script src="js/ai-service.js"></script>
 
-  <!-- 6. AI Modules -->
+  <!-- 5. AI Modules -->
   <script src="js/ai/lich-am-ai.js"></script>
   <script src="js/ai/tu-vi-ai.js"></script>
   <script src="js/ai/tu-tru-ai.js"></script>
   <script src="js/ai/phong-thuy-ai.js"></script>
   <script src="js/ai/van-khan-ai.js"></script>
 
-  <!-- 7. UI Modules -->
+  <!-- 6. UI Modules -->
   <script src="js/ui/lich-am-ui.js"></script>
   <script src="js/ui/tu-vi-ui.js"></script>
   <script src="js/ui/tu-tru-ui.js"></script>
   <script src="js/ui/phong-thuy-ui.js"></script>
   <script src="js/ui/van-khan-ui.js"></script>
 
-  <!-- 8. App Router — phải load SAU tất cả UI modules -->
+  <!-- 7. App Router — PHẢI load SAU tất cả UI modules -->
   <script src="js/app.js"></script>
 
 </body>
