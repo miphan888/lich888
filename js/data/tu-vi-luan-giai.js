@@ -1,3 +1,4 @@
+function _ts(s){return typeof s==='string'?s:(s&&s.ten?s.ten:'');}
 var MIEU_VUONG = {
   'Tử Vi':[5,3,4,2,3,5,5,3,4,2,3,5],
   'Thiên Cơ':[2,5,3,4,2,3,2,5,3,4,2,3],
@@ -88,7 +89,7 @@ function cungCo(ls,tenCung,dsSao){
       for(var j=0;j<dsSao.length;j++){
         var f=false;
         for(var k=0;k<sa.length;k++){
-          if(sa[k]===dsSao[j]){f=true;break;}
+          if(_ts(sa[k])===dsSao[j]){f=true;break;}
         }
         if(!f)return false;
       }
@@ -110,7 +111,7 @@ function tamPhuongCo(ls,tenCung,dsSao){
     for(var t=0;t<tp.length;t++){
       var sa=ls.cung[tp[t]].sao||[];
       for(var k=0;k<sa.length;k++){
-        if(sa[k]===dsSao[s]){f=true;break;}
+        if(_ts(sa[k])===dsSao[s]){f=true;break;}
       }
       if(f)break;
     }
@@ -129,8 +130,8 @@ function cungLanCanCo(ls,tenCung,tenSao){
   var right=(ci+1)%12;
   var sL=ls.cung[left].sao||[];
   var sR=ls.cung[right].sao||[];
-  for(var j=0;j<sL.length;j++){if(sL[j]===tenSao)return true;}
-  for(var k=0;k<sR.length;k++){if(sR[k]===tenSao)return true;}
+  for(var j=0;j<sL.length;j++){if(_ts(sL[j])===tenSao)return true;}
+  for(var k=0;k<sR.length;k++){if(_ts(sR[k])===tenSao)return true;}
   return false;
 }
 function khongCoChinhTinh(ls,tenCung){
@@ -141,7 +142,7 @@ function khongCoChinhTinh(ls,tenCung){
       var sa=ls.cung[i].sao||[];
       for(var j=0;j<sa.length;j++){
         for(var k=0;k<CT.length;k++){
-          if(sa[j]===CT[k])return false;
+          if(_ts(sa[j])===CT[k])return false;
         }
       }
       return true;
@@ -155,7 +156,7 @@ function saoMieuVuong(ls,tenSao){
   for(var i=0;i<ls.cung.length;i++){
     var sa=ls.cung[i].sao||[];
     for(var j=0;j<sa.length;j++){
-      if(sa[j]===tenSao){
+      if(_ts(sa[j])===tenSao){
         var dc=ls.cung[i].diaChi||0;
         if(typeof dc==='string')dc=CHI.indexOf(dc);
         if(dc<0)dc=0;
@@ -214,7 +215,7 @@ CACH_CUC.thuongCach.push(
         if(typeof dc==='string')dc=CHI.indexOf(dc);
         if(dc===3){// Mão
           var sa=ls.cung[i].sao||[];
-          for(var j=0;j<sa.length;j++){if(sa[j]==='Thái Dương')return true;}
+          for(var j=0;j<sa.length;j++){if(_ts(sa[j])==='Thái Dương')return true;}
         }
       }
     }
@@ -229,7 +230,7 @@ CACH_CUC.thuongCach.push(
         if(typeof dc==='string')dc=CHI.indexOf(dc);
         if(dc===11){// Hợi
           var sa=ls.cung[i].sao||[];
-          for(var j=0;j<sa.length;j++){if(sa[j]==='Thái Âm')return true;}
+          for(var j=0;j<sa.length;j++){if(_ts(sa[j])==='Thái Âm')return true;}
         }
       }
     }
@@ -244,7 +245,7 @@ CACH_CUC.thuongCach.push(
         if(typeof dc==='string')dc=CHI.indexOf(dc);
         if(dc===7){// Mùi
           var sa=ls.cung[i].sao||[];
-          for(var j=0;j<sa.length;j++){if(sa[j]==='Thái Dương')return true;}
+          for(var j=0;j<sa.length;j++){if(_ts(sa[j])==='Thái Dương')return true;}
         }
       }
     }

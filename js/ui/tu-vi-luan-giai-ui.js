@@ -768,7 +768,7 @@ function renderLuanGiaiTuVi(laSo) {
   console.log('[LuanGiai] renderLuanGiaiTuVi called');
 
   var ls = _normalizeLaSo(laSo);
-  var lg = luanGiaiTuVi(laSo);
+  var lg = luanGiaiTuVi(ls);
   if (!lg) return '<p style="color:red">Không thể phân tích lá số.</p>';
 
   var diemMau = _diemMau(lg.tongDiem);

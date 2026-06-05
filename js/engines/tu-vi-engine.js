@@ -561,9 +561,6 @@ var TuViEngine = (function() {
               break;
             }
           }
-          if (!saoList.find || saoList[saoList.length-1].ten !== ptKeys[pi]) {
-            /* Sao không có trong PHU_TINH, thêm thẳng */
-          }
         }
       }
 
@@ -600,7 +597,7 @@ var TuViEngine = (function() {
     }
 
     /* 13. Tiểu Vận */
-    var tieuVanList = tinhTieuVan(dvHienTai, nam, gioiTinh, ccNam.canIdx);
+    var tieuVanList = dvHienTai ? tinhTieuVan(dvHienTai, nam, gioiTinh, ccNam.canIdx) : [];
 
     /* 14. Chủ Mệnh + Thân Chủ */
     var chuMenh  = SAO_TU_VI.CHU_MENH[ccNam.chi]  || '?';
