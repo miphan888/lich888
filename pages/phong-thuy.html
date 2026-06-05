@@ -1,0 +1,103 @@
+<!-- pages/phong-thuy.html — Trang Phong Thủy -->
+<link rel="stylesheet" href="css/phong-thuy.css">
+
+<div class="app-container">
+
+  <!-- ===== HERO ===== -->
+  <div class="pt-hero">
+    <h1 class="pt-hero-title">🧭 Phong Thủy</h1>
+    <p class="pt-hero-sub">Giờ Hoàng Đạo, Hướng Xuất Hành, Thập Nhị Trực, Ngũ Hành</p>
+  </div>
+
+  <!-- ===== TỤC NGỮ NGẪU NHIÊN ===== -->
+  <div class="pt-tucngu-box">
+    <div class="pt-tucngu-icon">📜</div>
+    <div class="pt-tucngu-text" id="pt-tucngu-text">Đang tải...</div>
+    <button class="btn btn-secondary btn-sm pt-tucngu-btn" onclick="ptRandomTucNgu()">↻ Câu khác</button>
+  </div>
+
+  <!-- ===== FORM TRA CỨU NGÀY ===== -->
+  <div class="pt-form-card">
+    <h3 class="pt-form-title">🔍 Tra Cứu Ngày</h3>
+    <div class="pt-form-row">
+      <div class="pt-form-group">
+        <label class="pt-label" for="pt-ngay">Ngày</label>
+        <input type="number" id="pt-ngay" class="pt-input" min="1" max="31" placeholder="Ngày">
+      </div>
+      <div class="pt-form-group">
+        <label class="pt-label" for="pt-thang">Tháng</label>
+        <input type="number" id="pt-thang" class="pt-input" min="1" max="12" placeholder="Tháng">
+      </div>
+      <div class="pt-form-group">
+        <label class="pt-label" for="pt-nam">Năm</label>
+        <input type="number" id="pt-nam" class="pt-input" min="1900" max="2100" placeholder="Năm">
+      </div>
+      <div class="pt-form-group" style="flex: none;">
+        <label class="pt-label">&nbsp;</label>
+        <button class="btn btn-primary" onclick="ptTraCuu()">Tra Cứu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KẾT QUẢ ĐỔI NGÀY ===== -->
+  <div class="pt-section" id="pt-ngay-section" style="display:none;">
+    <h3 class="pt-section-title">📅 Thông Tin Ngày</h3>
+    <div class="pt-ngay-result" id="pt-ngay-result"></div>
+  </div>
+
+  <!-- ===== GIỜ HOÀNG ĐẠO / HẮC ĐẠO ===== -->
+  <div class="pt-section" id="pt-gio-section" style="display:none;">
+    <h3 class="pt-section-title">⏰ 12 Giờ Hoàng Đạo / Hắc Đạo</h3>
+    <div class="pt-gio-grid" id="pt-gio-grid"></div>
+  </div>
+
+  <!-- ===== HƯỚNG TỐT XUẤT HÀNH ===== -->
+  <div class="pt-section" id="pt-huong-section" style="display:none;">
+    <h3 class="pt-section-title">🧭 Hướng Tốt Xuất Hành</h3>
+    <div class="pt-huong-grid" id="pt-huong-grid"></div>
+  </div>
+
+  <!-- ===== BẢNG THẬP NHỊ TRỰC ===== -->
+  <div class="pt-section">
+    <h3 class="pt-section-title">🔄 Bảng Thập Nhị Trực</h3>
+    <div style="overflow-x:auto;">
+      <table class="pt-truc-table" id="pt-truc-table">
+        <thead>
+          <tr>
+            <th>Trực</th>
+            <th>Ý nghĩa</th>
+            <th>Việc tốt</th>
+            <th>Việc tránh</th>
+          </tr>
+        </thead>
+        <tbody id="pt-truc-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== NGŨ HÀNH ===== -->
+  <div class="pt-section">
+    <h3 class="pt-section-title">☯ Ngũ Hành</h3>
+    <div class="pt-ngu-hanh-grid" id="pt-ngu-hanh-grid"></div>
+    <div class="pt-ngu-hanh-rel">
+      <div class="pt-rel-card tuong-sinh">
+        <div class="pt-rel-title">🔄 Tương Sinh (sinh ra nhau)</div>
+        <div class="pt-rel-text">Kim → Thủy → Mộc → Hỏa → Thổ → Kim</div>
+      </div>
+      <div class="pt-rel-card tuong-khac">
+        <div class="pt-rel-title">⚔ Tương Khắc (khắc chế nhau)</div>
+        <div class="pt-rel-text">Kim → Mộc → Thổ → Thủy → Hỏa → Kim</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== AI TƯ VẤN ===== -->
+  <div class="pt-ai-box">
+    <div class="pt-ai-title">✨ AI Tư Vấn Phong Thủy</div>
+    <textarea class="pt-ai-textarea" id="pt-ai-question"
+      placeholder="Nhập câu hỏi phong thủy... VD: Nhà tôi hướng Tây Nam, sinh năm Canh Ngọ, có hợp không? Nên bố trí bàn thờ ở đâu?"></textarea>
+    <button class="btn btn-primary" id="pt-ai-btn" onclick="ptAskAI()">✨ AI Tư Vấn</button>
+    <div id="pt-ai-result-box" style="display:none;"></div>
+  </div>
+
+</div>

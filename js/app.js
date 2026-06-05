@@ -116,7 +116,13 @@ function loadSection(name) {
 }
 
 /* ---- Đánh dấu section nào có file pages/ (đã fetch thành công trước đó) ---- */
-var _confirmedFiles = { 'van-khan': true, 'tu-vi': true, 'tu-tru': true, 'lich-am': true };
+var _confirmedFiles = {
+  'van-khan':   true,
+  'tu-vi':      true,
+  'tu-tru':     true,
+  'lich-am':    true,
+  'phong-thuy': true
+};
 function _sectionHasFile(name) {
   return !!_confirmedFiles[name];
 }

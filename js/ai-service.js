@@ -1,6 +1,7 @@
 /* ============================================================
    ai-service.js — Module gọi Gemini API dùng chung
    Lịch Việt Nam 888
+   Phụ thuộc: config.js (load trước)
    ============================================================ */
 
 var AIService = (function() {
@@ -33,7 +34,6 @@ var AIService = (function() {
   function _buildRequestBody(systemPrompt, userMessage) {
     var parts = [];
 
-    // Nếu có system prompt, ghép vào đầu message
     if (systemPrompt) {
       parts.push({
         text: 'HƯỚNG DẪN HỆ THỐNG:\n' + systemPrompt + '\n\n---\n\nYÊU CẦU:\n' + userMessage
@@ -54,22 +54,10 @@ var AIService = (function() {
         topK: 40
       },
       safetySettings: [
-        {
-          category: 'HARM_CATEGORY_HARASSMENT',
-          threshold: 'BLOCK_ONLY_HIGH'
-        },
-        {
-          category: 'HARM_CATEGORY_HATE_SPEECH',
-          threshold: 'BLOCK_ONLY_HIGH'
-        },
-        {
-          category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-          threshold: 'BLOCK_ONLY_HIGH'
-        },
-        {
-          category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-          threshold: 'BLOCK_ONLY_HIGH'
-        }
+        { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_ONLY_HIGH' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_ONLY_HIGH' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' }
       ]
     };
   }
@@ -78,15 +66,17 @@ var AIService = (function() {
   function _callGeminiAPI(systemPrompt, userMessage, retryCount) {
     retryCount = retryCount || 0;
 
+    /* Lấy key từ APP_CONFIG (đã được tổng hợp từ api-key.js) */
     var apiKey = APP_CONFIG.GEMINI_API_KEY;
-    var model  = APP_CONFIG.GEMINI_MODEL;
 
-    if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+    /* Kiểm tra key */
+    if (!apiKey || apiKey === '' || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
       return Promise.reject(new Error('API_KEY_NOT_SET'));
     }
 
-    var url = APP_CONFIG.GEMINI_ENDPOINT + model + ':generateContent?key=' + apiKey;
-    var body = _buildRequestBody(systemPrompt, userMessage);
+    var model = APP_CONFIG.GEMINI_MODEL;
+    var url   = APP_CONFIG.GEMINI_ENDPOINT + model + ':generateContent?key=' + apiKey;
+    var body  = _buildRequestBody(systemPrompt, userMessage);
 
     return fetch(url, {
       method: 'POST',
@@ -94,8 +84,8 @@ var AIService = (function() {
       body: JSON.stringify(body)
     })
     .then(function(response) {
+      /* Rate limit — thử lại sau delay */
       if (response.status === 429) {
-        // Rate limit — thử lại sau delay
         if (retryCount < APP_CONFIG.AI_RETRY_COUNT) {
           return new Promise(function(resolve) {
             setTimeout(function() {
@@ -106,6 +96,11 @@ var AIService = (function() {
         throw new Error('RATE_LIMIT');
       }
 
+      /* API key không hợp lệ hoặc đã bị vô hiệu hóa */
+      if (response.status === 401 || response.status === 403) {
+        throw new Error('API_KEY_INVALID');
+      }
+
       if (!response.ok) {
         throw new Error('HTTP_ERROR_' + response.status);
       }
@@ -113,14 +108,12 @@ var AIService = (function() {
       return response.json();
     })
     .then(function(data) {
-      // Kiểm tra cấu trúc response
       if (!data.candidates || !data.candidates.length) {
         throw new Error('NO_CANDIDATES');
       }
 
       var candidate = data.candidates[0];
 
-      // Kiểm tra finish reason
       if (candidate.finishReason === 'SAFETY') {
         throw new Error('SAFETY_BLOCK');
       }
@@ -129,7 +122,6 @@ var AIService = (function() {
         throw new Error('EMPTY_RESPONSE');
       }
 
-      // Ghép tất cả parts text
       var text = candidate.content.parts
         .filter(function(p) { return p.text; })
         .map(function(p) { return p.text; })
@@ -141,29 +133,23 @@ var AIService = (function() {
 
   /* ---- Hàm public chính: gọi AI ---- */
   function ask(systemPrompt, userMessage, options) {
-    options = options || {};
-    var useCache = options.cache !== false; // Mặc định có cache
+    options  = options  || {};
+    var useCache = options.cache !== false;
 
     var cacheKey = _makeKey(systemPrompt, userMessage);
 
-    // Kiểm tra cache
     if (useCache && _isCacheValid(_cache[cacheKey])) {
       return Promise.resolve(_cache[cacheKey].value);
     }
 
-    // Tránh gọi trùng lặp cùng lúc
     if (_pendingRequests[cacheKey]) {
       return _pendingRequests[cacheKey];
     }
 
     var promise = _callGeminiAPI(systemPrompt, userMessage)
       .then(function(result) {
-        // Lưu cache
         if (useCache) {
-          _cache[cacheKey] = {
-            value: result,
-            timestamp: Date.now()
-          };
+          _cache[cacheKey] = { value: result, timestamp: Date.now() };
         }
         delete _pendingRequests[cacheKey];
         return result;
@@ -182,7 +168,10 @@ var AIService = (function() {
     var msg = err ? (err.message || String(err)) : '';
 
     if (msg === 'API_KEY_NOT_SET') {
-      return '⚠️ Chưa cấu hình API Key. Vui lòng mở file js/config.js và điền GEMINI_API_KEY.';
+      return '⚠️ Chưa có API Key. Tạo file <strong>js/api-key.js</strong> với nội dung:<br><code>var GEMINI_KEY = \'your-key\';</code><br>Lấy key tại <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a>';
+    }
+    if (msg === 'API_KEY_INVALID') {
+      return '🔑 API key không hợp lệ hoặc đã bị vô hiệu hóa. Tạo key mới tại <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a> và cập nhật file js/api-key.js.';
     }
     if (msg === 'RATE_LIMIT') {
       return '⏳ Đang bận xử lý nhiều yêu cầu. Vui lòng thử lại sau ít giây.';
@@ -195,9 +184,6 @@ var AIService = (function() {
     }
     if (msg.indexOf('HTTP_ERROR') === 0) {
       var code = msg.replace('HTTP_ERROR_', '');
-      if (code === '401' || code === '403') {
-        return '🔑 API Key không hợp lệ hoặc hết hạn. Vui lòng kiểm tra lại.';
-      }
       return '🌐 Lỗi kết nối mạng (mã ' + code + '). Vui lòng kiểm tra internet.';
     }
     if (msg.indexOf('Failed to fetch') > -1 || msg.indexOf('NetworkError') > -1) {
@@ -207,7 +193,7 @@ var AIService = (function() {
     return '❌ Lỗi không xác định: ' + msg;
   }
 
-  /* ---- Xóa cache (nếu cần) ---- */
+  /* ---- Xóa cache ---- */
   function clearCache() {
     _cache = {};
   }
@@ -215,7 +201,7 @@ var AIService = (function() {
   /* ---- Kiểm tra API key đã được cấu hình chưa ---- */
   function isConfigured() {
     var key = APP_CONFIG.GEMINI_API_KEY;
-    return key && key !== 'YOUR_GEMINI_API_KEY_HERE' && key.length > 10;
+    return key && key !== '' && key !== 'YOUR_GEMINI_API_KEY_HERE' && key.length > 10;
   }
 
   /* ---- Public API ---- */

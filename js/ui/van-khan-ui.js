@@ -736,33 +736,53 @@ function _vkPrint() {
   var bai     = _vkState.currentBai;
   var content = _vkState.previewHtml;
 
-  /* Chuẩn bị vùng in */
-  var printArea = document.getElementById('vk-print-area');
-  if (!printArea) return;
+  /* Kiểm tra có nội dung không */
+  if (!bai || !content || !content.trim()) {
+    showToast('Chưa có nội dung để in. Vui lòng xem trước bài khấn trước.', 'error');
+    return;
+  }
 
-  /* Nội dung in — plain text, serif font, tự co giãn */
+  /* Lấy hoặc tạo vùng in ngoài body (không nằm trong overlay) */
+  var printArea = document.getElementById('vk-print-area');
+  if (!printArea) {
+    printArea = document.createElement('div');
+    printArea.id = 'vk-print-area';
+    document.body.appendChild(printArea);
+  }
+
+  /* Xóa style display:none để có thể đo scrollHeight */
+  printArea.style.display = 'block';
+  printArea.style.position = 'absolute';
+  printArea.style.left = '-9999px';
+  printArea.style.top = '0';
+  printArea.style.width = '170mm';
+  printArea.style.background = '#fff';
+  printArea.style.color = '#000';
+  printArea.style.fontFamily = "'Noto Serif', 'Times New Roman', serif";
+
+  /* Ghi nội dung thuần text vào vùng in */
   printArea.innerHTML =
-    '<div id="vk-print-doc" style="' +
-      'font-family:var(--font-serif);' +
-      'font-size:var(--vk-print-fs,13pt);' +
-      'line-height:1.9;' +
-      'color:#000;' +
-      'white-space:pre-wrap;' +
-      'word-break:break-word;' +
-      'padding:0;' +
-      'margin:0;' +
-    '">' +
-      '<div style="text-align:center;font-size:1.15em;font-weight:700;margin-bottom:0.8em;letter-spacing:2px;">' +
-        _vkEscape(bai.title).toUpperCase() +
-      '</div>' +
-      _vkContentForPrint(content, _vkState.formData) +
-    '</div>';
+    '<div class="vkprint-title">' +
+      _vkEscape(bai.title).toUpperCase() +
+    '</div>' +
+    _vkContentForPrint(content, _vkState.formData);
 
   /* Tự scale font để vừa 1 trang A4 */
-  _vkAutoScaleFont();
+  _vkAutoScaleFont(printArea);
 
-  /* Gọi print */
+  /* Khôi phục về vị trí bình thường trước khi print */
+  printArea.style.position = '';
+  printArea.style.left = '';
+  printArea.style.top = '';
+  printArea.style.width = '';
+
+  /* Gọi in */
   window.print();
+
+  /* Sau khi in xong: ẩn lại vùng in */
+  setTimeout(function() {
+    printArea.style.display = 'none';
+  }, 1000);
 }
 
 /* ---- Chuyển content thành dạng in (bold lời cầu bổ sung) ---- */
@@ -779,23 +799,31 @@ function _vkContentForPrint(content, data) {
   return escaped;
 }
 
-/* ---- Auto scale font nếu nội dung dài ---- */
-function _vkAutoScaleFont() {
-  /* Thử từ 13pt xuống 7.5pt */
-  var sizes = [13, 12, 11, 10, 9.5, 9, 8.5, 8, 7.5];
-  var A4_HEIGHT_PT = 1052; /* 297mm × 3.78px/mm ≈ 1052px */
+/* ---- Auto scale font nếu nội dung dài hơn 1 trang A4 ---- */
+/* printArea: element DOM đã có nội dung */
+function _vkAutoScaleFont(printArea) {
+  /* Chiều cao khả dụng A4 sau trừ margin 15mm × 2 = 267mm × 3.78px/mm ≈ 1009px */
+  var MAX_H_PX   = 267 * 3.78;
+  var fontSize   = 13;
+  var lineHeight = 1.75;
+  var MIN_FS     = 7.5;
+  var MIN_LH     = 1.25;
 
-  for (var i = 0; i < sizes.length; i++) {
-    var printArea = document.getElementById('vk-print-area');
-    if (!printArea) break;
-    printArea.style.setProperty('--vk-print-fs', sizes[i] + 'pt');
+  /* Thiết lập ban đầu */
+  printArea.style.fontSize   = fontSize + 'pt';
+  printArea.style.lineHeight = String(lineHeight);
 
-    /* Kiểm tra chiều cao */
-    var doc = document.getElementById('vk-print-doc');
-    if (doc && doc.scrollHeight <= A4_HEIGHT_PT) {
-      break;
-    }
+  /* Giảm từng bước cho đến khi vừa */
+  while (printArea.scrollHeight > MAX_H_PX && fontSize > MIN_FS) {
+    fontSize   = Math.max(MIN_FS,  Math.round((fontSize   - 0.5) * 10) / 10);
+    lineHeight = Math.max(MIN_LH,  Math.round((lineHeight - 0.04) * 100) / 100);
+    printArea.style.fontSize   = fontSize + 'pt';
+    printArea.style.lineHeight = String(lineHeight);
   }
+
+  /* Lưu vào CSS custom properties để @media print dùng */
+  printArea.style.setProperty('--vk-print-fs', fontSize + 'pt');
+  printArea.style.setProperty('--vk-print-lh', String(lineHeight));
 }
 
 /* ============================================================

@@ -1,152 +1,108 @@
 /* ============================================================
    print.css — CSS In Ấn @media print
    Lịch Việt Nam 888
+   Chỉ hiện nội dung #vk-print-area trên nền trắng thuần
    ============================================================ */
 
 @media print {
 
-  /* ---- Ẩn tất cả UI không cần in ---- */
-  .site-header,
-  .main-nav,
-  .site-footer,
-  .nav-tab,
-  .btn,
-  .btn-group,
-  .form-section,
-  .form-actions,
-  .tabs,
-  .tab-btn,
-  .ai-box,
-  .toast-container,
-  .popup-overlay,
-  #app-loading,
-  .no-print {
-    display: none !important;
-  }
-
-  /* ---- Reset cho in ---- */
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    color-adjust: exact;
-  }
-
-  html, body {
-    width: 210mm;
-    margin: 0;
-    padding: 0;
-    background: white !important;
-    font-size: 11pt;
-    font-family: 'Times New Roman', serif;
-    color: #000;
-  }
-
-  /* ---- App container khi in ---- */
-  .app-container {
-    max-width: 100%;
-    padding: 0;
-    margin: 0;
-  }
-
-  /* ---- Vùng in chính của Văn Khấn ---- */
-  .print-area {
-    display: block !important;
-    width: 100%;
-    max-width: 170mm;
-    margin: 0 auto;
-    padding: 10mm 0;
-    page-break-inside: avoid;
-  }
-
-  /* Tiêu đề văn khấn khi in */
-  .print-title {
-    font-family: 'Times New Roman', serif;
-    font-size: 16pt;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 6mm;
-    border-bottom: 1pt solid #000;
-    padding-bottom: 3mm;
-  }
-
-  .print-subtitle {
-    font-size: 10pt;
-    text-align: center;
-    color: #444;
-    margin-bottom: 6mm;
-  }
-
-  /* Nội dung văn khấn */
-  .print-content {
-    font-size: 11pt;
-    line-height: 1.8;
-    text-align: justify;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-
-  /* Lời cầu khấn bổ sung in đậm */
-  .print-content .custom-prayer {
-    font-weight: bold;
-    display: block;
-    margin: 4mm 0;
-    border-left: 2pt solid #333;
-    padding-left: 4mm;
-  }
-
-  /* Thông tin lễ vật */
-  .print-note {
-    margin-top: 6mm;
-    padding-top: 4mm;
-    border-top: 1pt dashed #666;
-    font-size: 9.5pt;
-    color: #333;
-  }
-
-  .print-note-title {
-    font-weight: bold;
-    font-size: 10pt;
-    margin-bottom: 2mm;
-  }
-
-  /* Fit vừa 1 trang A4 */
+  /* ---- Trang in: A4, margin đủ ---- */
   @page {
     size: A4 portrait;
-    margin: 15mm 20mm;
+    margin: 15mm 18mm;
   }
 
-  /* Không ngắt trang ở giữa nội dung quan trọng */
-  .print-content,
-  .print-note {
-    page-break-inside: avoid;
-  }
-
-  /* Ẩn trang trí khi in */
-  .ornament,
-  .brand-icon,
-  .ai-box,
-  .result-section:not(.print-show),
-  .calendar-grid {
+  /* ---- Ẩn TOÀN BỘ body, chỉ hiện #vk-print-area ---- */
+  /* Kỹ thuật: ẩn tất cả con trực tiếp của body, ngoại trừ vùng in */
+  body > *:not(#vk-print-area) {
     display: none !important;
   }
 
-  /* Hiện lại chỉ vùng cần in */
-  .print-show {
-    display: block !important;
+  /* ---- Reset body về nền trắng thuần ---- */
+  html,
+  body {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    background-image: none !important;
+    background-color: #fff !important;
+    color: #000 !important;
+    font-family: 'Noto Serif', 'Times New Roman', serif !important;
+    font-size: 12pt !important;
   }
 
-  /* Link không in màu xanh */
-  a {
+  /* ---- Xóa pseudo-elements trang trí ---- */
+  html::before, html::after,
+  body::before, body::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  /* ---- Vùng in chính ---- */
+  #vk-print-area {
+    display: block !important;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    background-image: none !important;
+    color: #000 !important;
+    font-family: 'Noto Serif', 'Times New Roman', serif !important;
+    font-size: var(--vk-print-fs, 12pt) !important;
+    line-height: var(--vk-print-lh, 1.7) !important;
+    white-space: pre-line !important;
+    word-break: break-word !important;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  /* ---- Xóa mọi trang trí bên trong vùng in ---- */
+  #vk-print-area *,
+  #vk-print-area *::before,
+  #vk-print-area *::after {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-color: transparent !important;
+    color: #000 !important;
+  }
+
+  /* ---- Tiêu đề bài văn khấn ---- */
+  #vk-print-area .vkprint-title {
+    display: block !important;
+    text-align: center !important;
+    font-weight: bold !important;
+    font-size: calc(var(--vk-print-fs, 12pt) + 4pt) !important;
+    margin-bottom: 0.8em !important;
+    letter-spacing: 2px !important;
+    border: none !important;
+    background: none !important;
+  }
+
+  /* ---- Nội dung đã điền (in đậm) ---- */
+  #vk-print-area strong,
+  #vk-print-area .filled {
+    font-weight: bold !important;
+    color: #000 !important;
+  }
+
+  /* ---- Link: không màu xanh ---- */
+  #vk-print-area a {
     color: #000 !important;
     text-decoration: none !important;
   }
 
-  /* Ảnh không vỡ trang */
-  img {
+  /* ---- Ảnh không vỡ trang ---- */
+  #vk-print-area img {
     max-width: 100% !important;
-    page-break-inside: avoid;
+    page-break-inside: avoid !important;
   }
 }

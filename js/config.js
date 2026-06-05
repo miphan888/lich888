@@ -1,11 +1,12 @@
 /* ============================================================
-   config.js — Cấu hình ứng dụng & API Key
+   config.js — Cấu hình ứng dụng (KHÔNG chứa API key)
    Lịch Việt Nam 888
+   API key được load từ js/api-key.js (nằm trong .gitignore)
    ============================================================ */
 
 var APP_CONFIG = {
-  /* ---- Gemini API ---- */
-  GEMINI_API_KEY: 'AQ.Ab8RN6JXjN8Zh-Kt-YLeLyu2EWwUkeRzF68wfDI5eOO4GpgV-A',
+  /* ---- Gemini API — key được lấy từ js/api-key.js ---- */
+  GEMINI_API_KEY: (typeof GEMINI_KEY !== 'undefined') ? GEMINI_KEY : '',
   GEMINI_MODEL: 'gemini-2.0-flash',
   GEMINI_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/',
 

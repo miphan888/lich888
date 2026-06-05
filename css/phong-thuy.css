@@ -1,0 +1,524 @@
+/* ============================================================
+   phong-thuy.css — Styles cho module Phong Thủy
+   Lịch Việt Nam 888
+   Match CSS variables từ base.css
+   ============================================================ */
+
+/* ===========================================================
+   HERO BANNER
+   =========================================================== */
+.pt-hero {
+  background: linear-gradient(135deg, #1a3a1a 0%, #2d5a27 45%, var(--gold) 100%);
+  border-radius: var(--r-xl);
+  padding: var(--sp-xl) var(--sp-lg);
+  text-align: center;
+  margin-bottom: var(--sp-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.pt-hero::before {
+  content: '☯';
+  position: absolute;
+  font-size: 7rem;
+  opacity: 0.06;
+  color: var(--gold2);
+  top: -10px;
+  left: -10px;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+
+.pt-hero::after {
+  content: '🧭';
+  position: absolute;
+  font-size: 5rem;
+  opacity: 0.08;
+  bottom: -10px;
+  right: -10px;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
+.pt-hero-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--gold2);
+  margin-bottom: var(--sp-sm);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.pt-hero-sub {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+}
+
+/* ===========================================================
+   FORM TRA CỨU NGÀY
+   =========================================================== */
+.pt-form-card {
+  background: var(--card-bg, #fff9f0);
+  border: 1.5px solid var(--border, #e8d5b0);
+  border-radius: var(--r-xl);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-xl);
+}
+
+.pt-form-title {
+  font-family: var(--font-serif);
+  color: var(--red2);
+  font-size: 1.1rem;
+  margin-bottom: var(--sp-md);
+}
+
+.pt-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  align-items: flex-end;
+}
+
+.pt-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  flex: 1;
+  min-width: 100px;
+}
+
+.pt-label {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  font-weight: 500;
+}
+
+.pt-input {
+  border: 1.5px solid var(--border, #e8d5b0);
+  border-radius: var(--r-md);
+  padding: var(--sp-sm) var(--sp-md);
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  background: #fff;
+  color: var(--ink);
+  transition: border-color 0.2s;
+}
+
+.pt-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+/* ===========================================================
+   TỤC NGỮ NGẪU NHIÊN
+   =========================================================== */
+.pt-tucngu-box {
+  background: linear-gradient(135deg, #fffbf0 0%, #fff8e6 100%);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r-xl);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-xl);
+  position: relative;
+  text-align: center;
+}
+
+.pt-tucngu-icon {
+  font-size: 1.5rem;
+  margin-bottom: var(--sp-sm);
+}
+
+.pt-tucngu-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink2);
+  line-height: 1.7;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.pt-tucngu-btn {
+  margin-top: var(--sp-md);
+}
+
+/* ===========================================================
+   SECTION TIÊU ĐỀ
+   =========================================================== */
+.pt-section {
+  margin-bottom: var(--sp-xl);
+}
+
+.pt-section-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--red2);
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+/* ===========================================================
+   GRID GIỜ HOÀNG ĐẠO / HẮC ĐẠO (4 cột x 3 hàng)
+   =========================================================== */
+.pt-gio-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-sm);
+}
+
+@media (max-width: 600px) {
+  .pt-gio-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Ô giờ */
+.pt-gio-cell {
+  border-radius: var(--r-lg);
+  padding: var(--sp-md) var(--sp-sm);
+  text-align: center;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s;
+}
+
+.pt-gio-cell:hover {
+  transform: translateY(-2px);
+}
+
+/* Giờ Hoàng Đạo */
+.pt-gio-cell.hoang-dao {
+  background: #fffbdc;
+  border-color: var(--gold);
+}
+
+/* Giờ Hắc Đạo */
+.pt-gio-cell.hac-dao {
+  background: #f5f5f5;
+  border-color: #ddd;
+  opacity: 0.7;
+}
+
+.pt-gio-chi {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.pt-gio-cell.hac-dao .pt-gio-chi {
+  color: #999;
+}
+
+.pt-gio-khung {
+  font-size: 0.78rem;
+  color: var(--ink3);
+  margin-bottom: var(--sp-xs);
+}
+
+.pt-gio-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+}
+
+.pt-gio-cell.hoang-dao .pt-gio-badge {
+  background: var(--gold);
+  color: #fff;
+}
+
+.pt-gio-cell.hac-dao .pt-gio-badge {
+  background: #ccc;
+  color: #666;
+}
+
+/* ===========================================================
+   GRID HƯỚNG TỐT XUẤT HÀNH (3 cột)
+   =========================================================== */
+.pt-huong-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-md);
+}
+
+@media (max-width: 500px) {
+  .pt-huong-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.pt-huong-cell {
+  background: linear-gradient(135deg, #fffbf0, #fff8e6);
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+  text-align: center;
+}
+
+.pt-huong-icon {
+  font-size: 1.8rem;
+  margin-bottom: var(--sp-xs);
+}
+
+.pt-huong-ten {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--red2);
+}
+
+.pt-huong-mo-ta {
+  font-size: 0.82rem;
+  color: var(--ink3);
+  margin-top: 2px;
+}
+
+/* ===========================================================
+   ĐỔI NGÀY NHANH — kết quả ngày âm
+   =========================================================== */
+.pt-ngay-result {
+  background: #fffbf0;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r-lg);
+  padding: var(--sp-lg);
+  margin-top: var(--sp-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  justify-content: center;
+}
+
+.pt-ngay-item {
+  text-align: center;
+  min-width: 80px;
+}
+
+.pt-ngay-item-label {
+  font-size: 0.78rem;
+  color: var(--ink3);
+  margin-bottom: 2px;
+}
+
+.pt-ngay-item-val {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--red2);
+}
+
+/* ===========================================================
+   BẢNG THẬP NHỊ TRỰC
+   =========================================================== */
+.pt-truc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.pt-truc-table th {
+  background: var(--ink);
+  color: var(--gold2);
+  padding: var(--sp-sm) var(--sp-md);
+  text-align: left;
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+.pt-truc-table td {
+  padding: var(--sp-sm) var(--sp-md);
+  border-bottom: 1px solid #f0e8d0;
+  vertical-align: top;
+  color: var(--ink);
+}
+
+.pt-truc-table tr.highlight {
+  background: #fffbdc;
+}
+
+.pt-truc-table tr.highlight td {
+  font-weight: 600;
+  color: var(--red2);
+}
+
+.pt-truc-table tr:hover td {
+  background: #fffbf0;
+}
+
+.pt-truc-ten {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pt-truc-tot {
+  color: #2e7d32;
+  font-size: 0.82rem;
+}
+
+.pt-truc-xau {
+  color: #c62828;
+  font-size: 0.82rem;
+}
+
+/* ===========================================================
+   BẢNG NGŨ HÀNH
+   =========================================================== */
+.pt-ngu-hanh-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-lg);
+}
+
+@media (max-width: 600px) {
+  .pt-ngu-hanh-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.pt-nh-cell {
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+  text-align: center;
+  border: 2px solid;
+}
+
+.pt-nh-cell.kim   { background: #f5f5e0; border-color: #bfb800; }
+.pt-nh-cell.moc   { background: #e8f5e9; border-color: #388e3c; }
+.pt-nh-cell.thuy  { background: #e3f2fd; border-color: #1976d2; }
+.pt-nh-cell.hoa   { background: #fce4ec; border-color: #d32f2f; }
+.pt-nh-cell.tho   { background: #fff3e0; border-color: #f57c00; }
+
+.pt-nh-icon  { font-size: 1.6rem; margin-bottom: var(--sp-xs); }
+.pt-nh-ten   { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; }
+.pt-nh-info  { font-size: 0.75rem; color: var(--ink3); margin-top: 4px; line-height: 1.5; }
+
+/* Tương Sinh / Tương Khắc */
+.pt-ngu-hanh-rel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-md);
+}
+
+@media (max-width: 500px) {
+  .pt-ngu-hanh-rel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pt-rel-card {
+  background: #fafafa;
+  border: 1.5px solid #e0e0e0;
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+}
+
+.pt-rel-card.tuong-sinh {
+  border-color: #388e3c;
+  background: #f1f8f1;
+}
+
+.pt-rel-card.tuong-khac {
+  border-color: #d32f2f;
+  background: #fdf1f1;
+}
+
+.pt-rel-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: var(--sp-sm);
+}
+
+.pt-rel-card.tuong-sinh .pt-rel-title { color: #2e7d32; }
+.pt-rel-card.tuong-khac .pt-rel-title { color: #c62828; }
+
+.pt-rel-text {
+  font-size: 0.85rem;
+  color: var(--ink3);
+  line-height: 1.7;
+}
+
+/* ===========================================================
+   AI TƯ VẤN
+   =========================================================== */
+.pt-ai-box {
+  background: #fffbf0;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r-xl);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-xl);
+}
+
+.pt-ai-title {
+  font-family: var(--font-serif);
+  color: var(--red2);
+  font-size: 1.1rem;
+  margin-bottom: var(--sp-md);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.pt-ai-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border, #e8d5b0);
+  border-radius: var(--r-md);
+  padding: var(--sp-sm) var(--sp-md);
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  background: #fff;
+  color: var(--ink);
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: var(--sp-md);
+  box-sizing: border-box;
+}
+
+.pt-ai-textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.pt-ai-result {
+  background: #fff;
+  border: 1.5px solid var(--gold);
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--ink2);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: var(--sp-md);
+}
+
+.pt-ai-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  color: var(--gold);
+  font-size: 0.95rem;
+  padding: var(--sp-md);
+}
+
+.pt-no-key-msg {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  border-radius: var(--r-md);
+  padding: var(--sp-md);
+  font-size: 0.88rem;
+  color: #5d4037;
+  line-height: 1.6;
+}
+
+.pt-no-key-msg code {
+  background: #fff3e0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.85em;
+}
