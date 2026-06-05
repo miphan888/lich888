@@ -311,7 +311,8 @@ var CHINH_TINH_DATA = {
       'Huynh Đệ': 'Miếu → anh em phá cách. Hãm → anh em bất hòa.'
     }
   }
-};// ─── PHỤ TINH & CÁT TINH ───────────────────────────
+};
+// ─── PHỤ TINH & CÁT TINH ───────────────────────────
 
 var PHU_TINH_DATA = {
   'Tả Phụ': {
