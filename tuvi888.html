@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lá Số Tử Vi</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:#e0e0e0}
+.header{text-align:center;padding:30px 20px 10px}
+.header h1{font-size:2.2em;background:linear-gradient(90deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header p{color:#aaa;margin-top:5px;font-size:.95em}
+.form-container{max-width:700px;margin:20px auto;padding:25px 30px;background:rgba(255,255,255,.06);border-radius:16px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1)}
+.form-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:15px;align-items:end}
+.form-group{display:flex;flex-direction:column;flex:1;min-width:100px}
+.form-group label{font-size:.85em;color:#ccc;margin-bottom:5px}
+.form-group input,.form-group select{padding:10px 12px;border:1px solid rgba(255,255,255,.15);border-radius:8px;background:rgba(255,255,255,.08);color:#fff;font-size:1em;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:#ffd200}
+.form-group select option{background:#302b63;color:#fff}
+.btn-submit{width:100%;padding:13px;font-size:1.1em;font-weight:bold;border:none;border-radius:10px;background:linear-gradient(90deg,#f7971e,#ffd200);color:#1a1a2e;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.btn-submit:hover{transform:translateY(-2px);box-shadow:0 6px 25px rgba(255,210,0,.3)}
+.info-bar{max-width:1100px;margin:15px auto;display:flex;flex-wrap:wrap;justify-content:center;gap:15px;padding:0 20px}
+.info-item{background:rgba(255,255,255,.07);padding:10px 20px;border-radius:10px;border:1px solid rgba(255,255,255,.1);font-size:.9em}
+.info-item span{color:#ffd200;font-weight:bold}
+.laso-container{max-width:1100px;margin:25px auto;padding:0 15px 20px}
+.laso-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2px solid #ffd200;border-radius:12px;overflow:hidden}
+.cung{border:1px solid rgba(255,210,0,.25);padding:10px;min-height:140px;background:rgba(255,255,255,.03);transition:background .3s;display:flex;flex-direction:column}
+.cung:hover{background:rgba(255,210,0,.08)}
+.cung-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid rgba(255,210,0,.15);flex-wrap:wrap;gap:3px}
+.cung-name{font-weight:bold;color:#ffd200;font-size:.9em}
+.cung-canchi{font-size:.78em;color:#aaa}
+.cung-than{font-size:.7em;background:#e74c3c;color:#fff;padding:1px 6px;border-radius:4px}
+.star-list{flex:1}
+.star-chinh{color:#ff6b6b;font-weight:bold;font-size:.78em;padding:1px 0}
+.star-phu{color:#74b9ff;font-size:.78em;padding:1px 0}
+.star-sat{color:#fd79a8;font-size:.78em;padding:1px 0}
+.star-hoa{color:#00cec9;font-weight:bold;font-size:.78em;padding:1px 0}
+.star-trangsinh{color:#a29bfe;font-size:.78em;padding:1px 0}
+.star-triet{color:#fdcb6e;font-style:italic;font-size:.78em;padding:1px 0}
+.star-other{color:#ddd;font-size:.78em;padding:1px 0}
+.empty-cell{border:1px solid rgba(255,210,0,.25);background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;text-align:center;padding:15px;color:#999;min-height:140px}
+.empty-cell h3{color:#ffd200;margin-bottom:5px}
+.legend{max-width:1100px;margin:0 auto 40px;padding:0 15px;display:flex;flex-wrap:wrap;gap:15px;justify-content:center;font-size:.85em}
+#result{display:none}
+@media(max-width:768px){
+    .header h1{font-size:1.5em}
+    .cung{min-height:100px;padding:6px}
+    .cung-name{font-size:.72em}
+    .star-chinh,.star-phu,.star-sat,.star-hoa,.star-trangsinh,.star-triet,.star-other{font-size:.62em}
+    .form-group{min-width:80px}
+    .empty-cell{min-height:100px;padding:8px;font-size:.8em}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>🌟 Lá Số Tử Vi 🌟</h1>
+    <p>Nhập thông tin ngày sinh dương lịch để lập lá số</p>
+</div>
+
+<div class="form-container">
+    <div class="form-row">
+        <div class="form-group">
+            <label>Ngày sinh</label>
+            <input type="number" id="day" min="1" max="31" value="15">
+        </div>
+        <div class="form-group">
+            <label>Tháng</label>
+            <input type="number" id="month" min="1" max="12" value="8">
+        </div>
+        <div class="form-group">
+            <label>Năm sinh</label>
+            <input type="number" id="year" min="1900" max="2100" value="1990">
+        </div>
+        <div class="form-group">
+            <label>Giờ sinh</label>
+            <select id="hour">
+                <option value="0">Tý (23h-1h)</option>
+                <option value="1">Sửu (1h-3h)</option>
+                <option value="2">Dần (3h-5h)</option>
+                <option value="3" selected>Mão (5h-7h)</option>
+                <option value="4">Thìn (7h-9h)</option>
+                <option value="5">Tỵ (9h-11h)</option>
+                <option value="6">Ngọ (11h-13h)</option>
+                <option value="7">Mùi (13h-15h)</option>
+                <option value="8">Thân (15h-17h)</option>
+                <option value="9">Dậu (17h-19h)</option>
+                <option value="10">Tuất (19h-21h)</option>
+                <option value="11">Hợi (21h-23h)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Giới tính</label>
+            <select id="gender">
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn-submit" onclick="lapLaSo()">🔮 Lập Lá Số</button>
+</div>
+
+<div id="result">
+    <div class="info-bar" id="info-bar"></div>
+    <div class="laso-container">
+        <div class="laso-grid" id="laso-grid"></div>
+    </div>
+    <div class="legend">
+        <span><span style="color:#ff6b6b">●</span> Chính tinh</span>
+        <span><span style="color:#74b9ff">●</span> Phụ tinh</span>
+        <span><span style="color:#fd79a8">●</span> Sát tinh</span>
+        <span><span style="color:#00cec9">●</span> Tứ Hóa</span>
+        <span><span style="color:#a29bfe">●</span> Tràng Sinh</span>
+        <span><span style="color:#fdcb6e">●</span> Triệt/Tuần</span>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// PHẦN 1: ÂM LỊCH - Chuyển đổi Dương lịch sang Âm lịch
+// Thuật toán của Hồ Ngọc Đức
+// ============================================================
+const PI = Math.PI;
+
+function jdFromDate(dd, mm, yy) {
+    let a = Math.floor((14 - mm) / 12);
+    let y = yy + 4800 - a;
+    let m = mm + 12 * a - 3;
+    let jd = dd + Math.floor((153*m+2)/5) + 365*y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) - 32045;
+    if (jd < 2299161) jd = dd + Math.floor((153*m+2)/5) + 365*y + Math.floor(y/4) - 32083;
+    return jd;
+}
+
+function getNewMoonDay(k, tz) {
+    let T=k/1236.85, T2=T*T, T3=T2*T, dr=PI/180;
+    let Jd1=2415020.75933+29.53058868*k+0.0001178*T2-0.000000155*T3;
+    Jd1+=0.00033*Math.sin((166.56+132.87*T-0.009173*T2)*dr);
+    let M=359.2242+29.10535608*k-0.0000333*T2-0.00000347*T3;
+    let Mpr=306.0253+385.81691806*k+0.0107306*T2+0.00001236*T3;
+    let F=21.2964+390.67050646*k-0.0016528*T2-0.00000239*T3;
+    let C1=(0.1734-0.000393*T)*Math.sin(M*dr)+0.0021*Math.sin(2*dr*M);
+    C1-=0.4068*Math.sin(Mpr*dr)+0.0161*Math.sin(dr*2*Mpr);
+    C1-=0.0004*Math.sin(dr*3*Mpr);
+    C1+=0.0104*Math.sin(dr*2*F)-0.0051*Math.sin(dr*(M+Mpr));
+    C1-=0.0074*Math.sin(dr*(M-Mpr))+0.0004*Math.sin(dr*(2*F+M));
+    C1-=0.0004*Math.sin(dr*(2*F-M))-0.0006*Math.sin(dr*(2*F+Mpr));
+    C1+=0.0010*Math.sin(dr*(2*F-Mpr))+0.0005*Math.sin(dr*(2*Mpr+M));
+    let deltat;
+    if(T<-11) deltat=0.001+0.000839*T+0.0002261*T2-0.00000845*T3-0.000000081*T*T3;
+    else deltat=-0.000278+0.000265*T+0.000262*T2;
+    return Math.floor(Jd1+C1-deltat+0.5+tz/24);
+}
+
+function getSunLongitude(jdn, tz) {
+    let T=(jdn-0.5-tz/24-2451545.0)/36525, T2=T*T, dr=PI/180;
+    let M=357.52910+35999.05030*T-0.0001559*T2-0.00000048*T*T2;
+    let L0=280.46645+36000.76983*T+0.0003032*T2;
+    let DL=(1.914600-0.004817*T-0.000014*T2)*Math.sin(dr*M);
+    DL+=(0.019993-0.000101*T)*Math.sin(dr*2*M)+0.000290*Math.sin(dr*3*M);
+    let L=(L0+DL)*dr;
+    L-=PI*2*Math.floor(L/(PI*2));
+    return Math.floor(L/PI*6);
+}
+
+function getLunarMonth11(yy, tz) {
+    let off=jdFromDate(31,12,yy)-2415021;
+    let k=Math.floor(off/29.530588853);
+    let nm=getNewMoonDay(k,tz);
+    let sunLong=getSunLongitude(nm,tz);
+    if(sunLong>=9) nm=getNewMoonDay(k-1,tz);
+    return nm;
+}
+
+function getLeapMonthOffset(a11, tz) {
+    let k=Math.floor((a11-2415021.076998695)/29.530588853+0.5);
+    let last=0, i=1;
+    let arc=getSunLongitude(getNewMoonDay(k+i,tz),tz);
+    while(true){
+        last=arc; i++;
+        arc=getSunLongitude(getNewMoonDay(k+i,tz),tz);
+        if(!(arc!==last && i<14)) break;
+    }
+    return i-1;
+}
+
+function convertSolar2Lunar(dd, mm, yy, tz) {
+    let dayNumber=jdFromDate(dd,mm,yy);
+    let k=Math.floor((dayNumber-2415021.076998695)/29.530588853);
+    let monthStart=getNewMoonDay(k+1,tz);
+    if(monthStart>dayNumber) monthStart=getNewMoonDay(k,tz);
+    let a11=getLunarMonth11(yy,tz), b11=a11;
+    let lunarYear;
+    if(a11>=monthStart){ lunarYear=yy; a11=getLunarMonth11(yy-1,tz); }
+    else { lunarYear=yy+1; b11=getLunarMonth11(yy+1,tz); }
+    let lunarDay=dayNumber-monthStart+1;
+    let diff=Math.floor((monthStart-a11)/29);
+    let lunarLeap=0, lunarMonth=diff+11;
+    if(b11-a11>365){
+        let leapMonthDiff=getLeapMonthOffset(a11,tz);
+        if(diff>=leapMonthDiff){ lunarMonth=diff+10; if(diff===leapMonthDiff) lunarLeap=1; }
+    }
+    if(lunarMonth>12) lunarMonth-=12;
+    if(lunarMonth>=11 && diff<4) lunarYear--;
+    return [lunarDay, lunarMonth, lunarYear, lunarLeap];
+}
+// ============================================================
+// PHẦN 2: ĐỊNH NGHĨA SAO
+// ============================================================
+const THIEN_CAN = ["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"];
+const DIA_CHI = ["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"];
+const CUNG = ["Mệnh","Phụ Mẫu","Phúc Đức","Điền Trạch","Quan Lộc","Nô Bộc","Thiên Di","Tật Ách","Tài Bạch","Tử Tức","Phu Thê","Huynh Đệ"];
+const NGU_HANH_CUC = ["Kim tứ cục","Thủy nhị cục","Hỏa lục cục","Thổ ngũ cục","Mộc tam cục"];
+const CUC_SO = [4, 2, 6, 5, 3];
+
+// Phân loại sao theo nhóm để tô màu
+const SAO_CHINH = ["Tử Vi","Thiên Cơ","Thái Dương","Vũ Khúc","Thiên Đồng","Liêm Trinh",
+    "Thiên Phủ","Thái Âm","Tham Lang","Cự Môn","Thiên Tướng","Thiên Lương","Thất Sát","Phá Quân"];
+const SAO_PHU = ["Văn Xương","Văn Khúc","Tả Phù","Hữu Bật","Thiên Khôi","Thiên Việt","Lộc Tồn"];
+const SAO_SAT = ["Kình Dương","Đà La","Hỏa Tinh","Linh Tinh","Địa Không","Địa Kiếp"];
+const SAO_HOA = ["Hóa Lộc","Hóa Quyền","Hóa Khoa","Hóa Kỵ"];
+const SAO_TRANGSINH = ["Tràng Sinh","Mộc Dục","Quan Đới","Lâm Quan","Đế Vượng","Suy","Bệnh","Tử","Mộ","Tuyệt","Thai","Dưỡng"];
+const SAO_TRIET = ["Triệt","Tuần"];
+
+// ============================================================
+// PHẦN 3: CÁC HÀM TÍNH TOÁN CƠ BẢN
+// ============================================================
+
+// Hàm mod luôn trả về số dương
+function mod(n, m) { return ((n % m) + m) % m; }
+
+// Hàm merge: gộp danh sách sao vào dict chính
+function merge(d1, d2) {
+    for (let k in d2) {
+        if (!d1[k]) d1[k] = [];
+        d1[k] = d1[k].concat(d2[k]);
+    }
+}
+
+// Tính Ngũ Hành Cục từ Thiên Can và vị trí Cung Mệnh
+function nguHanhCuc(can, cung) {
+    let x = can % 5;
+    let y = cung % 6;
+    if (y === 0) y = 6;
+    const nhcuc = [
+        [0,0,0,0,0,0],
+        [1,0,4,2,3,0],
+        [0,2,0,3,0,1],
+        [3,0,1,0,2,0],
+        [0,4,0,1,0,3],
+        [2,0,3,0,4,0]
+    ];
+    return nhcuc[x][y - 1] - 1;
+}
+
+// Tính vị trí Cung Mệnh từ tháng sinh và giờ sinh
+function cungMenh(thang, gio) { return mod(thang + gio - 2, 12); }
+
+// Tính vị trí Cung Thân
+function cungThan(thang, gio) { return mod(thang + gio + 2, 12); }
+
+// Tính Thiên Can cho mỗi cung
+function canCung(canNam, cungSo) { return (((canNam % 5) * 2) + 2 + cungSo) % 10; }
+
+// An sao Tử Vi: xác định vị trí Tử Vi từ Cục số và ngày sinh âm lịch
+function anTuVi(cucSo, ngay) {
+    let du = ngay % cucSo;
+    let thuong = Math.floor(ngay / cucSo);
+    let pos;
+    if (du === 0) pos = 2 * thuong + 1;
+    else if (du * 2 <= cucSo) pos = 2 * thuong + 2;
+    else pos = 2 * thuong + 3;
+    return mod(pos, 12);
+}
+
+// Tính vị trí Thiên Phủ từ vị trí Tử Vi
+function anThienPhu(tvPos) { return mod(12 - tvPos + 4, 12); }
+
+// ============================================================
+// PHẦN 4: AN 14 CHÍNH TINH
+// ============================================================
+function anSao14(tvPos) {
+    let s = {};
+    let tv = mod(tvPos, 12);
+
+    // Nhóm Tử Vi (đi nghịch từ Tử Vi)
+    s[tv] = ["Tử Vi"];
+
+    let p = mod(tv + 4, 12);
+    if (!s[p]) s[p] = []; s[p].push("Liêm Trinh");
+
+    p = mod(tv - 3, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Đồng");
+
+    p = mod(tv + 3, 12);
+    if (!s[p]) s[p] = []; s[p].push("Vũ Khúc");
+
+    p = mod(tv - 2, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thái Dương");
+
+    p = mod(tv - 1, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Cơ");
+
+    // Nhóm Thiên Phủ (đi thuận từ Thiên Phủ)
+    let tp = anThienPhu(tv);
+    if (!s[tp]) s[tp] = []; s[tp].push("Thiên Phủ");
+
+    p = mod(tp + 1, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thái Âm");
+
+    p = mod(tp + 2, 12);
+    if (!s[p]) s[p] = []; s[p].push("Tham Lang");
+
+    p = mod(tp + 3, 12);
+    if (!s[p]) s[p] = []; s[p].push("Cự Môn");
+
+    p = mod(tp + 4, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Tướng");
+
+    p = mod(tp + 5, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Lương");
+
+    p = mod(tp + 6, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thất Sát");
+
+    p = mod(tp + 10, 12);
+    if (!s[p]) s[p] = []; s[p].push("Phá Quân");
+
+    return s;
+}
+
+// ============================================================
+// PHẦN 5: AN CÁC SAO PHỤ TINH
+// ============================================================
+
+// Tả Phù, Hữu Bật (theo tháng sinh)
+function anThangSinh(thang) {
+    let s = {};
+    let p1 = mod(thang + 3, 12);
+    if (!s[p1]) s[p1] = []; s[p1].push("Tả Phù");
+    let p2 = mod(11 - thang + 3, 12);
+    if (!s[p2]) s[p2] = []; s[p2].push("Hữu Bật");
+    return s;
+}
+
+// Văn Xương, Văn Khúc (theo giờ sinh)
+function anGioSinh(gio) {
+    let s = {};
+    let p1 = mod(10 - gio, 12);
+    if (!s[p1]) s[p1] = []; s[p1].push("Văn Xương");
+    let p2 = mod(gio + 4, 12);
+    if (!s[p2]) s[p2] = []; s[p2].push("Văn Khúc");
+    return s;
+}
+
+// Lộc Tồn, Kình Dương, Đà La (theo Can năm)
+function anLocTon(canNam) {
+    let s = {};
+    const locTonPos = [2,3,5,6,5,6,7,8,10,11];
+    let pos = locTonPos[canNam];
+    if (!s[pos]) s[pos] = []; s[pos].push("Lộc Tồn");
+    let kd = mod(pos + 1, 12);
+    if (!s[kd]) s[kd] = []; s[kd].push("Kình Dương");
+    let dl = mod(pos - 1, 12);
+    if (!s[dl]) s[dl] = []; s[dl].push("Đà La");
+    return s;
+}
+
+// Thiên Khôi, Thiên Việt (theo Can năm)
+function anThienKhoiViet(canNam) {
+    let s = {};
+    const kp = [1,0,10,10,1,0,7,6,3,3];
+    const vp = [7,8,6,6,7,8,1,2,5,5];
+    if (!s[kp[canNam]]) s[kp[canNam]] = []; s[kp[canNam]].push("Thiên Khôi");
+    if (!s[vp[canNam]]) s[vp[canNam]] = []; s[vp[canNam]].push("Thiên Việt");
+    return s;
+}
+
+// ============================================================
+// PHẦN 6: AN CÁC SAO SÁT TINH
+// ============================================================
+
+// Hỏa Tinh (theo Chi năm + giờ sinh)
+function anHoaTinh(chi, gio) {
+    let s = {};
+    const ht = [2,3,1,9,2,3,1,9,2,3,1,9];
+    let p = mod(ht[chi] + gio, 12);
+    if (!s[p]) s[p] = []; s[p].push("Hỏa Tinh");
+    return s;
+}
+
+// Linh Tinh (theo Chi năm + giờ sinh)
+function anLinhTinh(chi, gio) {
+    let s = {};
+    const lt = [3,2,10,10,3,2,10,10,3,2,10,10];
+    let p = mod(lt[chi] + gio, 12);
+    if (!s[p]) s[p] = []; s[p].push("Linh Tinh");
+    return s;
+}
+
+// Địa Không, Địa Kiếp (theo giờ sinh)
+function anDiaKhongKiep(gio) {
+    let s = {};
+    let dk = mod(11 - gio, 12);
+    if (!s[dk]) s[dk] = []; s[dk].push("Địa Không");
+    let dj = mod(gio + 11, 12);
+    if (!s[dj]) s[dj] = []; s[dj].push("Địa Kiếp");
+    return s;
+}
+
+// ============================================================
+// PHẦN 7: AN CÁC TRUNG TINH
+// ============================================================
+
+// Thiên Mã (theo Chi năm)
+function anThienMa(chi) {
+    let s = {};
+    const mp = [2,11,8,5,2,11,8,5,2,11,8,5];
+    if (!s[mp[chi]]) s[mp[chi]] = []; s[mp[chi]].push("Thiên Mã");
+    return s;
+}
+
+// Thiên Hình (theo tháng sinh)
+function anThienHinh(thang) {
+    let s = {};
+    let p = mod(thang + 8, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Hình");
+    return s;
+}
+
+// Thiên Riêu (theo tháng sinh)
+function anThienRieu(thang) {
+    let s = {};
+    let p = mod(thang + 4, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Riêu");
+    return s;
+}
+
+// Thiên Y (theo tháng sinh)
+function anThienY(thang) {
+    let s = {};
+    let p = mod(thang + 2, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Y");
+    return s;
+}
+
+// Đại Hao, Tiểu Hao (theo Chi năm)
+function anHaoTinh(chi) {
+    let s = {};
+    if (!s[chi]) s[chi] = []; s[chi].push("Đại Hao");
+    let th = mod(chi + 6, 12);
+    if (!s[th]) s[th] = []; s[th].push("Tiểu Hao");
+    return s;
+}
+
+// Tang Môn (theo Chi năm)
+function anTangMon(chi) {
+    let s = {};
+    let p = mod(chi + 2, 12);
+    if (!s[p]) s[p] = []; s[p].push("Tang Môn");
+    return s;
+}
+
+// Bạch Hổ (theo Chi năm)
+function anBachHo(chi) {
+    let s = {};
+    let p = mod(chi + 6, 12);
+    if (!s[p]) s[p] = []; s[p].push("Bạch Hổ");
+    return s;
+}
+
+// Thiên Khốc, Thiên Hư (theo Chi năm)
+function anThienKhocHu(chi) {
+    let s = {};
+    let tk = mod(6 - chi, 12);
+    if (!s[tk]) s[tk] = []; s[tk].push("Thiên Khốc");
+    let th = mod(6 + chi, 12);
+    if (!s[th]) s[th] = []; s[th].push("Thiên Hư");
+    return s;
+}
+
+// Long Trì, Phượng Các (theo Chi năm)
+function anLongTriPhuongCac(chi) {
+    let s = {};
+    let lt = mod(chi + 4, 12);
+    if (!s[lt]) s[lt] = []; s[lt].push("Long Trì");
+    let pc = mod(8 - chi, 12);
+    if (!s[pc]) s[pc] = []; s[pc].push("Phượng Các");
+    return s;
+}
+
+// Cô Thần, Quả Tú (theo Chi năm)
+function anCoThanQuaTu(chi) {
+    let s = {};
+    const ct = [2,2,5,5,5,8,8,8,11,11,11,2];
+    const qt = [10,10,1,1,1,4,4,4,7,7,7,10];
+    if (!s[ct[chi]]) s[ct[chi]] = []; s[ct[chi]].push("Cô Thần");
+    if (!s[qt[chi]]) s[qt[chi]] = []; s[qt[chi]].push("Quả Tú");
+    return s;
+}
+
+// Ân Quang, Thiên Quý (theo ngày sinh)
+function anAnQuangThienQuy(ngay) {
+    let s = {};
+    let aq = mod(ngay - 1 + 4, 12);
+    if (!s[aq]) s[aq] = []; s[aq].push("Ân Quang");
+    let tq = mod(11 - ngay + 1 + 8, 12);
+    if (!s[tq]) s[tq] = []; s[tq].push("Thiên Quý");
+    return s;
+}
+
+// Thai Phụ, Phong Cáo (theo giờ sinh)
+function anThaiPhuPhongCao(gio) {
+    let s = {};
+    let tp = mod(gio + 6, 12);
+    if (!s[tp]) s[tp] = []; s[tp].push("Thai Phụ");
+    let pc = mod(gio + 2, 12);
+    if (!s[pc]) s[pc] = []; s[pc].push("Phong Cáo");
+    return s;
+}
+
+// Thiên Không (theo Chi năm)
+function anThienKhong(chi) {
+    let s = {};
+    let p = mod(chi + 1, 12);
+    if (!s[p]) s[p] = []; s[p].push("Thiên Không");
+    return s;
+}
+
+// Hồng Loan, Thiên Hỷ (theo Chi năm)
+function anHongLoan(chi) {
+    let s = {};
+    let hl = mod(3 - chi, 12);
+    if (!s[hl]) s[hl] = []; s[hl].push("Hồng Loan");
+    let th = mod(hl + 6, 12);
+    if (!s[th]) s[th] = []; s[th].push("Thiên Hỷ");
+    return s;
+}
+
+// Quốc Ấn, Đường Phù (theo Can năm)
+function anQuocAnDuong(canNam) {
+    let s = {};
+    const qa = [1,6,3,8,1,6,3,8,1,6];
+    const dp = [6,1,8,3,6,1,8,3,6,1];
+    if (!s[qa[canNam]]) s[qa[canNam]] = []; s[qa[canNam]].push("Quốc Ấn");
+    if (!s[dp[canNam]]) s[dp[canNam]] = []; s[dp[canNam]].push("Đường Phù");
+    return s;
+}
+
+// Phá Toái (theo Chi năm)
+function anPhaToai(chi) {
+    let s = {};
+    const pt = [5,1,9,5,1,9,5,1,9,5,1,9];
+    if (!s[pt[chi]]) s[pt[chi]] = []; s[pt[chi]].push("Phá Toái");
+    return s;
+}
+
+// Thiên La, Địa Võng (cố định)
+function anThienLaDiaVong() {
+    let s = {};
+    s[5] = ["Thiên La"];
+    if (!s[11]) s[11] = []; s[11].push("Địa Võng");
+    return s;
+}
+
+// Triệt (theo Can năm)
+function anTriet(canNam) {
+    let s = {};
+    const tp = [[8,9],[6,7],[4,5],[2,3],[0,1],[8,9],[6,7],[4,5],[2,3],[0,1]];
+    for (let p of tp[canNam]) {
+        if (!s[p]) s[p] = []; s[p].push("Triệt");
+    }
+    return s;
+}
+
+// Tuần (theo Can năm + Chi năm)
+function anTuan(canNam, chiNam) {
+    let s = {};
+    let st = mod(10 - canNam + chiNam, 12);
+    if (!s[st]) s[st] = []; s[st].push("Tuần");
+    let st2 = mod(st + 1, 12);
+    if (!s[st2]) s[st2] = []; s[st2].push("Tuần");
+    return s;
+}
+// ============================================================
+// PHẦN 8: TỨ HÓA (Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ)
+// Xác định sao nào được gắn Tứ Hóa dựa theo Can năm
+// ============================================================
+
+function anHoaLoc(canNam) {
+    return ["Liêm Trinh","Thiên Cơ","Thiên Đồng","Thái Âm","Tham Lang",
+            "Vũ Khúc","Thái Dương","Cự Môn","Thiên Lương","Phá Quân"][canNam];
+}
+function anHoaQuyen(canNam) {
+    return ["Phá Quân","Thiên Lương","Thiên Cơ","Thiên Đồng","Thái Âm",
+            "Tham Lang","Vũ Khúc","Thái Dương","Tử Vi","Cự Môn"][canNam];
+}
+function anHoaKhoa(canNam) {
+    return ["Vũ Khúc","Tử Vi","Văn Xương","Thiên Cơ","Hữu Bật",
+            "Thiên Lương","Thiên Phủ","Văn Khúc","Tả Phù","Thái Âm"][canNam];
+}
+function anHoaKy(canNam) {
+    return ["Thái Dương","Thái Âm","Liêm Trinh","Cự Môn","Thiên Cơ",
+            "Văn Khúc","Thiên Đồng","Văn Xương","Vũ Khúc","Tham Lang"][canNam];
+}
+
+// ============================================================
+// PHẦN 9: TRÀNG SINH (12 sao vòng Tràng Sinh)
+// Chiều thuận/nghịch phụ thuộc âm dương + giới tính
+// ============================================================
+function anTrangSinh(nhCucIdx, gender, chi) {
+    let s = {};
+    // Vị trí khởi đầu Tràng Sinh theo Ngũ Hành Cục: Kim=Thân(8), Thủy=Hợi(11), Hỏa=Dần(2), Thổ=Thân(8), Mộc=Hợi(11)
+    const tsStart = [8, 11, 2, 8, 11];
+    let pos = tsStart[nhCucIdx];
+
+    // Xác định chiều đi: Dương Nam/Âm Nữ = thuận, Âm Nam/Dương Nữ = nghịch
+    let amDuong = chi % 2; // 0: dương, 1: âm
+    let direction;
+    if (gender === "male") {
+        direction = (amDuong === 0) ? 1 : -1;
+    } else {
+        direction = (amDuong === 0) ? -1 : 1;
+    }
+
+    const tsStars = ["Tràng Sinh","Mộc Dục","Quan Đới","Lâm Quan","Đế Vượng",
+                     "Suy","Bệnh","Tử","Mộ","Tuyệt","Thai","Dưỡng"];
+    for (let i = 0; i < tsStars.length; i++) {
+        let p = mod(pos + direction * i, 12);
+        if (!s[p]) s[p] = [];
+        s[p].push(tsStars[i]);
+    }
+    return s;
+}
+
+// ============================================================
+// PHẦN 10: HÀM LẬP LÁ SỐ CHÍNH
+// Gộp tất cả sao vào 12 cung
+// ============================================================
+function lapLaSo() {
+    // Lấy dữ liệu từ form
+    let day = parseInt(document.getElementById('day').value);
+    let month = parseInt(document.getElementById('month').value);
+    let year = parseInt(document.getElementById('year').value);
+    let hour = parseInt(document.getElementById('hour').value);
+    let gender = document.getElementById('gender').value;
+
+    // Validate input cơ bản
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+        alert("Vui lòng nhập ngày tháng năm hợp lệ!");
+        return;
+    }
+
+    // Bước 1: Chuyển Dương lịch → Âm lịch (múi giờ +7 Việt Nam)
+    let lunar = convertSolar2Lunar(day, month, year, 7);
+    let lunarDay = lunar[0], lunarMonth = lunar[1], lunarYear = lunar[2];
+
+    // Bước 2: Tính Can Chi năm sinh
+    let canNam = (lunarYear + 6) % 10;
+    let chiNam = (lunarYear + 8) % 12;
+
+    // Bước 3: Tính Cung Mệnh, Cung Thân
+    let cm = cungMenh(lunarMonth, hour);
+    let ct = cungThan(lunarMonth, hour);
+
+    // Bước 4: Tính Ngũ Hành Cục
+    let nhCucIdx = nguHanhCuc(canNam, cm);
+    let cucSoVal = CUC_SO[nhCucIdx];
+
+    // Bước 5: An Tử Vi
+    let tvPos = anTuVi(cucSoVal, lunarDay);
+
+    // Bước 6: Tạo 12 cung
+    let palaces = {};
+    for (let i = 0; i < 12; i++) {
+        let cungIdx = mod(i - cm, 12);
+        palaces[i] = {
+            name: CUNG[cungIdx],
+            diaChi: DIA_CHI[i],
+            thienCan: THIEN_CAN[canCung(canNam, i)],
+            stars: [],
+            isThan: (i === ct)
+        };
+    }
+
+    // Bước 7: An tất cả sao vào các cung
+    let allStars = {};
+
+    // 14 Chính tinh
+    merge(allStars, anSao14(tvPos));
+
+    // Sao theo tháng sinh
+    merge(allStars, anThangSinh(lunarMonth));
+    merge(allStars, anThienHinh(lunarMonth));
+    merge(allStars, anThienRieu(lunarMonth));
+    merge(allStars, anThienY(lunarMonth));
+
+    // Sao theo giờ sinh
+    merge(allStars, anGioSinh(hour));
+    merge(allStars, anDiaKhongKiep(hour));
+    merge(allStars, anThaiPhuPhongCao(hour));
+
+    // Sao theo Can năm
+    merge(allStars, anLocTon(canNam));
+    merge(allStars, anThienKhoiViet(canNam));
+    merge(allStars, anQuocAnDuong(canNam));
+    merge(allStars, anTriet(canNam));
+    merge(allStars, anTuan(canNam, chiNam));
+
+    // Sao theo Chi năm
+    merge(allStars, anHoaTinh(chiNam, hour));
+    merge(allStars, anLinhTinh(chiNam, hour));
+    merge(allStars, anThienMa(chiNam));
+    merge(allStars, anHaoTinh(chiNam));
+    merge(allStars, anTangMon(chiNam));
+    merge(allStars, anBachHo(chiNam));
+    merge(allStars, anThienKhocHu(chiNam));
+    merge(allStars, anLongTriPhuongCac(chiNam));
+    merge(allStars, anCoThanQuaTu(chiNam));
+    merge(allStars, anThienKhong(chiNam));
+    merge(allStars, anHongLoan(chiNam));
+    merge(allStars, anPhaToai(chiNam));
+    merge(allStars, anThienLaDiaVong());
+
+    // Sao theo ngày sinh
+    merge(allStars, anAnQuangThienQuy(lunarDay));
+
+    // Vòng Tràng Sinh
+    merge(allStars, anTrangSinh(nhCucIdx, gender, chiNam));
+
+    // Bước 8: An Tứ Hóa
+    // Tìm sao nào được gắn Hóa Lộc/Quyền/Khoa/Kỵ, rồi thêm vào cùng vị trí
+    let hoaLocStar = anHoaLoc(canNam);
+    let hoaQuyenStar = anHoaQuyen(canNam);
+    let hoaKhoaStar = anHoaKhoa(canNam);
+    let hoaKyStar = anHoaKy(canNam);
+
+    for (let pos in allStars) {
+        let starList = allStars[pos];
+        for (let star of starList) {
+            if (star === hoaLocStar) {
+                if (!allStars[pos]) allStars[pos] = [];
+                allStars[pos].push("Hóa Lộc");
+            }
+            if (star === hoaQuyenStar) {
+                if (!allStars[pos]) allStars[pos] = [];
+                allStars[pos].push("Hóa Quyền");
+            }
+            if (star === hoaKhoaStar) {
+                if (!allStars[pos]) allStars[pos] = [];
+                allStars[pos].push("Hóa Khoa");
+            }
+            if (star === hoaKyStar) {
+                if (!allStars[pos]) allStars[pos] = [];
+                allStars[pos].push("Hóa Kỵ");
+            }
+        }
+    }
+
+    // Bước 9: Gán sao vào cung
+    for (let pos = 0; pos < 12; pos++) {
+        if (allStars[pos]) {
+            palaces[pos].stars = allStars[pos];
+        }
+    }
+
+    // Bước 10: Hiển thị kết quả
+    renderResult({
+        palaces: palaces,
+        cungMenh: cm,
+        cungThan: ct,
+        nguHanhCuc: NGU_HANH_CUC[nhCucIdx],
+        cucSo: cucSoVal
+    }, lunarDay, lunarMonth, lunarYear, canNam, chiNam, hour, gender);
+}// ============================================================
+// PHẦN 11: HIỂN THỊ KẾT QUẢ LÁ SỐ
+// Render bảng 4x4 với 12 cung xung quanh, 4 ô giữa hiển thị thông tin
+// ============================================================
+
+// Xác định CSS class cho từng loại sao
+function getStarClass(name) {
+    if (SAO_CHINH.includes(name)) return "star-chinh";
+    if (SAO_PHU.includes(name)) return "star-phu";
+    if (SAO_SAT.includes(name)) return "star-sat";
+    if (SAO_HOA.includes(name)) return "star-hoa";
+    if (SAO_TRANGSINH.includes(name)) return "star-trangsinh";
+    if (SAO_TRIET.includes(name)) return "star-triet";
+    return "star-other";
+}
+
+// Tạo HTML cho 1 ô cung
+function renderCung(palace) {
+    let thanBadge = palace.isThan ? '<span class="cung-than">Thân</span>' : '';
+    let starsHtml = '';
+    for (let star of palace.stars) {
+        let cls = getStarClass(star);
+        starsHtml += '<div class="' + cls + '">' + star + '</div>';
+    }
+    return '<div class="cung">' +
+        '<div class="cung-header">' +
+            '<span class="cung-name">' + palace.name + thanBadge + '</span>' +
+            '<span class="cung-canchi">' + palace.thienCan + ' ' + palace.diaChi + '</span>' +
+        '</div>' +
+        '<div class="star-list">' + starsHtml + '</div>' +
+    '</div>';
+}
+
+// Tạo HTML cho ô trống ở giữa
+function renderEmptyCell(content) {
+    return '<div class="empty-cell"><div>' + content + '</div></div>';
+}
+
+// Hàm chính: render toàn bộ lá số ra giao diện
+function renderResult(laso, lunarDay, lunarMonth, lunarYear, canNam, chiNam, hour, gender) {
+    // Hiển thị thanh thông tin
+    let genderVn = (gender === "male") ? "Nam" : "Nữ";
+    let infoHtml = '';
+    infoHtml += '<div class="info-item">📅 Âm lịch: <span>' + lunarDay + '/' + lunarMonth + '/' + lunarYear + '</span></div>';
+    infoHtml += '<div class="info-item">📛 Năm: <span>' + THIEN_CAN[canNam] + ' ' + DIA_CHI[chiNam] + '</span></div>';
+    infoHtml += '<div class="info-item">⏰ Giờ: <span>' + DIA_CHI[hour] + '</span></div>';
+    infoHtml += '<div class="info-item">👤 Giới tính: <span>' + genderVn + '</span></div>';
+    infoHtml += '<div class="info-item">🔥 Cục: <span>' + laso.nguHanhCuc + '</span></div>';
+    infoHtml += '<div class="info-item">🔢 Cục số: <span>' + laso.cucSo + '</span></div>';
+    document.getElementById('info-bar').innerHTML = infoHtml;
+
+    // Layout bảng 4x4: 12 cung xung quanh, 4 ô giữa
+    // Thứ tự theo lá số tử vi truyền thống:
+    //   Tỵ(5)   Ngọ(6)   Mùi(7)   Thân(8)
+    //   Thìn(4)  [giữa]   [giữa]   Dậu(9)
+    //   Mão(3)   [giữa]   [giữa]   Tuất(10)
+    //   Dần(2)   Sửu(1)   Tý(0)    Hợi(11)
+
+    let p = laso.palaces;
+    let gridHtml = '';
+
+    // Hàng 1: Tỵ - Ngọ - Mùi - Thân
+    gridHtml += renderCung(p[5]);
+    gridHtml += renderCung(p[6]);
+    gridHtml += renderCung(p[7]);
+    gridHtml += renderCung(p[8]);
+
+    // Hàng 2: Thìn - [Thông tin 1] - [Thông tin 2] - Dậu
+    gridHtml += renderCung(p[4]);
+    gridHtml += renderEmptyCell(
+        '<h3>🌟 Lá Số Tử Vi</h3>' +
+        '<div style="margin-top:8px">' + THIEN_CAN[canNam] + ' ' + DIA_CHI[chiNam] + '</div>' +
+        '<div style="margin-top:4px">' + laso.nguHanhCuc + '</div>'
+    );
+    gridHtml += renderEmptyCell(
+        '<div>👤 ' + genderVn + '</div>' +
+        '<div style="margin-top:6px">⏰ Giờ ' + DIA_CHI[hour] + '</div>' +
+        '<div style="margin-top:6px">🔢 Cục số: ' + laso.cucSo + '</div>'
+    );
+    gridHtml += renderCung(p[9]);
+
+    // Hàng 3: Mão - [Thông tin 3] - [Thông tin 4] - Tuất
+    gridHtml += renderCung(p[3]);
+    gridHtml += renderEmptyCell(
+        '<div>📅 Ngày sinh Âm lịch</div>' +
+        '<div style="margin-top:6px;color:#ffd200;font-size:1.1em;font-weight:bold">' +
+        lunarDay + '/' + lunarMonth + '/' + lunarYear + '</div>'
+    );
+    gridHtml += renderEmptyCell(
+        '<div>📅 Ngày sinh Dương lịch</div>' +
+        '<div style="margin-top:6px;color:#ffd200;font-size:1.1em;font-weight:bold">' +
+        document.getElementById('day').value + '/' +
+        document.getElementById('month').value + '/' +
+        document.getElementById('year').value + '</div>'
+    );
+    gridHtml += renderCung(p[10]);
+
+    // Hàng 4: Dần - Sửu - Tý - Hợi
+    gridHtml += renderCung(p[2]);
+    gridHtml += renderCung(p[1]);
+    gridHtml += renderCung(p[0]);
+    gridHtml += renderCung(p[11]);
+
+    document.getElementById('laso-grid').innerHTML = gridHtml;
+
+    // Hiện kết quả
+    document.getElementById('result').style.display = 'block';
+
+    // Cuộn xuống kết quả
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
