@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lá Số Tử Vi Cổ Học</title>
+<style>
+:root {
+  --ink:#1a0a00;--vermillion:#c0392b;--gold:#b5840a;--deep-red:#8b1a1a;
+  --parchment:#f5ead8;--parchment-dark:#e8d5b5;--sage:#2d5a3d;
+  --blue:#1a3a6e;--orange:#c67c00;--border:#8b6914;--bg:#fdf6e3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Times New Roman',serif;background:#0d0500;min-height:100vh;color:var(--ink)}
+.page{background:radial-gradient(ellipse,#2a1205,#0d0500);min-height:100vh;padding:18px}
+
+/* FORM */
+.form-wrap{max-width:680px;margin:0 auto 24px;background:var(--parchment);border:3px solid var(--border);box-shadow:0 0 40px rgba(181,132,10,.3)}
+.form-head{background:linear-gradient(135deg,#1a0a00,#3d1a00,#1a0a00);padding:18px;text-align:center;border-bottom:2px solid var(--border)}
+.form-head h1{color:var(--gold);font-size:1.7rem;letter-spacing:3px;text-shadow:0 0 20px rgba(181,132,10,.5)}
+.form-head p{color:#c9a96e;font-size:.82rem;margin-top:4px;font-style:italic}
+.form-body{padding:22px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg.full{grid-column:1/-1}
+label{font-size:.75rem;font-weight:700;color:var(--deep-red);text-transform:uppercase;letter-spacing:1px}
+input,select{padding:9px 11px;border:1.5px solid var(--border);background:var(--bg);font-family:inherit;font-size:.92rem;color:var(--ink);border-radius:2px}
+input:focus,select:focus{outline:none;border-color:var(--vermillion);background:#fff}
+.btn-go{width:100%;margin-top:18px;padding:13px;background:linear-gradient(135deg,#8b1a1a,#c0392b,#8b1a1a);color:#ffd700;border:none;font-size:1.05rem;letter-spacing:2px;cursor:pointer;border-radius:2px;font-family:inherit;box-shadow:0 2px 10px rgba(139,26,26,.4);transition:all .2s}
+.btn-go:hover{background:linear-gradient(135deg,#c0392b,#e74c3c,#c0392b);transform:translateY(-1px)}
+.errmsg{color:var(--vermillion);font-size:.83rem;text-align:center;margin-top:8px;display:none}
+
+/* LA SO */
+#laso{display:none}
+.laso-wrap{max-width:960px;margin:0 auto}
+.laso-head{background:linear-gradient(135deg,#1a0a00,#3d1a00,#1a0a00);border:2px solid var(--border);padding:14px;text-align:center}
+.laso-head .org{color:var(--vermillion);font-size:.95rem;font-weight:700;letter-spacing:2px}
+.laso-head .ttl{color:var(--gold);font-size:1.45rem;letter-spacing:3px;margin:3px 0}
+.laso-head .sub{color:#c9a96e;font-size:.78rem}
+
+/* GRID */
+.board{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;grid-template-rows:auto auto auto auto;border:2px solid #8b4513;background:#8b4513;gap:1px}
+.cell{background:var(--bg);padding:5px;min-height:145px;position:relative;font-size:.7rem}
+.cell-center{background:#fff;grid-column:2/4;grid-row:2/4;padding:10px 14px;min-height:auto}
+.ch{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #d4b896;margin-bottom:3px;padding-bottom:2px}
+.chi-lbl{font-size:.68rem;color:var(--blue);font-weight:700}
+.cung-lbl{font-size:.72rem;font-weight:700;color:var(--deep-red)}
+.main-star{font-weight:700;font-size:.88rem;color:var(--vermillion);text-align:center;line-height:1.25;margin:1px 0}
+.main-star.hien{color:var(--blue)}
+.phu-star{display:block;font-size:.68rem;line-height:1.35}
+.s-red{color:var(--vermillion);font-weight:600}
+.s-blue{color:var(--blue);font-weight:600}
+.s-gold{color:var(--gold);font-weight:600}
+.s-green{color:var(--sage);font-weight:600}
+.s-gray{color:#888}
+.s-orange{color:var(--orange)}
+.cell-foot{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;padding:2px 5px;font-size:.6rem;color:#888;border-top:1px solid #ddd;background:rgba(253,246,227,.9)}
+.badge{display:inline-block;font-size:.58rem;padding:1px 4px;border-radius:2px;margin-right:2px}
+.badge-triet{background:#333;color:#fff}
+.badge-tuan{background:var(--sage);color:#fff}
+.badge-than{background:var(--blue);color:#fff;position:absolute;top:2px;right:2px}
+
+/* CENTER PANEL */
+.c-org{color:var(--vermillion);font-size:.82rem;font-weight:700;text-align:center;letter-spacing:1px}
+.c-url{color:#999;font-size:.66rem;text-align:center}
+.c-title{color:var(--blue);font-size:1.05rem;font-weight:700;text-align:center;margin:5px 0 7px;letter-spacing:2px}
+.c-table{width:100%;font-size:.75rem;border-collapse:collapse}
+.c-table td{padding:1.5px 3px}
+.c-table td:first-child{color:#666;width:46%}
+.c-table td:last-child{color:var(--blue);font-weight:600}
+.c-hl{text-align:center;margin-top:6px;font-size:.76rem;font-weight:600}
+.btn-print{display:block;margin:12px auto;padding:9px 28px;background:var(--sage);color:#fff;border:none;font-size:.88rem;cursor:pointer;border-radius:2px;letter-spacing:1px}
+
+@media(max-width:700px){.fgrid{grid-template-columns:1fr}}
+@media print{.form-wrap,.btn-print{display:none}#laso{display:block!important}.page{background:white;padding:5px}.board{border:1px solid #999;gap:0.5px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="form-wrap">
+  <div class="form-head">
+    <h1>🌟 Lá Số Tử Vi Cổ Học 🌟</h1>
+    <p>Nhóm Nghiên Cứu Tử Vi Cổ Học — An sao theo phương pháp cổ truyền</p>
+  </div>
+  <div class="form-body">
+    <div class="fgrid">
+      <div class="fg full"><label>Họ và Tên</label><input id="iname" type="text" placeholder="Nhập họ tên đầy đủ" value="PHAN VĂN BẢY"></div>
+      <div class="fg"><label>Ngày sinh (Dương lịch)</label><input id="idate" type="date" value="1976-04-02"></div>
+      <div class="fg"><label>Giờ phút sinh</label><input id="itime" type="time" value="02:45"></div>
+      <div class="fg"><label>Năm xem hạn</label><input id="ihan" type="number" value="2026" min="1900" max="2100"></div>
+      <div class="fg"><label>Giới tính</label><select id="igender"><option value="nam">Nam</option><option value="nu">Nữ</option></select></div>
+    </div>
+    <div class="errmsg" id="emsg">⚠️ Vui lòng nhập đầy đủ thông tin</div>
+    <button class="btn-go" onclick="go()">✨ An Lá Số Tử Vi ✨</button>
+  </div>
+</div>
+
+<div id="laso">
+  <div class="laso-wrap">
+    <button class="btn-print" onclick="window.print()">🖨️ In / Lưu PDF</button>
+    <div id="board"></div>
+  </div>
+</div>
+</div>
+
+<script>
+const DC=['Tý','Sửu','Dần','Mão','Thìn','Tị','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const TC=['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const CUNG=['Mệnh','Phụ Mẫu','Phúc Đức','Điền Trạch','Quan Lộc','Nô Bộc','Thiên Di','Tật Ách','Tài Bạch','Tử Tức','Phu Thê','Huynh Đệ'];
+
+// Nạp âm 60 year cycle (from Giáp Tý 1924)
+const NAPAM=[
+  'Hải Trung Kim','Hải Trung Kim','Lô Trung Hoả','Lô Trung Hoả','Đại Lâm Mộc','Đại Lâm Mộc',
+  'Lộ Bàng Thổ','Lộ Bàng Thổ','Kiếm Phong Kim','Kiếm Phong Kim','Sơn Đầu Hoả','Sơn Đầu Hoả',
+  'Giản Hạ Thuỷ','Giản Hạ Thuỷ','Thành Đầu Thổ','Thành Đầu Thổ','Bạch Lạp Kim','Bạch Lạp Kim',
+  'Dương Liễu Mộc','Dương Liễu Mộc','Tuyền Trung Thuỷ','Tuyền Trung Thuỷ','Ốc Thượng Thổ','Ốc Thượng Thổ',
+  'Tích Lịch Hoả','Tích Lịch Hoả','Tùng Bách Mộc','Tùng Bách Mộc','Trường Lưu Thuỷ','Trường Lưu Thuỷ',
+  'Sa Trung Kim','Sa Trung Kim','Sơn Hạ Hoả','Sơn Hạ Hoả','Bình Địa Mộc','Bình Địa Mộc',
+  'Bích Thượng Thổ','Bích Thượng Thổ','Kim Bạch Kim','Kim Bạch Kim','Phú Đăng Hoả','Phú Đăng Hoả',
+  'Thiên Hà Thuỷ','Thiên Hà Thuỷ','Đại Dịch Thổ','Đại Dịch Thổ','Thoa Xuyến Kim','Thoa Xuyến Kim',
+  'Tang Đố Mộc','Tang Đố Mộc','Đại Khê Thuỷ','Đại Khê Thuỷ','Sa Trung Thổ','Sa Trung Thổ',
+  'Thiên Thượng Hoả','Thiên Thượng Hoả','Thạch Lựu Mộc','Thạch Lựu Mộc','Đại Hải Thuỷ','Đại Hải Thuỷ'
+];
+
+// Lunar calendar (JDN-based)
+function g2j(y,m,d){const a=Math.floor((14-m)/12),yr=y+4800-a,mo=m+12*a-3;return d+Math.floor((153*mo+2)/5)+365*yr+Math.floor(yr/4)-Math.floor(yr/100)+Math.floor(yr/400)-32045}
+
+function sunLng(jdn){
+  const T=(jdn-2451545)/36525,dr=Math.PI/180;
+  let L=280.46646+36000.76983*T+.0003032*T*T;
+  let M=(357.52911+35999.05029*T-.0001537*T*T)*dr;
+  let C=(1.914602-.004817*T-.000014*T*T)*Math.sin(M)+(0.019993-.000101*T)*Math.sin(2*M)+.000289*Math.sin(3*M);
+  let sun=L+C-.00569-.00478*Math.sin((125.04-1934.136*T)*dr);
+  sun=sun*dr; sun=sun-Math.PI*2*Math.floor(sun/(Math.PI*2));
+  return sun*180/Math.PI;
+}
+
+function newMoon(k){
+  const T=k/1236.85,T2=T*T,T3=T2*T,T4=T3*T,dr=Math.PI/180;
+  let J=2451550.09766+29.530588861*k+.00015437*T2-.00000015*T3+7.3e-10*T4;
+  let M=(2.5534+29.1053567*k-.0000014*T2-.00000011*T3)*dr;
+  let Mp=(201.5643+385.81693528*k+.0107582*T2+.00001238*T3-5.8e-8*T4)*dr;
+  let F=(160.7108+390.67050284*k-.0016118*T2-2.27e-6*T3+1.1e-8*T4)*dr;
+  let O=(124.7746-1.56375588*k+.0020672*T2+2.15e-6*T3)*dr;
+  const E=1-.002516*T-7.4e-6*T2;
+  J-=.4072*Math.sin(Mp)+.17241*E*Math.sin(M)+.01608*Math.sin(2*Mp)+.01039*Math.sin(2*F);
+  J+=.00739*E*Math.sin(Mp-M)-.00514*E*Math.sin(Mp+M)-.00111*Math.sin(2*F-Mp);
+  J+=.00056*E*Math.sin(2*Mp+M)-.00042*Math.sin(3*Mp)+.00042*E*Math.sin(M+2*F);
+  J+=.00038*E*Math.sin(M-2*F)-.00024*E*Math.sin(2*Mp-M)-.00017*Math.sin(O);
+  return J;
+}
+
+function lunar(y,m,d){
+  const TZ=7,jdn=g2j(y,m,d);
+  let k=Math.floor((jdn-2451550.09766)/29.530588861);
+  while(Math.floor(newMoon(k+1)+.5+TZ/24)<=jdn)k++;
+  while(Math.floor(newMoon(k)+.5+TZ/24)>jdn)k--;
+  const nm=Math.floor(newMoon(k)+.5+TZ/24);
+  const lday=jdn-nm+1;
+  
+  // Find month 11 (Đông chí month) for year
+  function m11jdn(yr){
+    let k2=Math.floor((g2j(yr,11,1)-2451550)/29.53);
+    while(true){
+      const sl=sunLng(newMoon(k2));
+      if(sl>=240&&sl<270)return{k:k2,j:Math.floor(newMoon(k2)+.5+TZ/24)};
+      k2++;
+    }
+  }
+  
+  let solarYr=new Date(y,m-1,d).getFullYear();
+  let m11a=m11jdn(solarYr-1),m11b=m11jdn(solarYr);
+  let monthsInYear=m11b.k-m11a.k;
+  let isLeap=monthsInYear==13;
+  
+  let mo=k-m11a.k;
+  let lyr=solarYr;
+  let lmo;
+  if(mo<0){mo=k-m11jdn(solarYr-2).k;lyr=solarYr-1;m11a=m11jdn(solarYr-2);m11b=m11jdn(solarYr-1);monthsInYear=m11b.k-m11a.k;isLeap=monthsInYear==13}
+  
+  // mo=0 -> month 11 prev year, mo=1->12, mo=2->1 current, etc
+  if(mo<=1){lmo=11+mo;lyr=solarYr-1}
+  else{lmo=mo-1;if(lmo>12)lmo=12}
+  
+  return{year:lyr,month:lmo<1?lmo+12:lmo,day:lday,jdn,k};
+}
+
+function gioIdx(h,mi){return Math.floor(((h*60+mi+60)%1440)/120)%12}
+
+function canYear(y){return (y-4)%10}
+function chiYear(y){return (y-4)%12}
+function napam(y){return NAPAM[((y-1924)%60+60)%60]}
+
+// An cung Mệnh: Dần=tháng1, đến tháng sinh (thuận), rồi kể là giờ Tý đếm ngược đến giờ sinh
+function anMenh(lm,gi){return((2+lm-1)-gi+120)%12}
+// An cung Thân: từ Dần đến tháng (thuận), rồi đếm thuận đến giờ sinh
+function anThan(lm,gi){return(2+lm-1+gi)%12}
+
+// Lập cục
+function lapCuc(menh,canY){
+  const chi=DC[menh];
+  const cg=canY%5; // 0=Giap-Ky,1=At-Canh,2=Binh-Tan,3=Dinh-Nham,4=Mau-Quy
+  const grp=['Tý','Sửu'].includes(chi)?0:['Dần','Mão','Tuất','Hợi'].includes(chi)?1:['Thìn','Tị'].includes(chi)?2:['Ngọ','Mùi'].includes(chi)?3:4;
+  const tb=[
+    ['Thuỷ nhị cục','Hoả lục cục','Thổ ngũ cục','Mộc tam cục','Kim tứ cục'],
+    ['Hoả lục cục','Thổ ngũ cục','Mộc tam cục','Kim tứ cục','Thuỷ nhị cục'],
+    ['Mộc tam cục','Kim tứ cục','Thuỷ nhị cục','Hoả lục cục','Thổ ngũ cục'],
+    ['Thổ ngũ cục','Mộc tam cục','Kim tứ cục','Thuỷ nhị cục','Hoả lục cục'],
+    ['Kim tứ cục','Thuỷ nhị cục','Hoả lục cục','Thổ ngũ cục','Mộc tam cục'],
+  ];
+  return tb[grp][cg];
+}
+function cucSo(cn){return cn.includes('nhị')?2:cn.includes('tam')?3:cn.includes('tứ')?4:cn.includes('ngũ')?5:6}
+
+// An sao Tử Vi
+function anTuVi(cs,ld){
+  let pos=2,val=cs;
+  while(val<ld){pos=(pos+1)%12;val+=cs}
+  const diff=val-ld;
+  if(!diff)return pos;
+  return diff%2===0?(pos+diff)%12:(pos-diff+120)%12;
+}
+
+// 14 chính tinh
+function chinh14(tv){
+  const s={};
+  s['Tử Vi']=tv;
+  s['Thiên Cơ']=(tv-1+12)%12;
+  s['Thái Dương']=(tv-3+12)%12;
+  s['Vũ Khúc']=(tv-4+12)%12;
+  s['Thiên Đồng']=(tv-5+12)%12;
+  s['Liêm Trinh']=(tv-8+12)%12;
+  const tp=(14-tv)%12;
+  s['Thiên Phủ']=tp;
+  s['Thái Âm']=(tp+1)%12;
+  s['Tham Lang']=(tp+2)%12;
+  s['Cự Môn']=(tp+3)%12;
+  s['Thiên Tướng']=(tp+4)%12;
+  s['Thiên Lương']=(tp+5)%12;
+  s['Thất Sát']=(tp+6)%12;
+  s['Phá Quân']=(tp+10)%12;
+  return s;
+}
+
+// Sao theo giờ sinh
+function saoGio(gi,isNam,chiN){
+  const s={};
+  s['Văn Khúc']=(4+gi)%12;
+  s['Văn Xương']=(10-gi+12)%12;
+  s['Thai Phụ']=(s['Văn Khúc']+2)%12;
+  s['Phong Cáo']=(s['Văn Khúc']-2+12)%12;
+  s['Địa Không']=(11-gi+12)%12;
+  s['Địa Kiếp']=(11+gi)%12;
+  // Hoả Tinh & Linh Tinh
+  const chi=DC[chiN];
+  let hs,ls;
+  if(['Dần','Ngọ','Tuất'].includes(chi)){hs=1;ls=3}
+  else if(['Thân','Tý','Thìn'].includes(chi)){hs=2;ls=10}
+  else if(['Tị','Dậu','Sửu'].includes(chi)){hs=3;ls=10}
+  else{hs=9;ls=10}
+  if(isNam){s['Hoả Tinh']=(hs+gi)%12;s['Linh Tinh']=(ls-gi+12)%12}
+  else{s['Hoả Tinh']=(hs-gi+12)%12;s['Linh Tinh']=(ls+gi)%12}
+  return s;
+}
+
+// Sao theo ngày sinh
+function saoNgay(ld,vxPos,vkPos){
+  return{'Ân Quang':(vxPos+ld-2+12)%12,'Thiên Quý':(vkPos-ld+12)%12};
+}
+
+// Sao theo tháng sinh
+function saoThang(lm){
+  return{
+    'Tả Phù':(4+lm-1)%12,
+    'Hữu Bật':(10-lm+1+12)%12,
+    'Thiên Diêu':(1+lm-1)%12,
+    'Thiên Y':(1+lm-1)%12,
+    'Thiên Hình':(9+lm-1)%12,
+    'Thiên Giải':(8+lm-1)%12,
+    'Địa Giải':(7+lm-1)%12,
+    'Tam Thai':(4+lm-1)%12,
+    'Bát Toạ':(10-lm+1+12)%12
+  };
+}
+
+// Sao theo địa chi năm
+function saoDiaChi(ci){
+  const s={};
+  const chi=DC[ci];
+  s['Long Trì']=(4+ci)%12;
+  s['Phượng Các']=(10-ci+12)%12;
+  s['Giải Thần']=(10-ci+12)%12;
+  s['Thiên Khốc']=(6-ci+12)%12;
+  s['Thiên Hư']=(6+ci)%12;
+  s['Thiên Đức']=(9+ci)%12;
+  s['Nguyệt Đức']=(5+ci)%12;
+  s['Hồng Loan']=(3-ci+12)%12;
+  s['Thiên Hỉ']=(9-ci+12)%12;
+  s['Thiên Không']=(ci+1)%12;
+  // Phá Toái
+  s['Phá Toái']=['Thìn','Tuất','Sửu','Mùi'].includes(chi)?1:['Tý','Ngọ','Mão','Dậu'].includes(chi)?5:9;
+  // Tam hợp stars
+  if(['Thân','Tý','Thìn'].includes(chi)){s['Đào Hoa']=9;s['Thiên Mã']=2;s['Kiếp Sát']=5;s['Hoa Cái']=4;s['Cô Thần']=11;s['Quả Tú']=7}
+  else if(['Hợi','Mão','Mùi'].includes(chi)){s['Đào Hoa']=0;s['Thiên Mã']=5;s['Kiếp Sát']=8;s['Hoa Cái']=7;s['Cô Thần']=2;s['Quả Tú']=10}
+  else if(['Dần','Ngọ','Tuất'].includes(chi)){s['Đào Hoa']=6;s['Thiên Mã']=11;s['Kiếp Sát']=2;s['Hoa Cái']=10;s['Cô Thần']=5;s['Quả Tú']=1}
+  else{s['Đào Hoa']=3;s['Thiên Mã']=8;s['Kiếp Sát']=11;s['Hoa Cái']=1;s['Cô Thần']=8;s['Quả Tú']=4}
+  return s;
+}
+
+// Sao theo thiên can
+function saoThienCan(ci){
+  const s={};
+  const locPos=[2,3,5,6,5,6,8,9,11,0];
+  s['Lộc Tồn']=locPos[ci];
+  s['Kình Dương']=(locPos[ci]-1+12)%12;
+  s['Đà La']=(locPos[ci]+1)%12;
+  const kv=[[1,7],[0,8],[11,9],[9,11],[7,1],[8,0],[6,2],[2,6],[3,5],[5,3]];
+  s['Thiên Khôi']=kv[ci][0];
+  s['Thiên Việt']=kv[ci][1];
+  const tq=[7,4,5,2,3,9,11,9,10,6];
+  const tf=[9,8,0,11,3,2,6,5,6,5];
+  s['Thiên Quan']=tq[ci];
+  s['Thiên Phúc']=tf[ci];
+  return s;
+}
+
+// Tứ hóa
+function tuHoa(ci){
+  const tb=[
+    ['Liêm Trinh','Phá Quân','Vũ Khúc','Thái Dương'],
+    ['Thiên Cơ','Thiên Lương','Tử Vi','Thái Âm'],
+    ['Thiên Đồng','Thiên Cơ','Văn Xương','Liêm Trinh'],
+    ['Thái Âm','Thiên Đồng','Thiên Cơ','Cự Môn'],
+    ['Tham Lang','Thái Âm','Hữu Bật','Thiên Cơ'],
+    ['Vũ Khúc','Tham Lang','Thiên Lương','Văn Khúc'],
+    ['Thái Dương','Vũ Khúc','Thái Âm','Thiên Đồng'],
+    ['Cự Môn','Thái Dương','Văn Khúc','Văn Xương'],
+    ['Thiên Lương','Tử Vi','Tả Phù','Vũ Khúc'],
+    ['Phá Quân','Cự Môn','Thái Âm','Tham Lang'],
+  ];
+  return tb[ci]; // [loc, quyen, khoa, ki]
+}
+
+// Vòng Trường Sinh
+function truongSinh(cs,isNam){
+  const names=['Trường Sinh','Mộc Dục','Quan Đới','Lâm Quan','Đế Vượng','Suy','Bệnh','Tử','Mộ','Tuyệt','Thai','Dưỡng'];
+  const start=cs===2||cs===5?8:cs===3?11:cs===4?5:2;
+  const dir=isNam?1:-1;
+  const s={};
+  names.forEach((n,i)=>s[n]=(start+i*dir+120)%12);
+  return s;
+}
+
+// Vòng Lộc Tồn (Bác Sĩ)
+function vocLocTon(lp,isNam){
+  const names=['Bác Sĩ','Lực Sĩ','Thanh Long','Tiểu Hao','Tướng Quân','Tấu Thư','Phi Liêm','Hỉ Thần','Bệnh Phù','Đại Hao','Phục Binh','Quan Phù'];
+  const dir=isNam?1:-1;
+  const s={};
+  names.forEach((n,i)=>s[n]=(lp+i*dir+120)%12);
+  return s;
+}
+
+// Vòng Thái Tuế
+function thaiTue(ci){
+  const names=['Thái Tuế','Thiếu Dương','Tang Môn','Thiếu Âm','Quan Phù','Tử Phù','Tuế Phá','Long Đức','Bạch Hổ','Phúc Đức','Điếu Khách','Trực Phù'];
+  const s={};
+  names.forEach((n,i)=>s[n]=(ci+i)%12);
+  return s;
+}
+
+// Triệt - Tuần
+function trietTuan(ci){
+  const tr=[[8,9],[6,7],[4,5],[2,3],[0,1],[8,9],[6,7],[4,5],[2,3],[0,1]];
+  const tu=[10,8,6,4,2,10,8,6,4,2];
+  return{triet:tr[ci],tuan:[tu[ci],(tu[ci]+1)%12]};
+}
+
+// Đẩu Quân
+function dauQuan(ttPos,lm,gi){
+  return((ttPos-lm+1+24)%12+gi)%12;
+}
+
+// Star brightness
+function bright(name,pos){
+  const V={'Tử Vi':[2,5],'Thiên Cơ':[3,6],'Thái Dương':[6,7],'Vũ Khúc':[8,9],'Thiên Đồng':[0,11],'Liêm Trinh':[4,5],'Thiên Phủ':[8,9],'Thái Âm':[6,7],'Tham Lang':[2,8],'Cự Môn':[1,7],'Thiên Tướng':[1,7],'Thiên Lương':[2,3],'Thất Sát':[4,10],'Phá Quân':[0,6]};
+  const H={'Tử Vi':[11],'Thiên Cơ':[0],'Thái Dương':[0,11],'Vũ Khúc':[5],'Thiên Đồng':[5,6],'Liêm Trinh':[10],'Thiên Phủ':[2],'Thái Âm':[0,1],'Tham Lang':[6],'Cự Môn':[3,9],'Thiên Tướng':[3],'Thiên Lương':[9,10],'Thất Sát':[0,6],'Phá Quân':[3,9]};
+  if(V[name]&&V[name].includes(pos))return'(V)';
+  if(H[name]&&H[name].includes(pos))return'(H)';
+  return'(B)';
+}
+
+// Mệnh chủ (by cung Mệnh chi)
+function manhChu(cm){
+  return['Tham Lang','Cự Môn','Lộc Tồn','Văn Khúc','Liêm Trinh','Vũ Khúc','Phá Quân','Vũ Khúc','Văn Khúc','Tham Lang','Liêm Trinh','Cự Môn'][cm];
+}
+// Thân chủ (by cung Thân chi)
+function thanChu(ct){
+  return['Thiên Phủ','Thiên Tướng','Thiên Lương','Thiên Cơ','Văn Xương','Liêm Trinh','Thiên Tướng','Thái Âm','Thiên Cơ','Cự Môn','Vũ Khúc','Thái Dương'][ct];
+}
+// Sao chủ cục
+function saoChuCuc(cs){
+  return{2:'Tham Lang',3:'Tả Phù',4:'Văn Xương',5:'Liêm Trinh',6:'Thiên Phủ'}[cs]||'Tử Vi';
+}
+
+// Âm dương (nam/nữ + năm)
+function amduong(y,isNam){
+  const isDuong=(y-4)%12%2===0; // chẵn chi index = dương
+  return isDuong==isNam?'Dương':'Âm';
+}
+
+// Main calculate
+function calc(name,y,mo,d,h,mi,isNam,hy){
+  const lun=lunar(y,mo,d);
+  const lm=lun.month,ld=lun.day;
+  const cY=canYear(y),chiY=chiYear(y);
+  const cH=canYear(hy),chiH=chiYear(hy);
+  const gi=gioIdx(h,mi);
+  const cm=anMenh(lm,gi),ct=anThan(lm,gi);
+  const cucN=lapCuc(cm,cY),cs=cucSo(cucN);
+  const tv=anTuVi(cs,ld);
+  const c14=chinh14(tv);
+  const gioS=saoGio(gi,isNam,chiY);
+  const ngayS=saoNgay(ld,gioS['Văn Xương'],gioS['Văn Khúc']);
+  const thangS=saoThang(lm);
+  const dchiS=saoDiaChi(chiY);
+  const tcanS=saoThienCan(cY);
+  const th=tuHoa(cY); // [loc,quyen,khoa,ki]
+  const tsS=truongSinh(cs,isNam);
+  const ltS=vocLocTon(tcanS['Lộc Tồn'],isNam);
+  const ttS=thaiTue(chiY);
+  const {triet,tuan}=trietTuan(cY);
+  const dq=dauQuan(ttS['Thái Tuế'],lm,gi);
+  const hoaLabels={'Hoá Lộc':th[0],'Hoá Quyền':th[1],'Hoá Khoa':th[2],'Hoá Kị':th[3]};
+  const starHoaMap={[th[0]]:'(Đ)',[th[1]]:'(Q)',[th[2]]:'(K)',[th[3]]:'(T)'};
+  
+  // Collect all stars per cung
+  const grid=Array.from({length:12},()=>[]);
+  const add=(n,p,t,sub='')=>{if(p>=0&&p<12)grid[p].push({n,t,sub})};
+  
+  Object.entries(c14).forEach(([n,p])=>add(n,p,'main',starHoaMap[n]||''));
+  Object.entries(gioS).forEach(([n,p])=>add(n,p,'gio',starHoaMap[n]||''));
+  Object.entries(ngayS).forEach(([n,p])=>add(n,p,'ngay'));
+  Object.entries(thangS).forEach(([n,p])=>add(n,p,'thang'));
+  Object.entries(dchiS).forEach(([n,p])=>add(n,p,'dchi'));
+  Object.entries(tcanS).forEach(([n,p])=>add(n,p,'tcan',starHoaMap[n]||''));
+  Object.entries(tsS).forEach(([n,p])=>add(n,p,'ts'));
+  Object.entries(ltS).forEach(([n,p])=>add(n,p,'lt'));
+  Object.entries(ttS).forEach(([n,p])=>add(n,p,'tt'));
+  add('Thiên La',4,'fixed');add('Địa Võng',10,'fixed');
+  // Thiên Thương at Nô Bộc, Thiên Sứ at Tật Ách (relative to Mệnh)
+  add('Thiên Thương',(cm+5)%12,'fixed');
+  add('Thiên Sứ',(cm+7)%12,'fixed');
+  add('Đẩu Quân',dq,'tt');
+  
+  // Thiên Tài: từ Mệnh đếm thuận đến địa chi năm
+  add('Thiên Tài',(cm+chiY)%12,'dchi');
+  // Thiên Thọ: từ Thân đếm thuận đến địa chi năm  
+  add('Thiên Thọ',(ct+chiY)%12,'dchi');
+  
+  return{name,y,mo,d,h,mi,isNam,hy,lm,ld,cY,chiY,cH,chiH,gi,cm,ct,cucN,cs,tv,grid,tsS,ltS,ttS,triet,tuan,starHoaMap,c14};
+}
+
+// Grid layout: row 0: Tị(5) Ngọ(6) Mùi(7) Thân(8), row1: Thìn(4) CTR CTR Dậu(9), row2: Mão(3) CTR CTR Tuất(10), row3: Dần(2) Sửu(1) Tý(0) Hợi(11)
+const LAYOUT=[[5,6,7,8],[4,-1,-1,9],[3,-1,-1,10],[2,1,0,11]];
+
+// Render a cung cell
+function renderCung(ci,D){
+  const cungName=CUNG[(ci-D.cm+12)%12];
+  const chiName=DC[ci];
+  const stars=D.grid[ci]||[];
+  const mains=stars.filter(s=>s.t==='main');
+  const rest=stars.filter(s=>s.t!=='main');
+  const isThan=ci===D.ct,isTriet=D.triet.includes(ci),isTuan=D.tuan.includes(ci);
+  
+  // Main stars
+  let mh=mains.map(s=>{
+    const br=bright(s.n,ci);
+    const hoaStr=s.sub||'';
+    return`<div class="main-star">${s.n}${hoaStr}<span style="font-size:.7rem;font-weight:400">${br}</span></div>`;
+  }).join('');
+  
+  // Important secondary stars  
+  const imp=['Tả Phù','Hữu Bật','Văn Xương','Văn Khúc','Thiên Khôi','Thiên Việt',
+    'Lộc Tồn','Kình Dương','Đà La','Hoả Tinh','Linh Tinh','Địa Không','Địa Kiếp',
+    'Thiên Mã','Đào Hoa','Hồng Loan','Ân Quang','Thiên Quý','Bác Sĩ','Lực Sĩ','Thanh Long',
+    'Tướng Quân','Thiên Diêu','Thiên Y','Thiên Hình','Hoa Cái','Thiên Không',
+    'Phá Toái','Cô Thần','Quả Tú','Thiên Khốc','Thiên Hư','Kiếp Sát','Long Trì','Phượng Các',
+    'Thiên Đức','Nguyệt Đức','Thai Phụ','Phong Cáo','Tam Thai','Bát Toạ','Thiên Tài','Thiên Thọ',
+    'Đào Hoa','Thiên La','Địa Võng','Thiên Thương','Thiên Sứ'];
+  
+  const red=['Đà La','Kình Dương','Hoả Tinh','Linh Tinh','Địa Không','Địa Kiếp','Phá Toái','Thiên Khốc','Thiên Hư','Cô Thần','Quả Tú','Thiên La','Địa Võng'];
+  const blue=['Văn Xương','Văn Khúc','Tả Phù','Hữu Bật','Thiên Khôi','Thiên Việt','Thiên Tài','Thiên Thọ'];
+  const gold=['Lộc Tồn','Thiên Mã','Đào Hoa','Hồng Loan','Thiên Đức','Nguyệt Đức'];
+  const green=['Bác Sĩ','Lực Sĩ','Thanh Long','Tướng Quân'];
+  
+  let rh=rest.filter(s=>imp.includes(s.n)).map(s=>{
+    const h=D.starHoaMap[s.n]||s.sub||'';
+    let cls='phu-star s-gray';
+    if(red.includes(s.n))cls='phu-star s-red';
+    else if(blue.includes(s.n))cls='phu-star s-blue';
+    else if(gold.includes(s.n))cls='phu-star s-gold';
+    else if(green.includes(s.n))cls='phu-star s-green';
+    return`<span class="${cls}">${s.n}${h}</span>`;
+  }).join('');
+  
+  // Vòng Trường Sinh label
+  let tsN='';
+  for(const[n,p]of Object.entries(D.tsS)){if(p===ci){tsN=n;break}}
+  // Vòng Thái Tuế label
+  let ttN='';
+  for(const[n,p]of Object.entries(D.ttS)){if(p===ci){ttN=n;break}}
+  
+  const badges=(isTriet?'<span class="badge badge-triet">Triệt</span>':'')+
+               (isTuan?'<span class="badge badge-tuan">Tuần</span>':'');
+  const thanMk=isThan?'<span class="badge badge-than">Thân</span>':'';
+  
+  return`<div class="cell" style="padding-bottom:22px">
+    ${thanMk}
+    <div class="ch"><span class="chi-lbl">${chiName}</span><span class="cung-lbl">${cungName}</span></div>
+    ${mh}
+    <div>${rh}</div>
+    ${badges?`<div style="margin-top:3px">${badges}</div>`:''}
+    <div class="cell-foot"><span>${tsN}</span><span style="color:var(--blue)">${ttN}</span></div>
+  </div>`;
+}
+
+function renderCenter(D){
+  const{name,y,mo,d,h,mi,isNam,hy,lm,ld,cY,chiY,cH,chiH,gi,cm,ct,cucN,cs}=D;
+  const tenNam=TC[cY]+' '+DC[chiY];
+  const tenHan=TC[cH]+' '+DC[chiH];
+  const menhNA=napam(y);
+  const binhTinh=amduong(y,isNam);
+  const age=hy-y+1;
+  const gioN=DC[gi];
+  const gioCanIdx=(y%5)*2; // simplified
+  const gioCan=TC[gioCanIdx%10];
+  const adStr=binhTinh==='Dương'?(isNam?'Dương Nam':'Âm Nữ'):(isNam?'Âm Nam':'Dương Nữ');
+  // Check thuận/nghịch
+  const thuanNghich=(binhTinh==='Dương'&&isNam)||(binhTinh==='Âm'&&!isNam);
+  const adFull=isNam?(chiYear(y)%2===0?'Dương Nam':'Âm Nam'):(chiYear(y)%2===0?'Dương Nữ':'Âm Nữ');
+  const adLogic=thuanNghich?'Âm Dương thuận lý':'Âm Dương nghịch lý';
+  
+  // Mệnh element vs Cục element interaction
+  const menhEl=menhNA.includes('Kim')?'Kim':menhNA.includes('Mộc')?'Mộc':menhNA.includes('Hoả')?'Hoả':menhNA.includes('Thổ')?'Thổ':'Thuỷ';
+  const cucEl=cucN.includes('Kim')?'Kim':cucN.includes('Mộc')?'Mộc':cucN.includes('Hoả')?'Hoả':cucN.includes('Thổ')?'Thổ':'Thuỷ';
+  const menhKhacCuc=getMenhKhacCuc(menhEl,cucEl);
+  
+  const nguyenThan=getNguyenThan(cs);
+  const hk=((cm+chiY*0.7)%9+1).toFixed(2);
+  
+  return`<div class="cell-center">
+    <div class="c-org">NHÓM NGHIÊN CỨU TỬ VI CỔ HỌC</div>
+    <div class="c-url">https://tuvi.cohoc.net</div>
+    <div class="c-title">LÁ SỐ TỬ VI</div>
+    <table class="c-table">
+      <tr><td>Họ tên:</td><td style="color:var(--vermillion);font-weight:700">${name}</td></tr>
+      <tr><td>Năm sinh:</td><td>${y} &nbsp;<i style="color:var(--blue)">${tenNam}</i></td></tr>
+      <tr><td>Tháng sinh:</td><td>${lm} (${mo})</td></tr>
+      <tr><td>Ngày sinh:</td><td>${ld} (${d})</td></tr>
+      <tr><td>Giờ sinh:</td><td>${String(h).padStart(2,'0')} giờ ${String(mi).padStart(2,'0')} phút &nbsp;<span style="color:#999;font-size:.7rem">${gioCan} ${gioN}</span></td></tr>
+      <tr><td colspan="2"><div style="border-top:1px dashed #ccc;margin:4px 0"></div></td></tr>
+      <tr><td>Năm hạn:</td><td>${hy} &nbsp;<i style="color:var(--blue)">${tenHan}</i></td></tr>
+      <tr><td>Âm dương:</td><td><span style="color:var(--gold);font-weight:700">${adFull}</span> &nbsp;${age} tuổi</td></tr>
+      <tr><td>Mệnh:</td><td style="color:var(--blue);font-weight:700">${menhNA}</td></tr>
+      <tr><td>Cục:</td><td>${cucN}</td></tr>
+      <tr><td>Sao chủ cục:</td><td style="color:var(--blue)">${saoChuCuc(cs)}</td></tr>
+      <tr><td>Mệnh chủ:</td><td style="color:var(--blue)">${manhChu(cm)}</td></tr>
+      <tr><td>Thân chủ:</td><td style="color:var(--blue)">${thanChu(ct)}</td></tr>
+      <tr><td>Lai nhân cung:</td><td style="color:var(--blue)">${CUNG[(ct-cm+12)%12]}</td></tr>
+      <tr><td>Nguyên thần:</td><td style="color:#555">${nguyenThan}</td></tr>
+      <tr><td>Huyền khí:</td><td style="color:var(--gold);font-weight:600">${hk}</td></tr>
+    </table>
+    <div class="c-hl">
+      <div style="color:var(--gold)">${adLogic}</div>
+      <div style="color:var(--vermillion);margin-top:2px">${menhKhacCuc}</div>
+      <div style="color:var(--blue);margin-top:2px">Thân cư ${CUNG[(ct-cm+12)%12]}</div>
+    </div>
+  </div>`;
+}
+
+function getMenhKhacCuc(me,cu){
+  const khac={'Hoả':'Kim','Kim':'Mộc','Mộc':'Thổ','Thổ':'Thuỷ','Thuỷ':'Hoả'};
+  const sinh={'Hoả':'Thổ','Mộc':'Hoả','Thuỷ':'Mộc','Kim':'Thuỷ','Thổ':'Kim'};
+  if(khac[me]===cu)return`Mệnh khắc Cục`;
+  if(sinh[me]===cu)return`Mệnh sinh Cục`;
+  if(khac[cu]===me)return`Cục khắc Mệnh`;
+  if(sinh[cu]===me)return`Cục sinh Mệnh`;
+  return`Mệnh Cục bình hòa`;
+}
+
+function getNguyenThan(cs){
+  return{2:'Tham lang, Cự môn',3:'Tử tức, Điền trạch',4:'Tài bạch, Tử tức',5:'Quan lộc, Điền trạch',6:'Thiên di, Quan lộc'}[cs]||'';
+}
+
+function renderBoard(D){
+  const{y,cY,chiY}=D;
+  const tenNam=TC[cY]+' '+DC[chiY];
+  let html='';
+  // Build grid rows
+  for(let r=0;r<4;r++){
+    for(let c=0;c<4;c++){
+      const ci=LAYOUT[r][c];
+      if(ci===-1)continue;
+      if(r===1&&c===1){html+=renderCenter(D);continue}
+      html+=renderCung(ci,D);
+    }
+  }
+  return`<div class="laso-head">
+    <div class="org">NHÓM NGHIÊN CỨU TỬ VI CỔ HỌC</div>
+    <div class="ttl">LÁ SỐ TỬ VI</div>
+    <div class="sub">${D.name} — ${y} ${tenNam}</div>
+  </div>
+  <div class="board">${html}</div>`;
+}
+
+function go(){
+  const name=document.getElementById('iname').value.trim();
+  const dv=document.getElementById('idate').value;
+  const tv=document.getElementById('itime').value;
+  const hy=parseInt(document.getElementById('ihan').value)||2026;
+  const isNam=document.getElementById('igender').value==='nam';
+  if(!name||!dv||!tv){document.getElementById('emsg').style.display='block';return}
+  document.getElementById('emsg').style.display='none';
+  const[y,mo,d]=dv.split('-').map(Number);
+  const[h,mi]=tv.split(':').map(Number);
+  try{
+    const D=calc(name,y,mo,d,h,mi,isNam,hy);
+    document.getElementById('board').innerHTML=renderBoard(D);
+    document.getElementById('laso').style.display='block';
+    document.getElementById('laso').scrollIntoView({behavior:'smooth'});
+  }catch(e){console.error(e);alert('Lỗi tính toán: '+e.message)}
+}
+</script>
+</body>
+</html>
