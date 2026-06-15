@@ -1,355 +1,111 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>Thiên Bàn — Lập Lá Số Tử Vi Đẩu Số</title>
-<meta name="description" content="Lập lá số Tử Vi Đẩu Số trực tuyến. Thuật toán chuẩn theo sách Hi Di Trần Đoàn. Miễn phí, không cần đăng nhập.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tra Cứu Lá Số Tử Vi Đẩu Số</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/design-system.css">
-<link rel="stylesheet" href="css/landing.css">
-<link rel="stylesheet" href="css/laso.css">
-<style>
-/* Extra inline polish */
-.hero-decoration {
-  position:absolute;top:-40px;left:50%;transform:translateX(-50%);
-  width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(201,168,76,0.04) 0%,transparent 70%);
-  pointer-events:none;
-}
-[data-theme="light"] .hero-decoration{background:radial-gradient(circle,rgba(139,90,35,0.05) 0%,transparent 70%);}
-
-.form-section-divider{
-  display:flex;align-items:center;gap:12px;
-  margin:20px 0 8px;
-  font-size:0.7rem;font-weight:700;letter-spacing:0.1em;
-  text-transform:uppercase;color:var(--text-tertiary);
-}
-.form-section-divider::before,.form-section-divider::after{
-  content:'';flex:1;height:1px;background:var(--border-subtle);
-}
-.laso-header-bar{
-  display:flex;align-items:center;gap:12px;margin-bottom:20px;
-}
-.back-btn{
-  display:flex;align-items:center;gap:6px;
-  padding:8px 14px;border:1px solid var(--border-default);
-  border-radius:8px;background:var(--bg-elevated);
-  color:var(--text-secondary);font-size:0.8125rem;
-  cursor:pointer;transition:all .15s;text-decoration:none;
-  font-family:var(--font-body);
-}
-.back-btn:hover{border-color:var(--border-gold);color:var(--text-gold);}
-.laso-actions{display:flex;gap:8px;margin-left:auto;}
-@media print{
-  .site-header,.back-btn,.laso-actions,.drawer,.drawer-overlay,.laso-tabs{display:none!important;}
-  body{background:#fff!important;}
-  .laso-grid-wrapper{max-width:100%!important;}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Starfield -->
-<div class="starfield"><canvas id="starfieldCanvas"></canvas></div>
 
-<!-- Header -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="#" class="logo" onclick="showView('landing');return false;">
-      <div class="logo-icon">☵</div>
-      <div>
-        <div class="logo-text">THIÊN BÀN</div>
-        <div class="logo-sub">Tử Vi Đẩu Số</div>
-      </div>
-    </a>
-    <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" title="Chuyển chủ đề">☀</button>
-    </div>
-  </div>
+<header class="app-header">
+  <h1><span class="deco">☯</span> Tra Cứu Lá Số Tử Vi Đẩu Số <span class="deco">☯</span></h1>
+  <p class="subtitle">An sao theo Tử Vi Đẩu Số cổ truyền — Mệnh, Thân, 12 cung, Tứ Hoá</p>
 </header>
 
-<!-- Main -->
-<main class="main-content">
+<div class="app-container">
 
-  <!-- ═══ LANDING VIEW ═══ -->
-  <div class="view active" id="view-landing">
-    <div class="container">
-      <!-- Hero -->
-      <section class="hero" style="position:relative;">
-        <div class="hero-decoration"></div>
-        <div class="hero-eyebrow animate-in">
-          <span>☵</span>
-          <span>THIÊN BÀN 2026</span>
+  <!-- ================= FORM NHẬP LIỆU ================= -->
+  <aside class="input-panel" id="inputPanel">
+    <h2>📜 Thông tin lá số</h2>
+    <form id="chartForm" autocomplete="off">
+
+      <label for="hoTen">Họ và tên</label>
+      <input type="text" id="hoTen" placeholder="Nguyễn Văn A" required>
+
+      <div class="form-row form-row-3">
+        <div>
+          <label for="ngaySinh">Ngày</label>
+          <input type="number" id="ngaySinh" min="1" max="31" placeholder="VD: 16" required>
         </div>
-        <h1 class="hero-title animate-in animate-in-delay-1">
-          Lập Lá Số<br><em>Tử Vi Đẩu Số</em>
-        </h1>
-        <p class="hero-subtitle animate-in animate-in-delay-2">
-          Thuật toán chuẩn theo sách <em>Hi Di Trần Đoàn</em>. Toàn bộ tính toán chạy trên trình duyệt, không gửi dữ liệu ra ngoài.
-        </p>
-      </section>
-
-      <!-- Form -->
-      <div class="animate-in animate-in-delay-3">
-        <form class="form-card" id="formLapLaSo" autocomplete="off">
-          <div class="form-card-header">
-            <h2 class="form-card-title">Thông Tin Sinh</h2>
-            <p class="form-card-desc">Nhập đầy đủ để lá số chính xác nhất</p>
-          </div>
-
-          <div class="form-grid">
-            <!-- Họ tên -->
-            <div class="form-group full-width">
-              <label class="form-label">Họ và Tên</label>
-              <div class="input-wrapper">
-                <span class="input-icon">✦</span>
-                <input type="text" name="ten" class="form-input" placeholder="Nguyễn Văn A" maxlength="60">
-              </div>
-            </div>
-
-            <!-- Giới tính -->
-            <div class="form-group">
-              <label class="form-label">Giới Tính <span class="required">*</span></label>
-              <select name="gioi_tinh" class="form-select" required>
-                <option value="nam">Nam</option>
-                <option value="nu">Nữ</option>
-              </select>
-            </div>
-
-            <!-- Âm/Dương Lịch -->
-            <div class="form-group">
-              <label class="form-label">Lịch</label>
-              <div class="radio-group">
-                <div class="radio-option">
-                  <input type="radio" name="lich" id="lichDuong" value="duong" checked>
-                  <label for="lichDuong">Dương Lịch</label>
-                </div>
-                <div class="radio-option">
-                  <input type="radio" name="lich" id="lichAm" value="am">
-                  <label for="lichAm">Âm Lịch</label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Ngày Tháng Năm -->
-            <div class="date-row">
-              <div class="form-group">
-                <label class="form-label">Ngày <span class="required">*</span></label>
-                <!-- Ngày -->
-<select name="ngay" class="form-select" required>
-  <option value="">--</option>
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-  <option value="4">4</option>
-  <option value="5">5</option>
-  <option value="6">6</option>
-  <option value="7">7</option>
-  <option value="8">8</option>
-  <option value="9">9</option>
-  <option value="10">10</option>
-  <option value="11">11</option>
-  <option value="12">12</option>
-  <option value="13">13</option>
-  <option value="14">14</option>
-  <option value="15">15</option>
-  <option value="16">16</option>
-  <option value="17">17</option>
-  <option value="18">18</option>
-  <option value="19">19</option>
-  <option value="20">20</option>
-  <option value="21">21</option>
-  <option value="22">22</option>
-  <option value="23">23</option>
-  <option value="24">24</option>
-  <option value="25">25</option>
-  <option value="26">26</option>
-  <option value="27">27</option>
-  <option value="28">28</option>
-  <option value="29">29</option>
-  <option value="30">30</option>
-  <option value="31">31</option>
-</select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Tháng <span class="required">*</span></label>
-               <!-- Tháng -->
-<select name="thang" class="form-select" required>
-  <option value="">--</option>
-  <option value="1">01</option>
-  <option value="2">02</option>
-  <option value="3">03</option>
-  <option value="4">04</option>
-  <option value="5">05</option>
-  <option value="6">06</option>
-  <option value="7">07</option>
-  <option value="8">08</option>
-  <option value="9">09</option>
-  <option value="10">10</option>
-  <option value="11">11</option>
-  <option value="12">12</option>
-</select>
-              </div>
-              <div class="form-group date-year">
-                <label class="form-label">Năm Sinh <span class="required">*</span></label>
-                <input type="number" name="nam" id="inp-nam" class="form-input" placeholder="1990" min="1900" max="2050" required>
-              </div>
-            </div>
-
-            <!-- Giờ sinh -->
-            <div class="form-group full-width">
-              <label class="form-label">Giờ Sinh <span class="required">*</span></label>
-              <select name="gio" class="form-select" required>
-                <option value="">Chọn giờ sinh...</option>
-                <option value="0">Giờ Tý (23:00 – 01:00)</option>
-                <option value="1">Giờ Sửu (01:00 – 03:00)</option>
-                <option value="2">Giờ Dần (03:00 – 05:00)</option>
-                <option value="3">Giờ Mão (05:00 – 07:00)</option>
-                <option value="4">Giờ Thìn (07:00 – 09:00)</option>
-                <option value="5">Giờ Tị (09:00 – 11:00)</option>
-                <option value="6">Giờ Ngọ (11:00 – 13:00)</option>
-                <option value="7">Giờ Mùi (13:00 – 15:00)</option>
-                <option value="8">Giờ Thân (15:00 – 17:00)</option>
-                <option value="9">Giờ Dậu (17:00 – 19:00)</option>
-                <option value="10">Giờ Tuất (19:00 – 21:00)</option>
-                <option value="11">Giờ Hợi (21:00 – 23:00)</option>
-              </select>
-            </div>
-
-            <!-- Múi giờ -->
-            <div class="form-group">
-              <label class="form-label">Múi Giờ</label>
-              <select name="timezone" class="form-select">
-                <option value="7" selected>GMT+7 (Việt Nam)</option>
-                <option value="8">GMT+8 (Trung Quốc)</option>
-                <option value="0">GMT+0 (UTC)</option>
-                <option value="-5">GMT-5 (Mỹ EST)</option>
-                <option value="-8">GMT-8 (Mỹ PST)</option>
-              </select>
-            </div>
-
-            <!-- Nơi sinh (hiển thị nhưng không tính) -->
-            <div class="form-group">
-              <label class="form-label">Nơi Sinh</label>
-              <div class="input-wrapper">
-                <span class="input-icon">📍</span>
-                <input type="text" name="noisinh" class="form-input" placeholder="Hà Nội, Việt Nam" maxlength="80">
-              </div>
-            </div>
-          </div>
-
-          <!-- Submit -->
-          <div class="form-submit">
-            <button type="submit" class="btn btn-primary btn-xl btn-full">
-              Khởi Tính Lá Số →
-            </button>
-            <p class="form-hint">Tất cả tính toán chạy ngay trên trình duyệt của bạn</p>
-          </div>
-        </form>
+        <div>
+          <label for="thangSinh">Tháng</label>
+          <input type="number" id="thangSinh" min="1" max="12" placeholder="VD: 12" required>
+        </div>
+        <div>
+          <label for="namSinh">Năm</label>
+          <input type="number" id="namSinh" min="1900" max="2100" placeholder="VD: 2008" required>
+        </div>
       </div>
+      <p class="hint">Nhập theo Dương lịch — hệ thống sẽ tự đổi sang Âm lịch.</p>
 
-      <!-- Feature chips -->
-      <div class="feature-chips animate-in animate-in-delay-4">
-        <div class="feature-chip"><span class="chip-icon">📖</span>Nguồn: Hi Di Trần Đoàn</div>
-        <div class="feature-chip"><span class="chip-icon">🔒</span>Không lưu dữ liệu</div>
-        <div class="feature-chip"><span class="chip-icon">⚡</span>Tính toán tức thì</div>
-        <div class="feature-chip"><span class="chip-icon">📱</span>Mobile friendly</div>
-        <div class="feature-chip"><span class="chip-icon">🌙</span>Dark / Light mode</div>
+      <label for="gioiTinh">Giới tính</label>
+      <select id="gioiTinh">
+        <option value="Nam">Nam</option>
+        <option value="Nữ">Nữ</option>
+      </select>
+
+      <label for="gioSinh">Giờ sinh</label>
+      <div class="form-row form-row-time">
+        <input type="time" id="gioSinh" value="12:00">
+        <label class="checkbox-label">
+          <input type="checkbox" id="khongRoGio"> Không rõ giờ sinh
+        </label>
       </div>
+      <p class="hint" id="hourHint">Giờ sinh ảnh hưởng đến cung Mệnh - Thân và nhiều sao quan trọng. Nếu không chắc, hãy tích "Không rõ giờ sinh" (kết quả sẽ chỉ mang tính tham khảo).</p>
 
-      <!-- Info cards -->
-      <section class="info-section">
-        <div class="section-heading">
-          <h2>Về Tử Vi Đẩu Số</h2>
-          <p>Khoa mệnh lý phương Đông được truyền từ Hi Di Trần Đoàn đời Tống</p>
-        </div>
-        <div class="info-grid">
-          <div class="info-card">
-            <div class="info-card-icon">☯</div>
-            <h3 class="info-card-title">14 Chính Tinh</h3>
-            <p class="info-card-text">Tử Vi, Thiên Phủ và 12 sao chính phân thành hai vòng Tử Vi và Thiên Phủ, an theo ngày sinh và cục số.</p>
-          </div>
-          <div class="info-card">
-            <div class="info-card-icon">🌙</div>
-            <h3 class="info-card-title">Tứ Hóa</h3>
-            <p class="info-card-text">Hóa Lộc, Quyền, Khoa, Kị theo Can năm sinh — yếu tố quyết định cát hung trong từng đại vận lưu niên.</p>
-          </div>
-          <div class="info-card">
-            <div class="info-card-icon">⏳</div>
-            <h3 class="info-card-title">Đại Vận</h3>
-            <p class="info-card-text">Mỗi vận kéo dài 10 năm, nam dương nữ âm đi thuận, nam âm nữ dương đi nghịch theo cung.</p>
-          </div>
-          <div class="info-card">
-            <div class="info-card-icon">📐</div>
-            <h3 class="info-card-title">Tam Hợp</h3>
-            <p class="info-card-text">Thân Tý Thìn — Dần Ngọ Tuất — Tị Dậu Sửu — Hợi Mão Mùi tạo thành các nhóm tương hỗ trên lá số.</p>
-          </div>
-        </div>
-      </section>
+      <button type="submit" class="btn-primary">🔮 Tra cứu lá số</button>
+      <button type="button" id="sampleBtn" class="btn-link">📋 Dùng dữ liệu mẫu để xem demo</button>
+    </form>
+
+    <div id="errorBox" class="error-box hidden" role="alert"></div>
+
+    <div class="legend">
+      <h3>Chú giải màu sắc</h3>
+      <ul>
+        <li><span class="dot chinh"></span> Chính tinh (14 sao chủ)</li>
+        <li><span class="dot tot"></span> Cát tinh (sao tốt)</li>
+        <li><span class="dot xau"></span> Sát tinh / sao cần lưu ý</li>
+        <li><span class="dot vong"></span> Sao thuộc các vòng phụ (trung tính)</li>
+        <li><span class="badge-sample tuhoa-loc">Lộc</span><span class="badge-sample tuhoa-quyen">Quyền</span><span class="badge-sample tuhoa-khoa">Khoa</span><span class="badge-sample tuhoa-ky">Kỵ</span> Tứ Hoá</li>
+        <li><span class="tag-sample tuan-triet">Tuần / Triệt</span> Vùng không vong</li>
+      </ul>
+      <p class="hint">💡 Bấm vào tên sao để xem giải nghĩa ngắn.</p>
+    </div>
+  </aside>
+
+  <!-- ================= KHU VỰC HIỂN THỊ LÁ SỐ ================= -->
+  <main class="chart-area">
+    <div id="placeholder" class="placeholder">
+      <p>🔮 Nhập thông tin bên trái rồi nhấn <strong>“Tra cứu lá số”</strong> để xem lá số Tử Vi.</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container">
-        <p>THIÊN BÀN © 2026 — Thuật toán từ <em>Tử Vi Đẩu Số Toàn Thư</em> (Hi Di Trần Đoàn, dịch Vũ Tài Lục)</p>
-        <p style="margin-top:6px;font-size:0.75rem;color:var(--text-tertiary)">Chỉ mang tính tham khảo. Không thay thế lời khuyên chuyên môn.</p>
+    <div id="chartResult" class="chart-result hidden">
+      <div class="chart-actions">
+        <button id="printBtn" class="btn-secondary">🖨️ In lá số / Xuất PDF</button>
       </div>
-    </footer>
-  </div>
-
-  <!-- ═══ LÁ SỐ VIEW ═══ -->
-  <div class="view" id="view-laso">
-    <div class="container laso-view">
-      <!-- Back & Header Bar -->
-      <div class="laso-header-bar">
-        <button class="back-btn" id="btnBack">← Quay lại</button>
-        <div class="laso-actions">
-          <button class="btn btn-secondary" onclick="window.print()" style="height:36px;padding:0 14px;font-size:0.8rem;">🖨 In</button>
-        </div>
+      <div id="approxWarning" class="approx-warning hidden">
+        ⚠️ Chưa nhập giờ sinh chính xác — lá số dưới đây dùng giờ Ngọ (12:00) làm mặc định và chỉ mang tính <strong>tham khảo</strong>. Nhập đúng giờ sinh để có kết quả chính xác hơn.
       </div>
-
-      <!-- Person header -->
-      <div class="laso-header">
-        <div class="laso-person-info">
-          <h2 id="lasoName">—</h2>
-          <div class="laso-person-meta" id="lasoMeta"></div>
-        </div>
+      <div class="grid-scroll">
+        <div class="tuvi-grid" id="tuviGrid"><!-- JS render --></div>
       </div>
-
-      <!-- Tabs -->
-      <div class="laso-tabs">
-        <div class="tabs-nav">
-          <button class="tab-btn active" data-tab="laso">Lá Số</button>
-          <button class="tab-btn" data-tab="daivan">Đại Vận</button>
-          <button class="tab-btn" data-tab="thongtin">Thông Tin</button>
-        </div>
-      </div>
-
-      <!-- Content -->
-      <div id="lasoContent"></div>
     </div>
-  </div>
+  </main>
+</div>
 
-</main>
+<footer class="app-footer">
+  <p>Công cụ tra cứu mang tính tham khảo văn hoá truyền thống. Quy trình an sao dựa theo hướng dẫn tại tracuutuvi.com.</p>
+</footer>
 
-<!-- ═══ DRAWER ═══ -->
-<div class="drawer-overlay" id="drawerOverlay"></div>
-<aside class="drawer" id="drawer">
-  <div class="drawer-header">
-    <span id="drawerTitle" style="font-family:var(--font-display);font-size:1.1rem;font-weight:500;"></span>
-    <button class="drawer-close" id="btnCloseDrawer">✕</button>
-  </div>
-  <div class="drawer-body" id="drawerBody"></div>
-</aside>
+<div id="tooltip" class="tooltip hidden"></div>
 
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- Scripts -->
-<script src="js/tuvi-algorithm.js"></script>
-<script src="js/star-data.js"></script>
-<script src="js/app.js"></script>
+<script src="lunar.js"></script>
+<script src="data.js"></script>
+<script src="engine.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
